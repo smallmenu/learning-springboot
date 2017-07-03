@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -37,8 +36,8 @@ public class IndexController {
     /**
      * 通过 HttpServletRequest 或 @RequestHeader 获取header
      *
-     * @debug http://localhost:9999/header
      * @param request
+     * @param userAgent
      * @return
      */
     @RequestMapping("/header")
@@ -58,9 +57,8 @@ public class IndexController {
     }
 
     /**
-     * 通过 HttpServletRequest 获取其他请求类参数
+     * 通过 HttpServletRequest 获取其他请求类参数，如IP
      *
-     * @debug http://localhost:9999/request?args1=a&args2=b
      * @param request
      * @return
      */
@@ -80,9 +78,8 @@ public class IndexController {
     }
 
     /**
-     * GET,POST 参数获取
+     * 通过注解获取 GET,POST 参数
      *
-     * @debug http://localhost:9999/get?text1=a&text2=b
      * @param text1
      * @param text2
      * @return
@@ -97,6 +94,7 @@ public class IndexController {
     }
 
     /**
+     * 正常获取 GET,POST 参数
      *
      * @param text1
      * @param text2
@@ -115,7 +113,6 @@ public class IndexController {
      * required=true，无defaultValue，不提供参数会400
      * 多值value必须要提供数组形式，如：checkbox[]
      *
-     * @debug http://localhost:9999/gets?text1=a&checkbox[]=1&checkbox[]=2
      * @param text1
      * @param text2
      * @param checkbox
@@ -142,7 +139,6 @@ public class IndexController {
      * 获取参数集合
      * 同时会接受GET，POST参数，重名参数POST不会覆盖GET
      *
-     * @debug http://localhost:9999/getmap?args1=a&args2=b
      * @param gets
      * @return
      */
@@ -155,11 +151,9 @@ public class IndexController {
     }
 
     /**
-     *
      * 参数映射 @ModelAttribute
      *
-     * @debug http://localhost:9999/getmodel?id=1&name=%E4%B8%AD%E5%9B%BD
-     * @param g
+     * @param user
      * @return
      */
     @RequestMapping("/getmodel")
@@ -199,6 +193,11 @@ public class IndexController {
         return modelAndView;
     }
 
+    /**
+     * @ModelAttribute 注解会优先于控制器方法执行
+     *
+     * @return
+     */
     @ModelAttribute(value = "model1")
     public String modelSet1() {
         logger.info("ModelAttribute model1");

@@ -20,7 +20,6 @@ public class CookieController {
      * 通过HttpServletResponse设置cookie
      *
      * @param response
-     * @param cookie
      * @return
      */
     @RequestMapping("/setcookie")
@@ -38,7 +37,7 @@ public class CookieController {
     }
 
     /**
-     * 通过注解、HttpServletRequest 获取cookie
+     * 通过@CookieValue注解、HttpServletRequest 获取cookie
      *
      * @param cookie1
      * @param request
@@ -63,7 +62,7 @@ public class CookieController {
     }
 
     /**
-     * 通过Cookie.setMaxAge()删除cookie
+     * 删除cookie
      *
      * @param request
      * @param response

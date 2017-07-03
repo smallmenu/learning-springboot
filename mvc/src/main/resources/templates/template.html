@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="'Hello, ' + ${title}">title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/app.css}"/>
+</head>
+<body>
+<h1 th:text="'Hello, ' + ${title}">h1</h1>
+<div th:if="${show}">
+    <ul th:each="user : ${users}">
+        <li th:text="${user.id} + ':' + ${user.name} + ' '+ ${#dates.format(date, 'yyyy-MM-dd HH:mm:ss')}"></li>
+    </ul>
+</div>
+<div th:unless="${show}">
+    empty
+</div>
+</body>
+</html>

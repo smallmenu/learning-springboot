@@ -194,9 +194,9 @@ public class IndexController {
     }
 
     /**
-     * @ModelAttribute 注解会优先于控制器方法执行
+     * ModelAttribute 注解会优先于控制器方法执行
      *
-     * @return
+     * @return String
      */
     @ModelAttribute(value = "model1")
     public String modelSet1() {

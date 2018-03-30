@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
-@RequestMapping("/rest")
+    @RequestMapping("/rest")
 public class RestfulController {
 
     private final static Logger logger = LoggerFactory.getLogger(RestfulController.class);

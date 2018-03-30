@@ -78,7 +78,22 @@ public class IndexController {
     }
 
     /**
+     * 普通方式获取 GET,POST 参数
+     *
+     * @param text1
+     * @param text2
+     * @return
+     */
+    @RequestMapping(value = "/getsimple", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String getSimple(String text1, String text2) {
+        return text1 + "/" + text2;
+    }
+
+    /**
      * 通过注解获取 GET,POST 参数
+     *
+     * 和普通方式区别的意义在于：可以进行映射、默认值、参数检查等操作
      *
      * @param text1
      * @param text2
@@ -90,19 +105,6 @@ public class IndexController {
         logger.info(text1);
         logger.info(text2);
 
-        return text1 + "/" + text2;
-    }
-
-    /**
-     * 正常获取 GET,POST 参数
-     *
-     * @param text1
-     * @param text2
-     * @return
-     */
-    @RequestMapping(value = "/getsimple", method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
-    public String getSimple(String text1, String text2) {
         return text1 + "/" + text2;
     }
 
@@ -207,7 +209,7 @@ public class IndexController {
     @ModelAttribute(value = "model2")
     public User modelSet2() {
         logger.info("ModelAttribute model2");
-        User user = new User(1, "ModelAttribute");
+        User user = new User(1, "ModelAttribute User");
         return user;
     }
 }

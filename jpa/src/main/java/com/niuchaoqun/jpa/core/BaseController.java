@@ -23,7 +23,7 @@ public class BaseController {
     }
 
     protected HashMap<String, Object> responseSuccess() {
-        response = new HashMap<String, Object>();
+        response = new HashMap<>();
         response.put("state", true);
 
         return response;
@@ -35,7 +35,7 @@ public class BaseController {
     }
 
     protected HashMap<String, Object> responseSuccess(String message) {
-        response = new HashMap<String, Object>();
+        response = new HashMap<>();
         response.put("state", true);
         response.put("message", message);
 
@@ -43,7 +43,7 @@ public class BaseController {
     }
 
     protected HashMap<String, Object> responseError(String error) {
-        response = new HashMap<String, Object>();
+        response = new HashMap<>();
         response.put("state", false);
         response.put("error", error);
 
@@ -51,14 +51,14 @@ public class BaseController {
     }
 
     protected HashMap<String, Object> responseError() {
-        response = new HashMap<String, Object>();
+        response = new HashMap<>();
         response.put("state", false);
 
         return response;
     }
 
     protected HashMap<String, Object> responseData(Object data) {
-        response = new HashMap<String, Object>();
+        response = new HashMap<>();
         response.put("state", true);
         response.put("data", data);
 

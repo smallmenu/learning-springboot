@@ -15,5 +15,6 @@
 		<module>hello</module>
 		<module>mvc</module>
 		<module>jpa</module>
+		<module>mybatis</module>
 	</modules>
 </project>

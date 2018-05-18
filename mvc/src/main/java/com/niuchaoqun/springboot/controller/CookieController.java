@@ -62,7 +62,7 @@ public class CookieController {
     }
 
     /**
-     * 删除cookie
+     * 删除cookie，
      *
      * @param request
      * @param response

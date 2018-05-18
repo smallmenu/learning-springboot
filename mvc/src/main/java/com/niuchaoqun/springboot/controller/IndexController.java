@@ -42,18 +42,18 @@ public class IndexController {
      */
     @RequestMapping("/header")
     @ResponseBody
-    public String header(HttpServletRequest request, @RequestHeader(value = "user-agent") String userAgent) {
-        HashMap<String, String> headers = new HashMap<String, String>();
+    public HashMap<String, String> header(HttpServletRequest request, @RequestHeader(value = "user-agent") String userAgent) {
+        HashMap<String, String> headers = new HashMap<>();
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
-            String header = headerNames.nextElement();
-            String value = request.getHeader(header);
-            headers.put(header, value);
+            String headerName = headerNames.nextElement();
+            String value = request.getHeader(headerName);
+            headers.put(headerName, value);
         }
 
         logger.info(headers.toString());
         logger.info(userAgent);
-        return headers.toString();
+        return headers;
     }
 
     /**
@@ -64,7 +64,7 @@ public class IndexController {
      */
     @RequestMapping("/request")
     @ResponseBody
-    public String request(HttpServletRequest request) {
+    public HashMap<String, String> request(HttpServletRequest request) {
         HashMap<String, String> requests = new HashMap<>();
 
         requests.put("Method", request.getMethod());
@@ -74,11 +74,11 @@ public class IndexController {
         requests.put("RemoteAddr", request.getRemoteAddr());
 
         logger.info(requests.toString());
-        return requests.toString();
+        return requests;
     }
 
     /**
-     * 普通方式获取 GET,POST 参数
+     * 普通方式获取 GET,POST 参数，不提供参数是null
      *
      * @param text1
      * @param text2
@@ -94,6 +94,7 @@ public class IndexController {
      * 通过注解获取 GET,POST 参数
      *
      * 和普通方式区别的意义在于：可以进行映射、默认值、参数检查等操作
+     * RequestParam 注解默认required=true
      *
      * @param text1
      * @param text2
@@ -123,7 +124,7 @@ public class IndexController {
     @RequestMapping(value = "/gets", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String gets(String text1,
-                      @RequestParam(value = "text2", defaultValue = "text2", required = true) String text2,
+                      @RequestParam(value = "text2", defaultValue = "value2", required = true) String text2,
                       @RequestParam(value = "checkbox[]", required = false) ArrayList<String> checkbox) {
         logger.info(text1);
         logger.info(text2);
@@ -146,10 +147,10 @@ public class IndexController {
      */
     @RequestMapping("/getmap")
     @ResponseBody
-    public String getMap(@RequestParam Map<String, Object> gets) {
+    public Map<String, Object> getMap(@RequestParam Map<String, Object> gets) {
         logger.info(gets.toString());
 
-        return gets.toString();
+        return gets;
     }
 
     /**
@@ -170,18 +171,31 @@ public class IndexController {
         return "model";
     }
 
+    /**
+     * 模版引擎数据传入，返回是模版文件名
+     *
+     * @param model   这是个接口
+     * @param modelMap   这是个实现
+     * @param map   这是Java原生的 Map 类
+     * @return
+     */
     @RequestMapping("/model")
     public String model(Model model, ModelMap modelMap, Map<String, Object> map) {
         model.addAttribute("title1", "model_title");
         modelMap.addAttribute("title2", "modelMap_title");
         map.put("title2", "map_title");
 
-        User user = new User(1, "test");
+        User user = new User(15, "test_name");
         model.addAttribute("user", user);
 
         return "model";
     }
 
+    /**
+     * 手动渲染模版，返回 ModelAndView 对象
+     *
+     * @return
+     */
     @RequestMapping("/modelandview")
     public ModelAndView modelAndView() {
         ModelAndView modelAndView = new ModelAndView();

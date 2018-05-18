@@ -17,7 +17,7 @@ public class TemplateController {
     public String setModel(Model model) {
         Date date = new Date();
 
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         users.add(new User(1, "zhangsan"));
         users.add(new User(2, "lisi"));
         users.add(new User(3, "wangwu"));

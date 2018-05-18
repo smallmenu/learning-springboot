@@ -9,15 +9,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * 控制器 RequestMaping 注解URL前缀: /rest
+ */
 @RestController
-    @RequestMapping("/rest")
+@RequestMapping("/rest")
 public class RestfulController {
 
     private final static Logger logger = LoggerFactory.getLogger(RestfulController.class);
 
     private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping("")
+    /**
+     * 这种情况下，如果为空，则支持 /rest 与 /rest/ 访问
+     *
+     * @return
+     */
+    @RequestMapping("/")
     public String index() {
         return "Hello Rest";
     }

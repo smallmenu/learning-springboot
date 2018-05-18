@@ -10,29 +10,32 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.lang.reflect.Array;
+import java.util.HashMap;
+
 @SpringBootApplication
 public class HelloApplication implements CommandLineRunner {
 
-	private Logger logger = LoggerFactory.getLogger(HelloApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelloApplication.class);
 
-	@Autowired
-	private MysqlProperties mysqlProperties;
+    @Autowired
+    private MysqlProperties mysqlProperties;
 
-	@Autowired
-	private AppProperties appProperties;
+    @Autowired
+    private AppProperties appProperties;
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication application = new SpringApplication(HelloApplication.class);
         application.setBannerMode(Banner.Mode.OFF);
         application.run(args);
-	}
+    }
 
-	@Override
-	public void run(String... strings) throws Exception {
-		logger.info(mysqlProperties.toString());
-		logger.info(appProperties.toString());
+    @Override
+    public void run(String... strings) throws Exception {
+        logger.info(mysqlProperties.toString());
+        logger.info(appProperties.toString());
 
-		System.out.println(mysqlProperties.toString());
-		System.out.println(appProperties.toString());
-	}
+        System.out.println(mysqlProperties.toString());
+        System.out.println(appProperties.toString());
+    }
 }

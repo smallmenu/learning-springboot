@@ -40,6 +40,10 @@ public class MysqlProperties {
 
     @Override
     public String toString() {
-        return "MysqlProperties{" + "host='" + host + '\'' + ", user='" + user + '\'' + ", mix='" + mix + '\'' + '}';
+        return "MysqlProperties{" +
+                "host='" + host + '\'' +
+                ", user='" + user + '\'' +
+                ", mix='" + mix + '\'' +
+                '}';
     }
 }

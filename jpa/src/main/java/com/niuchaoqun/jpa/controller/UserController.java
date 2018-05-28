@@ -102,15 +102,15 @@ public class UserController extends BaseController {
 
         return this.responseError("参数错误");
     }
-//
-//    @RequestMapping(value = "/{userId}/state/{state}", method = RequestMethod.PUT)
-//    public Object updateState(@PathVariable Long userId,
-//                              @PathVariable(value = "state", required = true) Integer state) {
-//        if (userRepository.saveState(userId, state) > 0) {
-//            return this.responseSuccess("操作成功");
-//        }
-//        return this.responseError("操作失败");
-//    }
+
+    @RequestMapping(value = "/{userId}/state/{state}", method = RequestMethod.PUT)
+    public Object updateState(@PathVariable Long userId,
+                              @PathVariable(value = "state", required = true) Integer state) {
+        if (userRepository.saveState(userId, state) > 0) {
+            return this.responseSuccess("操作成功");
+        }
+        return this.responseError("操作失败");
+    }
 //
 //    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 //    public Object edit(@PathVariable Long userId,

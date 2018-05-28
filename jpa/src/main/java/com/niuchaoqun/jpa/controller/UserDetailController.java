@@ -22,16 +22,16 @@ public class UserDetailController extends BaseController {
     @Autowired
     private UserDetailRepository userDetailRepository;
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public Object get(@PathVariable Long userId) {
-        if (userId > 0) {
-            UserDetail userDetail = userDetailRepository.findByUserId(userId);
-            //if (userDetail != null) {
-                User user = userDetail.getUser();
-                return this.responseData(user);
-            //}
-        }
-
-        return this.responseError("参数错误");
-    }
+//    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+//    public Object get(@PathVariable Long userId) {
+//        if (userId > 0) {
+//            UserDetail userDetail = userDetailRepository.findByUserId(userId);
+//            //if (userDetail != null) {
+//                User user = userDetail.getUser();
+//                return this.responseData(user);
+//            //}
+//        }
+//
+//        return this.responseError("参数错误");
+//    }
 }

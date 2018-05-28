@@ -23,28 +23,28 @@ public class RoleController extends BaseController {
     @Autowired
     private RoleRepository roleRepository;
 
-    @RequestMapping(value = "/{roleId}", method = RequestMethod.GET)
-    public Object get(@PathVariable Short roleId) {
-        if (roleId > 0) {
-            Role role = roleRepository.findOne(roleId);
-            if (role != null) {
-                return this.responseData(role);
-            }
-        }
-
-        return this.responseError("参数错误");
-    }
-
-    @RequestMapping(value = "/users/{roleId}", method = RequestMethod.GET)
-    public Object users(@PathVariable Short roleId) {
-        if (roleId > 0) {
-            Role role = roleRepository.findOne(roleId);
-            if (role != null) {
-                List<User> users = role.getUsers();
-                return this.responseData(users);
-            }
-        }
-
-        return this.responseError("参数错误");
-    }
+//    @RequestMapping(value = "/{roleId}", method = RequestMethod.GET)
+//    public Object get(@PathVariable Short roleId) {
+//        if (roleId > 0) {
+//            Role role = roleRepository.findOne(roleId);
+//            if (role != null) {
+//                return this.responseData(role);
+//            }
+//        }
+//
+//        return this.responseError("参数错误");
+//    }
+//
+//    @RequestMapping(value = "/users/{roleId}", method = RequestMethod.GET)
+//    public Object users(@PathVariable Short roleId) {
+//        if (roleId > 0) {
+//            Role role = roleRepository.findOne(roleId);
+//            if (role != null) {
+//                List<User> users = role.getUsers();
+//                return this.responseData(users);
+//            }
+//        }
+//
+//        return this.responseError("参数错误");
+//    }
 }

@@ -26,42 +26,42 @@ public class OrderController extends BaseController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
-    public Object get(@PathVariable Long orderId) {
-        if (orderId > 0) {
-            Order order = orderRepository.findOne(orderId);
-            if (order != null) {
-                return this.responseData(order);
-            }
-        }
-
-        return this.responseError("参数错误");
-    }
-
-    @RequestMapping(value = "/product/{orderId}", method = RequestMethod.GET)
-    public Object product(@PathVariable Long orderId) {
-        if (orderId > 0) {
-            Order order = orderRepository.findOne(orderId);
-            if (order != null) {
-                List<Product> products = order.getProducts();
-                return this.responseData(products);
-            }
-        }
-
-        return this.responseError("参数错误");
-    }
-
-    @RequestMapping(value = "/user/{orderId}", method = RequestMethod.GET)
-    public Object user(@PathVariable Long orderId) {
-        if (orderId > 0) {
-            Order order = orderRepository.findOne(orderId);
-            if (order != null) {
-                User user = order.getUser();
-                return this.responseData(user);
-            }
-        }
-
-        return this.responseError("参数错误");
-    }
+//    @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
+//    public Object get(@PathVariable Long orderId) {
+//        if (orderId > 0) {
+//            Order order = orderRepository.findOne(orderId);
+//            if (order != null) {
+//                return this.responseData(order);
+//            }
+//        }
+//
+//        return this.responseError("参数错误");
+//    }
+//
+//    @RequestMapping(value = "/product/{orderId}", method = RequestMethod.GET)
+//    public Object product(@PathVariable Long orderId) {
+//        if (orderId > 0) {
+//            Order order = orderRepository.findOne(orderId);
+//            if (order != null) {
+//                List<Product> products = order.getProducts();
+//                return this.responseData(products);
+//            }
+//        }
+//
+//        return this.responseError("参数错误");
+//    }
+//
+//    @RequestMapping(value = "/user/{orderId}", method = RequestMethod.GET)
+//    public Object user(@PathVariable Long orderId) {
+//        if (orderId > 0) {
+//            Order order = orderRepository.findOne(orderId);
+//            if (order != null) {
+//                User user = order.getUser();
+//                return this.responseData(user);
+//            }
+//        }
+//
+//        return this.responseError("参数错误");
+//    }
 
 }

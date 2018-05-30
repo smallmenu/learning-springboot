@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class IndexController {
     }
 
     /**
-     * 普通方式获取 GET,POST 参数，不提供参数是null
+     * 普通方式获取 GET,POST 参数，不提供参数是null，提供参数无值为空字符串
      *
      * @param text1
      * @param text2
@@ -161,7 +162,7 @@ public class IndexController {
      */
     @RequestMapping("/getmodel")
     @ResponseBody
-    public User getModel(@ModelAttribute User user) {
+    public User getModel(@Valid User user) {
         return user;
     }
 
@@ -185,7 +186,7 @@ public class IndexController {
         modelMap.addAttribute("title2", "modelMap_title");
         map.put("title2", "map_title");
 
-        User user = new User(15, "test_name");
+        User user = new User(1L, "zhangsan");
         model.addAttribute("user", user);
 
         return "model";
@@ -203,7 +204,9 @@ public class IndexController {
         modelAndView.addObject("title1", "title1");
         modelAndView.addObject("title2", "title2");
 
-        User user = new User(1, "test");
+        User user = new User();
+        user.setId(1L);
+        user.setName("test");
         modelAndView.addObject("user", user);
 
         return modelAndView;
@@ -223,7 +226,9 @@ public class IndexController {
     @ModelAttribute(value = "model2")
     public User modelSet2() {
         logger.info("ModelAttribute model2");
-        User user = new User(1, "ModelAttribute User");
+        User user = new User();
+        user.setId(1L);
+        user.setName("ModelAttribute User");
         return user;
     }
 }

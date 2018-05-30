@@ -1,14 +1,14 @@
 //package com.niuchaoqun.jpa.repository.impl;
 //
 //
-//import com.niuchaoqun.jpa.dto.UserSearchDto;
+//import com.niuchaoqun.jpa.dto.UserSearchForm;
 //import com.niuchaoqun.jpa.entity.User;
 //import com.niuchaoqun.jpa.repository.UserCustomRepository;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageImpl;
-//import org.springframework.data.domain.Pageable;
+//import org.springframework.data.dto.Page;
+//import org.springframework.data.dto.PageImpl;
+//import org.springframework.data.dto.Pageable;
 //
 //import javax.persistence.EntityManager;
 //import javax.persistence.PersistenceContext;
@@ -23,7 +23,7 @@
 //    private EntityManager em;
 //
 //    @Override
-//    public Page<User> search(UserSearchDto userSearch, Pageable pageable) {
+//    public Page<User> search(UserSearchForm userSearch, Pageable pageable) {
 //        String querySql = "select t ";
 //        String countSql = "select count(t) ";
 //        StringBuffer sqlBuffer = new StringBuffer("from User t where 1=1");

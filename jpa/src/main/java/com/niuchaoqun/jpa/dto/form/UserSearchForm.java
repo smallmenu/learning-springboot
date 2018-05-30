@@ -1,11 +1,11 @@
-package com.niuchaoqun.jpa.dto;
+package com.niuchaoqun.jpa.dto.form;
 
 import lombok.Data;
 
 import javax.validation.constraints.Pattern;
 
 @Data
-public class UserSearchDto {
+public class UserSearchForm {
     private String username;
 
     @Pattern(regexp = "(male|female)")

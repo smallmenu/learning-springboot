@@ -32,7 +32,11 @@ public class RestfulController {
 
     @RequestMapping("/greeing")
     public User index(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new User(counter.incrementAndGet(), name);
+        User user = new User();
+        user.setId(counter.incrementAndGet());
+        user.setName(name);
+
+        return user;
     }
 
 

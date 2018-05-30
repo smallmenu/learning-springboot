@@ -18,7 +18,7 @@ public class BaseController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        StringTrimmerEditor stringtrimmer = new StringTrimmerEditor(true);
+        StringTrimmerEditor stringtrimmer = new StringTrimmerEditor(false);
         binder.registerCustomEditor(String.class, stringtrimmer);
     }
 

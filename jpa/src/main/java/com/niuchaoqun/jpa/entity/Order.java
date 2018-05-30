@@ -7,6 +7,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * 使用 Table
+ */
 @Entity
 @Data
 @Table(name = "`order`")

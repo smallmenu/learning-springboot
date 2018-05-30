@@ -1,25 +1,18 @@
 package com.niuchaoqun.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
+
 
 @Entity
 @Data
-@ToString(exclude = "users")
-public class Role {
+public class Role implements Serializable {
     @Id
     @GeneratedValue
     private Short id;
 
     @Column(nullable = false)
     private String name;
-
-    @OneToMany
-    @JoinColumn(name = "role_id")
-    @JsonBackReference
-    private List<User> users;
 }

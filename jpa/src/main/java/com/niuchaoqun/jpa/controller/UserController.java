@@ -1,35 +1,21 @@
 package com.niuchaoqun.jpa.controller;
 
 import com.niuchaoqun.jpa.core.BaseController;
-import com.niuchaoqun.jpa.dto.UserAddDto;
-import com.niuchaoqun.jpa.dto.UserEditDto;
-import com.niuchaoqun.jpa.dto.UserSearchDto;
-import com.niuchaoqun.jpa.entity.Order;
-import com.niuchaoqun.jpa.entity.Role;
+import com.niuchaoqun.jpa.dto.form.UserAddForm;
 import com.niuchaoqun.jpa.entity.User;
-import com.niuchaoqun.jpa.entity.UserDetail;
-import com.niuchaoqun.jpa.repository.UserDetailRepository;
 import com.niuchaoqun.jpa.repository.UserRepository;
 import com.niuchaoqun.jpa.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.sql.SQLException;
 import java.util.Optional;
-
-import static java.util.Arrays.asList;
 
 @RestController
 @RequestMapping("/user")
@@ -42,23 +28,25 @@ public class UserController extends BaseController {
 
 //    @Autowired
 //    private UserDetailRepository userDetailRepository;
-//
-//    @Autowired
-//    private UserService userService;
 
-//    @RequestMapping(value = "", method = RequestMethod.POST)
-//    public Object add(@Valid UserAddDto userAdd, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return this.responseError(this.resultErrors(result));
-//        }
-//
-//        try {
-//            User newUser = userService.add(userAdd);
-//            return this.responseData(newUser);
-//        } catch (Exception e) {
-//            return this.responseError(e.getLocalizedMessage());
-//        }
-//    }
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public Object add(@Valid UserAddForm userAdd, BindingResult result) {
+        if (result.hasErrors()) {
+            return this.responseError(this.resultErrors(result));
+        }
+
+        try {
+            User user = userService.add(userAdd);
+
+            Optional<User> newUser = userRepository.findById(user.getId());
+            return this.responseData(newUser.orElse(null));
+        } catch (Exception e) {
+            return this.responseError(e.getLocalizedMessage());
+        }
+    }
 
 //    @RequestMapping(value = "", method = RequestMethod.GET)
 //    public Object page(@RequestParam(name = "page", required = false) Integer page,
@@ -76,7 +64,7 @@ public class UserController extends BaseController {
 //
 //    @RequestMapping(value = "/search", method = RequestMethod.GET)
 //    public Object search(@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-//                         UserSearchDto userSearch) {
+//                         UserSearchForm userSearch) {
 //        logger.info(userSearch.toString());
 //        Page<User> users = userRepository.search(userSearch, pageable);
 //
@@ -88,6 +76,16 @@ public class UserController extends BaseController {
         if (userId > 0) {
             Optional<User> user = userRepository.findById(userId);
             return this.responseData(user.orElse(null));
+        }
+
+        return this.responseError("参数错误");
+    }
+
+    @RequestMapping(value = "/lazy/{userId}", method = RequestMethod.GET)
+    public Object getLazy(@PathVariable Long userId) {
+        if (userId > 0) {
+            Optional<User> user = userRepository.findById(userId);
+            return this.responseSuccess();
         }
 
         return this.responseError("参数错误");
@@ -114,7 +112,7 @@ public class UserController extends BaseController {
 //
 //    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 //    public Object edit(@PathVariable Long userId,
-//                       @Valid UserEditDto userEdit, BindingResult result) {
+//                       @Valid UserEditForm userEdit, BindingResult result) {
 //        logger.info(userEdit.toString());
 //        if (result.hasErrors()) {
 //            return this.responseError(this.resultErrors(result));

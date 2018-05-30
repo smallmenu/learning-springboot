@@ -1,4 +1,4 @@
-package com.niuchaoqun.jpa.dto;
+package com.niuchaoqun.jpa.dto.form;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.Pattern;
 
 @Data
-public class UserEditDto {
+public class UserEditForm {
     @Length(min = 2, max = 32)
     private String name;
 

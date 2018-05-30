@@ -18,9 +18,22 @@ public class TemplateController {
         Date date = new Date();
 
         List<User> users = new ArrayList<>();
-        users.add(new User(1, "zhangsan"));
-        users.add(new User(2, "lisi"));
-        users.add(new User(3, "wangwu"));
+
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setName("zhangsan");
+
+        User user2 = new User();
+        user2.setId(2L);
+        user2.setName("lisi");
+
+        User user3 = new User();
+        user3.setId(3L);
+        user3.setName("wangwu");
+
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
 
         model.addAttribute("title", "Template");
         model.addAttribute("show", true);

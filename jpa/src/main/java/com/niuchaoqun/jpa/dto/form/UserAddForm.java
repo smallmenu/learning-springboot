@@ -1,25 +1,25 @@
-package com.niuchaoqun.jpa.dto;
+package com.niuchaoqun.jpa.dto.form;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Data
-public class UserAddDto {
+public class UserAddForm {
     @NotEmpty
-    @Length(min = 2, max = 32)
+    @Size(min = 2, max = 32)
     private String name;
 
     @NotEmpty
-    @Length(min = 3, max = 32)
+    @Size(min = 3, max = 32)
     @Email
     private String username;
 
     @NotEmpty
-    @Length(min = 6, max = 32, message = "长度不符合要求")
+    @Size(min = 6, max = 32, message = "长度不符合要求")
     private String password;
 
     @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
@@ -39,4 +39,6 @@ public class UserAddDto {
     private String role_id;
 
     private String address;
+
+    private String job;
 }

@@ -41,6 +41,7 @@ public class UserController extends BaseController {
         try {
             User user = userService.add(userAdd);
 
+
             Optional<User> newUser = userRepository.findById(user.getId());
             return this.responseData(newUser.orElse(null));
         } catch (Exception e) {

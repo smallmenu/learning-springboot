@@ -32,8 +32,8 @@ public class HelloApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        logger.info(mysqlProperties.toString());
-        logger.info(appProperties.toString());
+        logger.debug(mysqlProperties.toString());
+        logger.debug(appProperties.toString());
 
         System.out.println(mysqlProperties.toString());
         System.out.println(appProperties.toString());

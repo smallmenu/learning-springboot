@@ -1,8 +1,8 @@
 package com.niuchaoqun.jpa.controller;
 
 import com.niuchaoqun.jpa.core.BaseController;
+import com.niuchaoqun.jpa.core.Response;
 import com.niuchaoqun.jpa.entity.Role;
-import com.niuchaoqun.jpa.entity.User;
 import com.niuchaoqun.jpa.repository.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/role")
@@ -23,28 +23,13 @@ public class RoleController extends BaseController {
     @Autowired
     private RoleRepository roleRepository;
 
-//    @RequestMapping(value = "/{roleId}", method = RequestMethod.GET)
-//    public Object get(@PathVariable Short roleId) {
-//        if (roleId > 0) {
-//            Role role = roleRepository.findOne(roleId);
-//            if (role != null) {
-//                return this.responseData(role);
-//            }
-//        }
-//
-//        return this.responseError("参数错误");
-//    }
-//
-//    @RequestMapping(value = "/users/{roleId}", method = RequestMethod.GET)
-//    public Object users(@PathVariable Short roleId) {
-//        if (roleId > 0) {
-//            Role role = roleRepository.findOne(roleId);
-//            if (role != null) {
-//                List<User> users = role.getUsers();
-//                return this.responseData(users);
-//            }
-//        }
-//
-//        return this.responseError("参数错误");
-//    }
+    @RequestMapping(value = "/{roleId}", method = RequestMethod.GET)
+    public Object get(@PathVariable Short roleId) {
+        if (roleId > 0) {
+            Optional<Role> role = roleRepository.findById(roleId);
+            return Response.data(role.orElse(null));
+        }
+
+        return Response.error("参数错误");
+    }
 }

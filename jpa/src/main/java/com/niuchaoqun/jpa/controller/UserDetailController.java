@@ -1,10 +1,9 @@
 package com.niuchaoqun.jpa.controller;
 
 import com.niuchaoqun.jpa.core.BaseController;
-import com.niuchaoqun.jpa.entity.User;
+import com.niuchaoqun.jpa.core.Response;
 import com.niuchaoqun.jpa.entity.UserDetail;
 import com.niuchaoqun.jpa.repository.UserDetailRepository;
-import com.niuchaoqun.jpa.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,11 @@ public class UserDetailController extends BaseController {
     public Object get(@PathVariable Long userId) {
         if (userId > 0) {
             UserDetail userDetail = userDetailRepository.findByUserId(userId);
-            return this.responseData(userDetail);
+            if (userDetail != null) {
+                return Response.data(userDetail);
+            }
         }
 
-        return this.responseError("参数错误");
+        return Response.error("参数错误");
     }
 }

@@ -2,10 +2,7 @@ package com.niuchaoqun.jpa.dto.form;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Data
 public class UserAddForm {
@@ -35,8 +32,9 @@ public class UserAddForm {
     @Pattern(regexp = "\\d{2}:\\d{2}:\\d{2}")
     private String access_time;
 
-    @NotEmpty
-    private String role_id;
+    @Min(value = 1)
+    @Max(value = 255)
+    private Short role_id;
 
     private String address;
 

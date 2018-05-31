@@ -1,6 +1,7 @@
 package com.niuchaoqun.jpa.controller;
 
 import com.niuchaoqun.jpa.core.BaseController;
+import com.niuchaoqun.jpa.core.Response;
 import com.niuchaoqun.jpa.entity.Order;
 import com.niuchaoqun.jpa.entity.Product;
 import com.niuchaoqun.jpa.entity.Role;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/order")
@@ -26,17 +28,15 @@ public class OrderController extends BaseController {
     @Autowired
     private OrderRepository orderRepository;
 
-//    @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
-//    public Object get(@PathVariable Long orderId) {
-//        if (orderId > 0) {
-//            Order order = orderRepository.findOne(orderId);
-//            if (order != null) {
-//                return this.responseData(order);
-//            }
-//        }
-//
-//        return this.responseError("参数错误");
-//    }
+    @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
+    public Object get(@PathVariable Long orderId) {
+        if (orderId > 0) {
+            Optional<Order> order = orderRepository.findById(orderId);
+            return Response.data(order.orElse(null));
+        }
+
+        return Response.error("参数错误");
+    }
 //
 //    @RequestMapping(value = "/product/{orderId}", method = RequestMethod.GET)
 //    public Object product(@PathVariable Long orderId) {
@@ -50,18 +50,18 @@ public class OrderController extends BaseController {
 //
 //        return this.responseError("参数错误");
 //    }
-//
-//    @RequestMapping(value = "/user/{orderId}", method = RequestMethod.GET)
-//    public Object user(@PathVariable Long orderId) {
-//        if (orderId > 0) {
-//            Order order = orderRepository.findOne(orderId);
-//            if (order != null) {
-//                User user = order.getUser();
-//                return this.responseData(user);
-//            }
-//        }
-//
-//        return this.responseError("参数错误");
-//    }
+
+    @RequestMapping(value = "/user/{orderId}", method = RequestMethod.GET)
+    public Object user(@PathVariable Long orderId) {
+        if (orderId > 0) {
+            Optional<Order> order = orderRepository.findById(orderId);
+            if (order.isPresent()) {
+                User user = order.get().getUser();
+                return Response.data(user);
+            }
+        }
+
+        return Response.error("参数错误");
+    }
 
 }

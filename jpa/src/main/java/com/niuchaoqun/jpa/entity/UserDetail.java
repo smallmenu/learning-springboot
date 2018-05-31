@@ -19,7 +19,6 @@ public class UserDetail implements Serializable {
     private String address;
 
     @OneToOne
-    @JoinColumn
     @JsonBackReference
     private User user;
 }

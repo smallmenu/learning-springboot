@@ -2,8 +2,9 @@ package com.niuchaoqun.jpa.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
-import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,17 +21,20 @@ import java.util.List;
  * @GeneratedValue  注解字段为自动生成，如 MySQL AUTO_INCREMENT
  * @Column  注解字段属性，如是否允许为空，是否唯一，是否进行插入和更新
  * @Transient 标识该字段并非数据库字段的实体映射
+ * @DynamicUpdate 注解动态生成UPDATE SQL语句，同理还有 @DynamicInsert
+ * @Generated 数据库的自动维护字段，插入不回写，之前通过@PrePersist，现在这个注解可以解决，原理是又回查了一次
  *
  * @JsonProperty  JSON 注解，比如配置别名
  * @JsonIgnore  JSON 注解，在 JSON 时忽略
  * @JsonFormat  JSON 注解，在 JSON 时转换格式
+ * @JsonProperty JSON 注解，在 JSON 时转换属性名
+ *
+ *
  */
 
 @Data
 @Entity
-//@Table(name = "`user`")
-//@DynamicUpdate
-//@ToString(exclude = {"role", "detail"})
+@DynamicUpdate
 public class User implements Serializable {
 
     @Id
@@ -62,10 +66,12 @@ public class User implements Serializable {
     @JsonFormat(pattern="HH:mm:ss")
     private Time accessTime;
 
-    @Column(nullable = false, updatable = false)
+    @Generated(GenerationTime.INSERT)
+    @Column(nullable = false, insertable = false, updatable = false )
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp created;
 
+    @Generated(GenerationTime.ALWAYS)
     @Column(nullable = false)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated;
@@ -74,12 +80,14 @@ public class User implements Serializable {
 
     /**
      * 当前表 role_id 已经做了关联，所以需要定义 insert,update 为 false，否则会报列重复错误
+     *
+     * @Column(updatable = false, insertable = false)
+     * private Short role_id;
+     *
      */
-//    @Column(updatable = false, insertable = false)
-//    private Short role_id;
 
     /**
-     * 一对一关联
+     * 一对一关联(A)
      *
      * user(id, role_id)，role(id)
      * user 表有 role_id 字段，关联 role 表 id 字段
@@ -94,7 +102,7 @@ public class User implements Serializable {
     private Role role;
 
     /**
-     * 一对一关联
+     * 一对一关联(B)
      *
      * user(id)，user_detail(id, user_id)
      * user_detail 表有 user_id 字段，关联 user 表 id 字段
@@ -107,13 +115,15 @@ public class User implements Serializable {
      *
      * 双向关联涉及到 JSON、toString() 的循环引用的问题，需要特殊处理
      * 在没找到解决办法的时候，只能避免这样设计表结构
+     *
+     * cascade 属性表示级联操作，CascadeType.REMOVE 为级联删除
      */
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private UserDetail detail;
 
     /**
-     * 一对一关联
+     * 一对一关联(C)
      *
      * user(id)， user_profile(user_id)
      * 两个表直接主键关联
@@ -123,25 +133,24 @@ public class User implements Serializable {
      *
      * 关于 FetchType：
      * 所有的 XXXToOne 默认值是 FAGER，所有的 XXXToMany 默认值是 LAZY，所以这里设置 LAZY 不会延迟查询
-     * 但是，测试会改变查询方式，由组合查询->单条查询
+     * 但是，测试会改变具体的查询方式，由组合查询->单条查询
      */
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @PrimaryKeyJoinColumn
     private UserProfile profile;
 
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-//    @JsonBackReference
-//    private List<Order> orders;
-//
-//    public void setRole(Role role) {
-//        this.role = role;
-//    }
-//
-//    public Role getRole() {
-//        return this.role;
-//    }
-//
+    /**
+     * 一对多关联
+     *
+     *
+     *
+     *
+     */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonManagedReference
+    private List<Order> orders;
+
 //    @PrePersist
 //    public void prePersist() {
 //        state = 1;

@@ -20,6 +20,9 @@ public class UserEditForm {
     @Pattern(regexp = "(male|female)")
     private String sex;
 
+
+    private Integer role_id;
+
     @Range(min = 0, max = 1)
     private Integer state;
 }

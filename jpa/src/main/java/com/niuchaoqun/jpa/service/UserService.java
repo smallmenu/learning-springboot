@@ -1,6 +1,7 @@
 package com.niuchaoqun.jpa.service;
 
 import com.niuchaoqun.jpa.dto.form.UserAddForm;
+import com.niuchaoqun.jpa.dto.form.UserEditForm;
 import com.niuchaoqun.jpa.entity.Role;
 import com.niuchaoqun.jpa.entity.User;
 import com.niuchaoqun.jpa.entity.UserDetail;
@@ -52,7 +53,7 @@ public class UserService {
         }
 
         // 校验角色参数
-        short role_id = Short.parseShort(userAdd.getRole_id());
+        short role_id = userAdd.getRole_id();
         Optional<Role> role = roleRepository.findById(role_id);
         if (!role.isPresent()) {
             throw new RuntimeException("角色ID不存在");
@@ -63,7 +64,6 @@ public class UserService {
         String salt = RandomStringUtils.random(6, true, true).toLowerCase();
         String md5 = DigestUtils.md5DigestAsHex(password.getBytes());
         password = DigestUtils.md5DigestAsHex((md5 + salt).getBytes());
-
 
         User user = new User();
         user.setName(userAdd.getName());
@@ -112,35 +112,40 @@ public class UserService {
 
         return user;
     }
-//
-//    public User edit(Long id, UserEditForm userEdit) throws ParseException {
-//        User user = userRepository.findOne(id);
-//        if (user != null) {
-//            if (userEdit.getName() != null) {
-//                user.setName(userEdit.getName());
-//            }
-//            if (userEdit.getPassword() != null) {
-//                HashMap<String, String> passwords = password(userEdit.getPassword());
-//                user.setPassword(passwords.get("p"));
-//                user.setSalt(passwords.get("s"));
-//            }
-//            if (userEdit.getBirthday() != null) {
-//                user.setBirthday(new Date(DateUtils.parseDate(userEdit.getBirthday(), "yyyy-MM-dd").getTime()));
-//            }
-//            if (userEdit.getSex() != null) {
-//                user.setSex(userEdit.getSex());
-//            }
-//            if (userEdit.getState() != null) {
-//                user.setState(userEdit.getState());
-//            }
-//
-//            logger.info(user.toString());
-//
-//            userRepository.save(user);
-//            return user;
-//        } else {
-//            throw new RuntimeException("用户不存在");
-//        }
-//    }
-//
+
+
+    public User edit(Long id, UserEditForm userEdit) throws ParseException, java.text.ParseException {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            User editUser = user.get();
+            if (userEdit.getName() != null) {
+                editUser.setName(userEdit.getName());
+            }
+            if (userEdit.getPassword() != null) {
+                String password = userEdit.getPassword();
+                String salt = RandomStringUtils.random(6, true, true).toLowerCase();
+                String md5 = DigestUtils.md5DigestAsHex(password.getBytes());
+                password = DigestUtils.md5DigestAsHex((md5 + salt).getBytes());
+
+                editUser.setPassword(password);
+                editUser.setSalt(salt);
+            }
+            if (userEdit.getBirthday() != null) {
+                editUser.setBirthday(new Date(DateUtils.parseDate(userEdit.getBirthday(), "yyyy-MM-dd").getTime()));
+            }
+            if (userEdit.getSex() != null) {
+                editUser.setSex(userEdit.getSex());
+            }
+            if (userEdit.getState() != null) {
+                editUser.setState(userEdit.getState());
+            }
+
+            userRepository.save(editUser);
+
+            return editUser;
+        } else {
+            throw new RuntimeException("用户不存在");
+        }
+    }
+
 }

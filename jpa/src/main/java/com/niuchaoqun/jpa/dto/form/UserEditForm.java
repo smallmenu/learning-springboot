@@ -3,7 +3,6 @@ package com.niuchaoqun.jpa.dto.form;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-
 import javax.validation.constraints.Pattern;
 
 @Data
@@ -20,9 +19,10 @@ public class UserEditForm {
     @Pattern(regexp = "(male|female)")
     private String sex;
 
-
-    private Integer role_id;
-
     @Range(min = 0, max = 1)
     private Integer state;
+
+    private String job;
+
+    private String address;
 }

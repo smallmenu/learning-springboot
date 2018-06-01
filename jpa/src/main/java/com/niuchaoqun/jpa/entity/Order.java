@@ -24,11 +24,16 @@ public class Order {
     @JsonBackReference
     private User user;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//        name = "order_product",
-//        joinColumns = @JoinColumn(name = "order_id"),
-//        inverseJoinColumns = @JoinColumn(name = "product_id"))
-//    @JsonManagedReference
-//    private List<Product> products;
+    /**
+     * 多对多关联
+     *
+     * 需要一个关联表，可以使用 @JoinTable name 属性指定
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "order_product",
+        joinColumns = @JoinColumn(name = "order_id"),
+        inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @JsonManagedReference
+    private List<Product> products;
 }

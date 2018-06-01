@@ -23,6 +23,10 @@ import org.springframework.util.DigestUtils;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -76,17 +80,17 @@ public class UserService {
 
         // 格式化日期参数
         if (userAdd.getBirthday() != null) {
-            user.setBirthday(new Date(DateUtils.parseDate(userAdd.getBirthday(), "yyyy-MM-dd").getTime()));
+            user.setBirthday(LocalDate.parse(userAdd.getBirthday(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         } else {
             user.setBirthday(null);
         }
         if (userAdd.getAccess() != null) {
-            user.setAccess(new Timestamp(DateUtils.parseDate(userAdd.getAccess(), "yyyy-MM-dd HH:mm:ss").getTime()));
+            user.setAccess(LocalDateTime.parse(userAdd.getAccess(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         } else {
             user.setAccess(null);
         }
         if (userAdd.getAccess_time() != null) {
-            user.setAccessTime(new Time(DateUtils.parseDate(userAdd.getAccess_time(), "HH:mm:ss").getTime()));
+            user.setAccessTime(LocalTime.parse(userAdd.getAccess_time(), DateTimeFormatter.ofPattern("HH:mm:ss")));
         } else {
             user.setAccessTime(null);
         }
@@ -110,6 +114,10 @@ public class UserService {
         }
         userProfileRepository.saveAndFlush(userProfile);
 
+        // 需要手动回写数据
+        user.setDetail(userDetail);
+        user.setProfile(userProfile);
+
         return user;
     }
 
@@ -117,7 +125,9 @@ public class UserService {
     public User edit(Long id, UserEditForm userEdit) throws ParseException, java.text.ParseException {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
+
             User editUser = user.get();
+
             if (userEdit.getName() != null) {
                 editUser.setName(userEdit.getName());
             }
@@ -131,7 +141,7 @@ public class UserService {
                 editUser.setSalt(salt);
             }
             if (userEdit.getBirthday() != null) {
-                editUser.setBirthday(new Date(DateUtils.parseDate(userEdit.getBirthday(), "yyyy-MM-dd").getTime()));
+                editUser.setBirthday(LocalDate.parse(userEdit.getBirthday(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             }
             if (userEdit.getSex() != null) {
                 editUser.setSex(userEdit.getSex());

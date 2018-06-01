@@ -4,8 +4,10 @@ import com.niuchaoqun.jpa.core.BaseController;
 import com.niuchaoqun.jpa.core.Response;
 import com.niuchaoqun.jpa.dto.form.UserAddForm;
 import com.niuchaoqun.jpa.dto.form.UserEditForm;
+import com.niuchaoqun.jpa.dto.form.UserSearchForm;
 import com.niuchaoqun.jpa.entity.Order;
 import com.niuchaoqun.jpa.entity.User;
+import com.niuchaoqun.jpa.repository.UserCustomRepository;
 import com.niuchaoqun.jpa.repository.UserRepository;
 import com.niuchaoqun.jpa.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -16,9 +18,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Generated;
 import javax.validation.ReportAsSingleViolation;
 import javax.validation.Valid;
 import java.util.List;
@@ -36,6 +40,9 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserCustomRepository userCustomRepository;
+
     @RequestMapping(value = "", method = RequestMethod.POST)
     public Object add(@Valid UserAddForm userAdd, BindingResult result) {
         if (result.hasErrors()) {
@@ -44,8 +51,7 @@ public class UserController extends BaseController {
 
         try {
             User user = userService.add(userAdd);
-            Optional<User> newUser = userRepository.findById(user.getId());
-            return Response.data(newUser.orElse(null));
+            return Response.data(user);
         } catch (Exception e) {
             return Response.error(e.getLocalizedMessage());
         }
@@ -65,14 +71,14 @@ public class UserController extends BaseController {
         return Response.data(users);
     }
 
-//    @RequestMapping(value = "/search", method = RequestMethod.GET)
-//    public Object search(@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-//                         UserSearchForm userSearch) {
-//        logger.info(userSearch.toString());
-//        Page<User> users = userRepository.search(userSearch, pageable);
-//
-//        return this.responseData(users);
-//    }
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public Object search(@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                         UserSearchForm userSearchForm) {
+        logger.info(userSearchForm.toString());
+        Page<User> users = userCustomRepository.search(userSearchForm, pageable);
+
+        return Response.data(users);
+    }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public Object get(@PathVariable Long userId) {
@@ -80,16 +86,6 @@ public class UserController extends BaseController {
             Optional<User> user = userRepository.findById(userId);
 
             logger.info(user.get().toString());
-            return Response.data(user.orElse(null));
-        }
-
-        return Response.error("参数错误");
-    }
-
-    @RequestMapping(value = "/lazy/{userId}", method = RequestMethod.GET)
-    public Object getLazy(@PathVariable Long userId) {
-        if (userId > 0) {
-            Optional<User> user = userRepository.findById(userId);
             return Response.data(user.orElse(null));
         }
 

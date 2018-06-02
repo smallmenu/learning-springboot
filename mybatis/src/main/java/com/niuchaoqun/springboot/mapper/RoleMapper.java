@@ -1,14 +1,13 @@
 package com.niuchaoqun.springboot.mapper;
 
-import com.niuchaoqun.springboot.entity.User;
+import com.niuchaoqun.springboot.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.Optional;
 
 @Mapper
-public interface UserMapper {
-
-    Optional<User> findById(@Param("id") Long id);
+public interface RoleMapper {
+    @Select("SELECT * FROM role WHERE id = #{id}")
+    Role findById(Short id);
 }

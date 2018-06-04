@@ -69,7 +69,7 @@ public class User implements Serializable {
     private LocalDateTime created;
 
     @Generated(GenerationTime.ALWAYS)
-    @Column(nullable = false)
+    @Column(nullable = false, insertable = false, updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updated;
 

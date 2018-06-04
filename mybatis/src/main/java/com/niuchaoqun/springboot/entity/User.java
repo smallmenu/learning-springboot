@@ -3,13 +3,12 @@ package com.niuchaoqun.springboot.entity;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
-public class User implements Serializable {
+public class User {
 
     private Long id;
 

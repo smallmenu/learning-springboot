@@ -27,6 +27,7 @@ import java.util.List;
  * @JsonIgnore JSON 注解，在 JSON 时忽略
  * @JsonFormat JSON 注解，在 JSON 时转换格式
  * @JsonProperty JSON 注解，在 JSON 时转换属性名
+ * @JsonIdentityInfo JSON 注解，解决循环引用问题
  */
 
 @Data
@@ -136,13 +137,23 @@ public class User implements Serializable {
     @PrimaryKeyJoinColumn
     private UserProfile profile;
 
-
     /**
-     * 一对多关联
+     * 双向一对多关联
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonManagedReference
     private List<Order> orders;
+
+//    /**
+//     * 单向一对多关联
+//     * <p>
+//     * user(id)， order(id, user_id)
+//     *
+//     * OneToMany 关联，JoinColumn 的 name 属性为附表的外键字段名称，单向关联不能定义 Order 的 user_id 字段，否则会报错
+//     */
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+//    private List<Order> orders;
 
 
 //    @PrePersist

@@ -35,30 +35,30 @@ public class OrderController extends BaseController {
         return Response.error("参数错误");
     }
 
-    @RequestMapping(value = "/product/{orderId}", method = RequestMethod.GET)
-    public Object product(@PathVariable Long orderId) {
-        if (orderId > 0) {
-            Optional<Order> order = orderRepository.findById(orderId);
-            if (order.isPresent()) {
-                List<Product> products = order.get().getProducts();
-                return Response.data(products);
-            }
-        }
-
-        return Response.error("参数错误");
-    }
-
-    @RequestMapping(value = "/user/{orderId}", method = RequestMethod.GET)
-    public Object user(@PathVariable Long orderId) {
-        if (orderId > 0) {
-            Optional<Order> order = orderRepository.findById(orderId);
-            if (order.isPresent()) {
-                User user = order.get().getUser();
-                return Response.data(user);
-            }
-        }
-
-        return Response.error("参数错误");
-    }
+//    @RequestMapping(value = "/product/{orderId}", method = RequestMethod.GET)
+//    public Object product(@PathVariable Long orderId) {
+//        if (orderId > 0) {
+//            Optional<Order> order = orderRepository.findById(orderId);
+//            if (order.isPresent()) {
+//                List<Product> products = order.get().getProducts();
+//                return Response.data(products);
+//            }
+//        }
+//
+//        return Response.error("参数错误");
+//    }
+//
+//    @RequestMapping(value = "/user/{orderId}", method = RequestMethod.GET)
+//    public Object user(@PathVariable Long orderId) {
+//        if (orderId > 0) {
+//            Optional<Order> order = orderRepository.findById(orderId);
+//            if (order.isPresent()) {
+//                User user = order.get().getUser();
+//                return Response.data(user);
+//            }
+//        }
+//
+//        return Response.error("参数错误");
+//    }
 
 }

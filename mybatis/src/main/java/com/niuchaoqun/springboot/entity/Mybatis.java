@@ -1,6 +1,6 @@
 package com.niuchaoqun.springboot.entity;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -8,20 +8,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
-public class User {
-
+public class Mybatis {
     private Long id;
 
-    private String name;
-
-    @JsonProperty(value = "email")
     private String username;
-
-    @JsonIgnore
-    private String password;
-
-    @JsonIgnore
-    private String salt;
 
     private LocalDate birthday;
 
@@ -31,7 +21,7 @@ public class User {
     private LocalDateTime access;
 
     @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime access_time;
+    private LocalTime accessTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created;
@@ -39,5 +29,5 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updated;
 
-    private Integer state;
+    private Short state;
 }

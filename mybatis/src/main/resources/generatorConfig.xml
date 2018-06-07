@@ -5,7 +5,7 @@
 <generatorConfiguration>
     <properties resource="generatorConfig.properties"/>
     <classPathEntry location="${mbg.jdbc.driver-location}"/>
-    <context id="mysql" defaultModelType="conditional" targetRuntime="MyBatis3Simple">
+    <context id="mysql" defaultModelType="conditional" targetRuntime="MyBatis3">
         <property name="autoDelimitKeywords" value="false"/>
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>

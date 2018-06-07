@@ -11,7 +11,7 @@ import java.time.LocalTime;
 public class Mybatis {
     private Long id;
 
-    private String username;
+    private String name;
 
     private LocalDate birthday;
 

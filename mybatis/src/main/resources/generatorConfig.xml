@@ -5,7 +5,7 @@
 <generatorConfiguration>
     <properties resource="generatorConfig.properties"/>
     <classPathEntry location="${mbg.jdbc.driver-location}"/>
-    <context id="mysql" defaultModelType="conditional" targetRuntime="MyBatis3">
+    <context id="mysql" defaultModelType="conditional" targetRuntime="MyBatis3Simple">
         <property name="autoDelimitKeywords" value="false"/>
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
@@ -36,7 +36,7 @@
                          targetPackage="${mbg.target-package.mapper}">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
-        <javaClientGenerator type="ANNOTATEDMAPPER"
+        <javaClientGenerator type="${mbg.type}"
                              targetProject="${mbg.target-project.java}"
                              targetPackage="${mbg.target-package.mapper}">
             <property name="enableSubPackages" value="true"/>

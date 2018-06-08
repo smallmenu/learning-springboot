@@ -97,9 +97,9 @@ mybatisMapper.insert(mybatis);
 解决这个问题大概有以下方式：
 
 
-1. 修改 `mybatis.configuration.map-underscore-to-camel-case` 为 true
+1. 修改 `mybatis.configuration.map-underscore-to-camel-case` 为 true，(但是无法解决字段名完全异构的情况)
 2. 在实体类中直接定义成 access_time （不够优雅）
-3. 在 Mapper 中定义 @Results 结果集映射（这有点扯，它肯定不是用来干这个，因为可能有很多个 SELECT 语句会累死）
+3. 在 Mapper 中定义 @Results 结果集映射（这有点扯，它肯定不是用来干这个，因为可能有很多个 SELECT 语句，会累死）
 4. 使用 XML 配置的 ResultMap 来定义
 
 ```
@@ -116,7 +116,7 @@ Mybatis findById(long id);
 
 1. 与 JPA 同样的问题，由数据库自己维护的 created 字段插入后数据不能回写
 
-
+貌似没有什么好办法，只能再查一次
 
 2. insertSelective，updateSelective
 
@@ -160,9 +160,13 @@ int updateSelectiveById(Mybatis mybatis);
 
 除了使用注解以外，还可以通过 XML 定义数据库相关操作，这样 Mapper 中只留下接口部分，在 SpringBoot 中 XML 文件默认是放到 resources 目录下的。
 
-一般项目会采用 XML 的方式，因为可以定义 ResultMap （实现字段名映射，还可以定义关联关系），并且可以方便的实现 insertSelective，updateSelective，并且由于 XML 存放的是 SQL 逻辑，所以可以方便的做 SQL review
+一般项目会采用 XML 的方式，因为可以定义 ResultMap （可以实现字段名异构映射，还可以定义关联关系）
 
-在 applications.properties 增加配置项，配置XML路径，以及别名实体类路径：
+可以相对方便的实现 insertSelective，updateSelective
+
+由于 XML 存放的是 SQL 逻辑，所以可以方便的做 SQL review
+
+在 applications.properties 增加配置项，配置 XML 路径，以及别名实体类路径：
 
 ```
 mybatis:
@@ -188,44 +192,40 @@ UserMapper.xml
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.niuchaoqun.springboot.mapper.UserMapper">
-    <select id="findOne" parameterType="long" resultType="User">
-      SELECT * FROM user WHERE id = #{id}
+<mapper namespace="com.niuchaoqun.springboot.mapper.MybatisMapper">
+    <resultMap id="BaseResultMap" type="Mybatis">
+        <id property="id" column="id" />
+    </resultMap>
+
+    <select id="findById" parameterType="long" resultMap="BaseResultMap">
+        SELECT * FROM mybatis WHERE id = #{id}
     </select>
 
-    <select id="findAll" resultType="User">
-      SELECT * FROM user
+    <select id="findAll" resultMap="BaseResultMap">
+      SELECT * FROM mybatis
     </select>
 
-    <select id="findByUsername" parameterType="string" resultType="User">
-        SELECT * FROM user WHERE username = #{username}
+    <select id="findByName" parameterType="string" resultMap="BaseResultMap">
+        SELECT * FROM mybatis WHERE name = #{name}
     </select>
-
-    <delete id="delete" parameterType="long">
-      DELETE FROM user WHERE id = #{id}
-    </delete>
     
-    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="ic">
-      INSERT INTO user
-      (role_id, username, password, salt, name, birthday, sex, access, access_time, state)
+    <insert id="insert" parameterType="Mybatis" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+      INSERT INTO mybatis
+      (name, birthday, sex, access, access_time, state)
       VALUES
-      (#{role_id}, #{username}, #{password}, #{salt}, #{name}, #{birthday}, #{sex}, #{access}, #{access_time}, #{state})
+      (#{name}, #{birthday}, #{sex}, #{access}, #{accessTime}, #{state})
     </insert>
-    
-    <update id="updateState">
-        UPDATE user SET state = #{id} WHERE id = #{state}
-    </update>
 
-    <update id="update" parameterType="User">
-        UPDATE user
+    <delete id="deleteById" parameterType="long">
+      DELETE FROM mybatis WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="Mybatis">
+        UPDATE mybatis
         <set>
+            <if test="birthday != null">birthday = #{birthday},</if>
             <if test="name != null">name = #{name},</if>
-            <if test="password != null">password = #{password},</if>
-            <if test="salt != null">salt = #{salt},</if>
-            <if test="birthday != null">birthday = #{birthday},</if>
             <if test="sex != null">sex = #{sex},</if>
-            <if test="birthday != null">birthday = #{birthday},</if>
-            <if test="state != null">state = #{state},</if>
         </set>
         WHERE id = #{id}
     </update>
@@ -238,7 +238,7 @@ UserMapper.xml
 
 丝毫提不起再接着搞下去的兴趣，光玩这个 MyBatis 配置，然后做个 CURD，估计都能玩一上午，并且一旦修改表结构，表字段名，可以想象有多心痛，一定是我姿势不对。
 
-开始找轮子.
+开始找轮子。
 
 ## MyBatis Generator 插件
 

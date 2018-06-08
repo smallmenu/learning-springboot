@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niuchaoqun.springboot.mapper.MybatisMapper">
+    <resultMap id="BaseResultMap" type="Mybatis">
+        <id property="id" column="id" />
+    </resultMap>
+
+    <select id="findById" parameterType="long" resultMap="BaseResultMap">
+        SELECT * FROM mybatis WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+      SELECT * FROM mybatis
+    </select>
+
+    <select id="findByName" parameterType="string" resultMap="BaseResultMap">
+        SELECT * FROM mybatis WHERE name = #{name}
+    </select>
+    
+    <insert id="insert" parameterType="Mybatis" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+      INSERT INTO mybatis
+      (name, birthday, sex, access, access_time, state)
+      VALUES
+      (#{name}, #{birthday}, #{sex}, #{access}, #{accessTime}, #{state})
+    </insert>
+
+    <delete id="deleteById" parameterType="long">
+      DELETE FROM mybatis WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="Mybatis">
+        UPDATE mybatis
+        <set>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sex != null">sex = #{sex},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

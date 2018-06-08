@@ -77,7 +77,7 @@ public interface MybatisMapper {
 
 @Mapper 注解表示这是一个 Mapper，SpringBoot 可以自动扫描生成实例。类似 JPA 的 Repository。
 @Repository 注解仅仅是为了提示 IDEA 在自动注入的时候不会报错
-@Options 属性配置了一些参数，这里是保证插入的主键能回写。
+@Options 属性配置了一些参数，这里是保证插入的主键能直接回写。
 
 然后我们就可以像 JPA 一样使用了：
  
@@ -318,15 +318,17 @@ int updateByPrimaryKey(User record);
 
 ### 通用 Mapper
 
-通用Mapper，已经默认内置了一些单表的增删改查操作，对于基础的需求，不需要手写接口和XML了。而分页插件提供了强大的分页功能。
+通用Mapper，可能借鉴了一些 JPA 的思想，默认内置了一些单表的增删改查操作，对于基础的需求，不需要手写接口和XML了。
+
+而分页插件提供了强大的分页功能。
 
 pom.xml 引入：
 
 ```
 <dependency>
-  <groupId>tk.mybatis</groupId>
-  <artifactId>mapper-spring-boot-starter</artifactId>
-  <version>1.1.1</version>
+    <groupId>tk.mybatis</groupId>
+    <artifactId>mapper-spring-boot-starter</artifactId>
+    <version>2.0.2</version>
 </dependency>
 <dependency>
   <groupId>com.github.pagehelper</groupId>

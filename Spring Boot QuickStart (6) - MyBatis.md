@@ -120,7 +120,7 @@ Mybatis findById(long id);
 
 2. insertSelective，updateSelective
 
-也就是选择性插入与更新操作，上面的注解示例，不能很好的实现 ，一般需要这么做：
+也就是选择性插入与更新操作，上面的注解示例，不能很好的实现 ，需要这么做：
 
 定义一个 MybatisSqlProvider：
 
@@ -149,7 +149,7 @@ public class MybatisSqlProvider {
 }
 ```
 
-然后再在 Mapper 上使用 @UpdateProvider 定义：
+然后再在 Mapper 上使用 @UpdateProvider 注解使用上面的定义：
 
 ```
 @UpdateProvider(type = MybatisSqlProvider.class, method = "updateSelectiveById")
@@ -158,15 +158,15 @@ int updateSelectiveById(Mybatis mybatis);
 
 ## XML 配置
 
-除了使用注解以外，还可以通过 XML 定义数据库相关操作，这样 Mapper 中只留下接口部分，在 SpringBoot 中 XML 文件默认是放到 resources 目录下的。
+除了使用注解以外，还可以通过 XML 定义数据库相关操作，这样 Mapper 中只留下接口部分，在 SpringBoot 中 XML 文件默认是放到 resources 目录下。
 
-一般项目会采用 XML 的方式，因为可以定义 ResultMap （可以实现字段名异构映射，还可以定义关联关系）
+一般情况，项目推荐采用 XML 的方式，因为可以定义 ResultMap （可以实现字段名异构映射，还可以定义关联关系）
 
 可以相对方便的实现 insertSelective，updateSelective
 
-由于 XML 存放的是 SQL 逻辑，所以可以方便的做 SQL review
+由于 XML 存放的是主要 SQL ，所以可以方便的做 SQL Review
 
-在 applications.properties 增加配置项，配置 XML 路径，以及别名实体类路径：
+在 applications.properties 增加配置项，配置 XML 路径，以及别名实体类的路径：
 
 ```
 mybatis:
@@ -174,7 +174,7 @@ mybatis:
   type-aliases-package: com.niuchaoqun.springboot.entity
 ```
 
-UserMapper:
+定义接口 UserMapper:
 
 ```
 @Mapper
@@ -187,7 +187,7 @@ public interface MybatisMapper {
 }
 ```
 
-UserMapper.xml
+定义 UserMapper.xml
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -236,9 +236,9 @@ UserMapper.xml
  
 看到这里，感觉上使用起来还不如 JPA 爽，并且你需要熟悉很多的配置，无论是注解还是 XML 映射文件。
 
-丝毫提不起再接着搞下去的兴趣，光玩这个 MyBatis 配置，然后做个 CURD，估计都能玩一上午，并且一旦修改表结构，表字段名，可以想象有多心痛，一定是我姿势不对。
+丝毫提不起再接着搞下去的兴趣，光玩这个 MyBatis 配置，然后做个 CURD，估计都能玩一上午，并且一旦修改表结构，表字段名，可以想象有多心痛
 
-开始找轮子。
+一定是我姿势不对，开始找轮子。
 
 ## MyBatis Generator 插件
 
@@ -318,9 +318,11 @@ int updateByPrimaryKey(User record);
 
 ### 通用 Mapper
 
-通用Mapper，可能借鉴了一些 JPA 的思想，默认内置了一些单表的增删改查操作，对于基础的需求，不需要手写接口和XML了。
+通用Mapper，默认内置了一些单表的增删改查操作（类似 generator 生成的方法），对于基础的需求，不需要手写接口和XML了。
 
-而分页插件提供了强大的分页功能。
+并且借鉴了一些 JPA 的思想，也使用了一些 JPA 的注解。
+
+分页插件提供了强大的分页功能。
 
 pom.xml 引入：
 

@@ -16,5 +16,6 @@
 		<module>mvc</module>
 		<module>jpa</module>
 		<module>mybatis</module>
+		<module>mybatis-common</module>
 	</modules>
 </project>

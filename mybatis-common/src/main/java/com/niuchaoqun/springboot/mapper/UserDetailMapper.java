@@ -7,3 +7,4 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface UserDetailMapper extends Mapper<UserDetail> {
 }
+

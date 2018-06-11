@@ -1,6 +1,9 @@
 package com.niuchaoqun.springboot.service;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.niuchaoqun.springboot.dto.form.UserSearchForm;
 import com.niuchaoqun.springboot.entity.Role;
 import com.niuchaoqun.springboot.entity.User;
 import com.niuchaoqun.springboot.entity.UserDetail;
@@ -12,6 +15,7 @@ import com.niuchaoqun.springboot.mapper.UserDetailMapper;
 import com.niuchaoqun.springboot.mapper.UserMapper;
 import com.niuchaoqun.springboot.mapper.UserProfileMapper;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +23,13 @@ import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @Service
@@ -156,5 +162,21 @@ public class UserService {
         } else {
             throw new RuntimeException("用户不存在");
         }
+    }
+
+    public List<User> search(UserSearchForm userSearch) {
+        Example example = new Example(User.class);
+        example.createCriteria();
+
+        if (userSearch.getRole_id() != null) {
+            example.and().andEqualTo("roleId", userSearch.getRole_id());
+        }
+        if (userSearch.getSex() != null) {
+            example.and().andEqualTo("sex", userSearch.getSex());
+        }
+        example.orderBy("created").desc();
+
+        List<User> users = userMapper.selectByExample(example);
+        return users;
     }
 }

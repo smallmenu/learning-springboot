@@ -1,8 +1,11 @@
 package com.niuchaoqun.springboot.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.niuchaoqun.springboot.core.BaseController;
 import com.niuchaoqun.springboot.core.Response;
 
+import com.niuchaoqun.springboot.dto.form.UserSearchForm;
 import com.niuchaoqun.springboot.entity.User;
 import com.niuchaoqun.springboot.dto.form.UserAddForm;
 import com.niuchaoqun.springboot.dto.form.UserEditForm;
@@ -18,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -44,29 +48,36 @@ public class UserController extends BaseController {
             return Response.error(e.getLocalizedMessage());
         }
     }
-//
-//    @RequestMapping(value = "", method = RequestMethod.GET)
-//    public Object page(@RequestParam(name = "page", required = false) Integer page,
-//                       @RequestParam(name="size", required = false) Integer size) {
-//        page = page == null ? 0 : Math.max(0, page);
-//        size = size == null ? 10 : Math.max(10, size);
-//
-//        Sort sort = new Sort(Sort.Direction.DESC, "id");
-//        Pageable pageable = new PageRequest(page, size, sort);
-//
-//        Page<User> users = userRepository.findAll(pageable);
-//
-//        return Response.data(users);
-//    }
-//
-//    @RequestMapping(value = "/search", method = RequestMethod.GET)
-//    public Object search(@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-//                         UserSearchForm userSearchForm) {
-//        logger.info(userSearchForm.toString());
-//        Page<User> users = userCustomRepository.search(userSearchForm, pageable);
-//
-//        return Response.data(users);
-//    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public Object page(@RequestParam(name = "page", required = false) Integer page,
+                       @RequestParam(name="size", required = false) Integer size) {
+        page = page == null ? 0 : Math.max(0, page);
+        size = size == null ? 10 : Math.max(3, size);
+
+        PageHelper.startPage(page, size);
+        List<User> users = userMapper.selectAll();
+        PageInfo pageUsers = new PageInfo(users);
+
+        return Response.data(pageUsers);
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public Object search(@Valid UserSearchForm userSearchForm, BindingResult result) {
+        if (result.hasErrors()) {
+            return Response.error(this.resultErrors(result));
+        }
+
+        Integer page = userSearchForm.getPage();
+        Integer size = userSearchForm.getSize();
+        page = page == null ? 0 : Math.max(0, page);
+        size = size == null ? 10 : Math.max(3, size);
+
+        PageHelper.startPage(page, size);
+        List<User> users = userService.search(userSearchForm);
+        PageInfo pageUsers = new PageInfo(users);
+        return Response.data(pageUsers);
+    }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public Object get(@PathVariable Long userId) {

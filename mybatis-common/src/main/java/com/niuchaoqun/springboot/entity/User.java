@@ -60,4 +60,10 @@ public class User implements Serializable {
     private LocalDateTime updated;
 
     private Integer state;
+
+    private Role role;
+
+    private UserProfile profile;
+
+    private UserDetail detail;
 }

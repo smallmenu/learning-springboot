@@ -9,6 +9,7 @@ import com.niuchaoqun.springboot.dto.form.UserSearchForm;
 import com.niuchaoqun.springboot.entity.User;
 import com.niuchaoqun.springboot.dto.form.UserAddForm;
 import com.niuchaoqun.springboot.dto.form.UserEditForm;
+import com.niuchaoqun.springboot.entity.relation.UserRelation;
 import com.niuchaoqun.springboot.mapper.UserMapper;
 
 import com.niuchaoqun.springboot.service.UserService;
@@ -83,6 +84,16 @@ public class UserController extends BaseController {
     public Object get(@PathVariable Long userId) {
         if (userId > 0) {
             User user = userMapper.selectByPrimaryKey(userId);
+            return Response.data(user);
+        }
+
+        return Response.error("参数错误");
+    }
+
+    @RequestMapping(value = "/complete/{userId}", method = RequestMethod.GET)
+    public Object complete(@PathVariable Long userId) {
+        if (userId > 0) {
+            User user = userMapper.selectUserRelationByPrimaryKey(userId);
             return Response.data(user);
         }
 

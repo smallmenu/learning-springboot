@@ -23,6 +23,7 @@ import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.time.LocalDate;
@@ -165,18 +166,18 @@ public class UserService {
     }
 
     public List<User> search(UserSearchForm userSearch) {
-        Example example = new Example(User.class);
-        example.createCriteria();
+        Condition condition = new Condition(User.class);
+        condition.createCriteria();
 
         if (userSearch.getRole_id() != null) {
-            example.and().andEqualTo("roleId", userSearch.getRole_id());
+            condition.and().andEqualTo("roleId", userSearch.getRole_id());
         }
         if (userSearch.getSex() != null) {
-            example.and().andEqualTo("sex", userSearch.getSex());
+            condition.and().andEqualTo("sex", userSearch.getSex());
         }
-        example.orderBy("created").desc();
+        condition.orderBy("created").desc();
 
-        List<User> users = userMapper.selectByExample(example);
+        List<User> users = userMapper.selectByExample(condition);
         return users;
     }
 }

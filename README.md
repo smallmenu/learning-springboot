@@ -28,9 +28,12 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 * 请求中获取 Header、GET、POST、路径等参数
 * Cookie、Session 常规操作示例
 * 模板引擎 Thymeleaf 操作示例
+* 使用 spring-boot-devtools 热更新（代码更新后修改自动编译）
 
 ### jpa
 
+* 使用 Jetty 代替默认的 Tomcat
+* 集成 lombok
 * JPA 相关操作，定义实体，定义 Repository，CURD 以及分页操作示例
 * 模拟业务场景中的 Controller -> Service -> Repository -> Entity 操作流程
 * 通过定义 DTO 接受参数映射

@@ -10,6 +10,7 @@ spring-boot-starter-data-jpa 默认使用的是 Hibernate 实现。
 
 直接引入 JPA 和 MySQL 依赖：
 
+
 ```
 <dependency>
 	<groupId>org.springframework.boot</groupId>

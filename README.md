@@ -1,6 +1,14 @@
 # learning-springboot
 
-spring boot 初学者及核心技术巩固的最佳实践
+spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 springboot 学习项目：
+
+[springboot-learning-example](https://github.com/JeffLi1993/springboot-learning-example) (star 5191)
+
+[spring-boot-examples](https://github.com/ityouknow/spring-boot-examples) (star 4447)
+
+[SpringBoot-Learning](https://github.com/dyc87112/SpringBoot-Learning) (star 3524)
+
+在实践过程中，增加了不少自己对业务场景的思考与幻想。
 
 ## 项目目录
 
@@ -36,3 +44,20 @@ spring boot 初学者及核心技术巩固的最佳实践
 
 * Mybatis 集成通用 Mapper 与分页插件 pagehelper
 * 按照 Mybatis 方式实现 JPA 同样的示例
+
+## 文章目录
+
+[Spring Boot QuickStart (1) - 介绍](http://www.niuchaoqun.com/14963868024588.html)
+
+[Spring Boot QuickStart (2) - 基础](http://www.niuchaoqun.com/14968999112830.html)
+
+[Spring Boot QuickStart (3) - Web & Restful](http://www.niuchaoqun.com/14969970515462.html)
+
+[Spring Boot QuickStart (4) - Database](http://www.niuchaoqun.com/14988948908551.html)
+
+[Spring Boot QuickStart (5) - Spring Data JPA](http://www.niuchaoqun.com/14982055707598.html)
+
+[Spring Boot QuickStart (6) - MyBatis](http://www.niuchaoqun.com/14992154022184.html)
+
+
+

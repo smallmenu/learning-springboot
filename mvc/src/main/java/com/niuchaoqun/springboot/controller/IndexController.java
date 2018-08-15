@@ -4,14 +4,18 @@ import com.niuchaoqun.springboot.domain.User;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,6 +36,29 @@ public class IndexController {
     public String hello(Model model) {
         model.addAttribute("title", "Spring Boot");
         return "hello";
+    }
+
+    @RequestMapping("/test")
+    public String test() {
+        return "sub/test";
+    }
+
+    @RequestMapping("/image1")
+    public void image1(HttpServletResponse response) throws IOException {
+        String image = "";
+
+        response.setContentType("image/jpeg");
+        ServletOutputStream os = response.getOutputStream();
+        os.write(image.getBytes());
+        os.flush();
+        os.close();
+    }
+
+    @RequestMapping(value = "/image1", produces = {MediaType.IMAGE_JPEG_VALUE})
+    @ResponseBody
+    public byte[] image2() {
+        String image = "";
+        return image.getBytes();
     }
 
     /**

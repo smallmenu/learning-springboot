@@ -43,6 +43,12 @@ public class IndexController {
         return "sub/test";
     }
 
+    /**
+     * 通过 HttpServletResponse 输出图片
+     *
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping("/image1")
     public void image1(HttpServletResponse response) throws IOException {
         String image = "";

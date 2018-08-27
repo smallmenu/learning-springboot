@@ -1,5 +1,6 @@
 package com.niuchaoqun.springboot.controller;
 
+import com.niuchaoqun.springboot.core.BaseController;
 import com.niuchaoqun.springboot.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/list")
-public class ListController {
+public class ListController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(ListController.class);
 
     @Autowired

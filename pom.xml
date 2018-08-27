@@ -17,5 +17,6 @@
 		<module>jpa</module>
 		<module>mybatis</module>
 		<module>mybatis-common</module>
+		<module>redis</module>
 	</modules>
 </project>

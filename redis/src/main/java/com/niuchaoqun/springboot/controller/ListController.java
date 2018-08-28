@@ -2,13 +2,14 @@ package com.niuchaoqun.springboot.controller;
 
 import com.niuchaoqun.springboot.core.BaseController;
 import com.niuchaoqun.springboot.core.Response;
+import com.niuchaoqun.springboot.pojo.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,22 +25,39 @@ public class ListController extends BaseController {
 
     }
 
-    @RequestMapping("/add")
-    public Object add() {
-        String key = "test_list";
-        String value = "value";
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        redisTemplate.setKeySerializer(stringRedisSerializer);
-        redisTemplate.setValueSerializer(stringRedisSerializer);
-        ListOperations<String, String> list = redisTemplate.opsForList();
+    @RequestMapping("/string")
+    public Object string(@RequestParam(value = "listKey", defaultValue = "list_key_string") String listKey) {
+        String value = "list_value";
+        ListOperations<String, String> operations = redisTemplate.opsForList();
 
-        list.rightPush(key, value + "1");
-        list.rightPush(key, value + "2");
+        operations.rightPush(listKey, value + "1");
+        operations.rightPush(listKey, value + "2");
+        operations.rightPush(listKey, value + "3");
 
-        Object o = list.leftPop(key);
+        String pop = operations.leftPop(listKey);
 
-        return Response.data(o);
+        return Response.success(pop);
     }
 
+    @RequestMapping("/object")
+    public Object setObject(@RequestParam(value = "objectKey", defaultValue = "list_key_object") String objectKey) {
+        ListOperations<String, User> operations = redisTemplate.opsForList();
 
+        User user1 = new User();
+        user1.setId(1);
+        user1.setName("helloworld汉字1");
+        user1.setAge(15);
+
+        User user2 = new User();
+        user2.setId(2);
+        user2.setName("helloworld汉字2");
+        user2.setAge(16);
+
+        operations.rightPush(objectKey, user1);
+        operations.rightPush(objectKey, user2);
+
+        User user = operations.leftPop(objectKey);
+
+        return Response.data(user);
+    }
 }

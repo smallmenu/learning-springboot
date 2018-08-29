@@ -1,5 +1,6 @@
 package com.niuchaoqun.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -12,5 +13,6 @@ public class Product implements Serializable {
 
     private String name;
 
+    @JsonFormat()
     private Double price;
 }

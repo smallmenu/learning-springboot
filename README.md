@@ -28,7 +28,9 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 * 请求中获取 Header、GET、POST、路径等参数
 * Cookie、Session 常规操作示例
 * 模板引擎 Thymeleaf 操作示例
+* ScheduledTask 示例
 * 使用 spring-boot-devtools 热更新（代码更新后修改自动编译）
+* 404，500 页面自定义
 
 ### jpa
 
@@ -48,6 +50,15 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 
 * Mybatis 集成通用 Mapper 与分页插件 pagehelper
 * 使用 Mybatis 方式实现上面 JPA 同样的示例
+* 如何实现使用多条件查询与关联查询
+
+### redis
+
+* Redis 集成示例，Redis JavaConfig 配置key与value
+* stringRedisTemplate 与 RedisTemplate
+* 操作 Redis 的 string, list, set, hash 类型
+* Cache 与 Redis 的集成，Cache注解
+* 使用 Redis 托管 Session
 
 ## 文章目录
 

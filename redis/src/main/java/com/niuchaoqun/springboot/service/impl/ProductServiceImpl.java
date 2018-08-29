@@ -5,6 +5,7 @@ import com.niuchaoqun.springboot.mapper.ProductMapper;
 import com.niuchaoqun.springboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Condition;
@@ -18,6 +19,14 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Override
+    @CachePut(key = "#product.id")
+    public Product save(Product product) {
+        int save = productMapper.updateByPrimaryKey(product);
+
+        return product;
+    }
+
+    @Override
     @Cacheable
     public Product getProductById(Long productId) {
         Product product = productMapper.selectByPrimaryKey(productId);
@@ -25,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Cacheable(value = "product_where")
+    @Cacheable(key = "'greater_' + #id")
     public List<Product> getProductWhere(Integer id) {
         Condition condition = new Condition(Product.class);
         condition.createCriteria();

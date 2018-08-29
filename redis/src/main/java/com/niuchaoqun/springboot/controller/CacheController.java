@@ -3,14 +3,12 @@ package com.niuchaoqun.springboot.controller;
 import com.niuchaoqun.springboot.core.BaseController;
 import com.niuchaoqun.springboot.core.Response;
 import com.niuchaoqun.springboot.entity.Product;
+import com.niuchaoqun.springboot.mapper.ProductMapper;
 import com.niuchaoqun.springboot.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,9 @@ public class CacheController extends BaseController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     @RequestMapping("/product")
     public Object products(@RequestParam(value = "id", required = false) Integer id){
@@ -40,6 +41,17 @@ public class CacheController extends BaseController {
             if (product != null) {
                 return Response.data(product);
             }
+        }
+        return Response.error();
+    }
+
+    @RequestMapping(value = "/product/{productId}", method = RequestMethod.PUT)
+    public Object save(@PathVariable Long productId) {
+        if (productId > 0) {
+            Product product = productMapper.selectByPrimaryKey(productId);
+            product.setPrice(0.00);
+            Product save = productService.save(product);
+            return Response.data(save);
         }
         return Response.error();
     }

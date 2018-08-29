@@ -17,11 +17,11 @@ public class SetController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(SetController.class);
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, String> stringRedisTemplate;
 
     @RequestMapping("/string")
     public Object string(@RequestParam(value = "setKey", defaultValue = "set_key_string") String setKey) {
-        SetOperations<String, String> operations = redisTemplate.opsForSet();
+        SetOperations<String, String> operations = stringRedisTemplate.opsForSet();
         operations.add(setKey, "AA");
         operations.add(setKey, "BB");
         operations.add(setKey, "CC");

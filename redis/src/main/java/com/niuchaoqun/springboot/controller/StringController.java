@@ -22,11 +22,14 @@ public class StringController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(StringController.class);
 
     @Autowired
+    private RedisTemplate<String, String> stringRedisTemplate;
+
+    @Autowired
     private RedisTemplate redisTemplate;
 
     @RequestMapping("/set")
     public Object set(@RequestParam(value = "stringKey", defaultValue = "string_key") String stringKey) {
-        ValueOperations operations = redisTemplate.opsForValue();
+        ValueOperations operations = stringRedisTemplate.opsForValue();
         operations.set(stringKey, "test_redis_value", 360, TimeUnit.SECONDS);
 
         return Response.success();
@@ -34,8 +37,8 @@ public class StringController extends BaseController {
 
     @RequestMapping("/get")
     public Object get(@RequestParam(value = "stringKey", defaultValue = "string_key") String stringKey) {
-        ValueOperations operations = redisTemplate.opsForValue();
-        if (redisTemplate.hasKey(stringKey)) {
+        ValueOperations operations = stringRedisTemplate.opsForValue();
+        if (stringRedisTemplate.hasKey(stringKey)) {
             String result = (String)operations.get(stringKey);
             return Response.success(result);
         } else {

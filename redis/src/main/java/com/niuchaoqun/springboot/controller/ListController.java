@@ -18,6 +18,9 @@ public class ListController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(ListController.class);
 
     @Autowired
+    private RedisTemplate<String, String> stringRedisTemplate;
+
+    @Autowired
     private RedisTemplate redisTemplate;
 
     @RequestMapping("")
@@ -28,11 +31,11 @@ public class ListController extends BaseController {
     @RequestMapping("/string")
     public Object string(@RequestParam(value = "listKey", defaultValue = "list_key_string") String listKey) {
         String value = "list_value";
-        ListOperations<String, String> operations = redisTemplate.opsForList();
+        ListOperations<String, String> operations = stringRedisTemplate.opsForList();
 
-        operations.rightPush(listKey, value + "1");
-        operations.rightPush(listKey, value + "2");
-        operations.rightPush(listKey, value + "3");
+        operations.rightPush(listKey, value);
+        operations.rightPush(listKey, value);
+        operations.rightPush(listKey, value);
 
         String pop = operations.leftPop(listKey);
 

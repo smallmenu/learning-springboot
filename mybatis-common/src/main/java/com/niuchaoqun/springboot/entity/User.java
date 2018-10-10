@@ -19,7 +19,6 @@ import java.time.LocalTime;
  * @Transient 注解可忽略的字段
  * @Id 注解主键
  * @GeneratedValue 指定主键生成形式，以及回写主键数据
- *
  */
 @Table(name = "user")
 @Data

@@ -28,8 +28,8 @@ public class SessionController {
             HttpSession httpSession,
             @SessionAttribute(value = "session1", required = false) String session1) {
         HttpSession session = request.getSession();
-        String session2 = (String)session.getAttribute("session2");
-        String http_session1 = (String)httpSession.getAttribute("session1");
+        String session2 = (String) session.getAttribute("session2");
+        String http_session1 = (String) httpSession.getAttribute("session1");
 
         logger.info(http_session1);
         logger.info(session1);

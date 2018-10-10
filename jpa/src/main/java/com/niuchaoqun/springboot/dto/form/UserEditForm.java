@@ -3,6 +3,7 @@ package com.niuchaoqun.springboot.dto.form;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+
 import javax.validation.constraints.Pattern;
 
 @Data

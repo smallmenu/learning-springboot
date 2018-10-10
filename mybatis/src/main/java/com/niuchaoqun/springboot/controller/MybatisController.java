@@ -28,15 +28,15 @@ public class MybatisController extends BaseController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public Object add() {
-            Mybatis mybatis = new Mybatis();
-            mybatis.setName("test");
-            mybatis.setBirthday(LocalDate.parse("1980-08-08", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            mybatis.setSex("male");
-            mybatis.setAccess(LocalDateTime.parse("1981-08-08 01:02:03", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            mybatis.setAccessTime(LocalTime.parse("01:02:03", DateTimeFormatter.ofPattern("HH:mm:ss")));
-            mybatis.setState(new Short("1"));
-            boolean success = mybatisMapper.insert(mybatis);
-            return Response.data(mybatis);
+        Mybatis mybatis = new Mybatis();
+        mybatis.setName("test");
+        mybatis.setBirthday(LocalDate.parse("1980-08-08", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        mybatis.setSex("male");
+        mybatis.setAccess(LocalDateTime.parse("1981-08-08 01:02:03", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        mybatis.setAccessTime(LocalTime.parse("01:02:03", DateTimeFormatter.ofPattern("HH:mm:ss")));
+        mybatis.setState(new Short("1"));
+        boolean success = mybatisMapper.insert(mybatis);
+        return Response.data(mybatis);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

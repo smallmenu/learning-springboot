@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.gmapper;
 
 import com.niuchaoqun.springboot.gentity.User;
+
 import java.util.List;
 
 public interface UserMapper {

@@ -12,18 +12,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class HelloApplicationTests {
 
-	@Autowired
-	private MysqlProperties mysqlProperties;
+    @Autowired
+    private MysqlProperties mysqlProperties;
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
-	@Test
-	public void getMysql() {
-		Assert.assertEquals(mysqlProperties.getHost(), "dev");
-		Assert.assertEquals(mysqlProperties.getUser(), "dev_user");
-		Assert.assertEquals(mysqlProperties.getMix(), "dev/dev_user");
-	}
+    @Test
+    public void getMysql() {
+        Assert.assertEquals(mysqlProperties.getHost(), "dev");
+        Assert.assertEquals(mysqlProperties.getUser(), "dev_user");
+        Assert.assertEquals(mysqlProperties.getMix(), "dev/dev_user");
+    }
 
 }

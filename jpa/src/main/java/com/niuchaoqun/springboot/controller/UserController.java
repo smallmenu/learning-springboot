@@ -59,7 +59,7 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Object page(@RequestParam(name = "page", required = false) Integer page,
-                       @RequestParam(name="size", required = false) Integer size) {
+                       @RequestParam(name = "size", required = false) Integer size) {
         page = page == null ? 0 : Math.max(0, page);
         size = size == null ? 10 : Math.max(10, size);
 

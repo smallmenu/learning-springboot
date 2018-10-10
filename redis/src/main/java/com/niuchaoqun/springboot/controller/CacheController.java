@@ -24,7 +24,7 @@ public class CacheController extends BaseController {
     private ProductMapper productMapper;
 
     @RequestMapping("/product")
-    public Object products(@RequestParam(value = "id", required = false) Integer id){
+    public Object products(@RequestParam(value = "id", required = false) Integer id) {
         if (id != null && id > 0) {
             List<Product> productWhere = productService.getProductWhere(id);
             return Response.data(productWhere);

@@ -39,7 +39,7 @@ public class StringController extends BaseController {
     public Object get(@RequestParam(value = "stringKey", defaultValue = "string_key") String stringKey) {
         ValueOperations operations = stringRedisTemplate.opsForValue();
         if (stringRedisTemplate.hasKey(stringKey)) {
-            String result = (String)operations.get(stringKey);
+            String result = (String) operations.get(stringKey);
             return Response.success(result);
         } else {
             return Response.error("not exist");

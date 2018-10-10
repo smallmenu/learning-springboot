@@ -126,7 +126,7 @@ public class IndexController {
 
     /**
      * 通过注解获取 GET,POST 参数
-     *
+     * <p>
      * 和普通方式区别的意义在于：可以进行映射、默认值、参数检查等操作
      * RequestParam 注解默认required=true
      *
@@ -145,7 +145,7 @@ public class IndexController {
 
     /**
      * GET 参数获取
-     *
+     * <p>
      * 不提供参数是 null
      * required=true，无defaultValue，不提供参数会400
      * 多值value必须要提供数组形式，如：checkbox[]
@@ -158,15 +158,15 @@ public class IndexController {
     @RequestMapping(value = "/gets", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String gets(String text1,
-                      @RequestParam(value = "text2", defaultValue = "value2", required = true) String text2,
-                      @RequestParam(value = "checkbox[]", required = false) ArrayList<String> checkbox) {
+                       @RequestParam(value = "text2", defaultValue = "value2", required = true) String text2,
+                       @RequestParam(value = "checkbox[]", required = false) ArrayList<String> checkbox) {
         logger.info(text1);
         logger.info(text2);
         logger.info(ArrayUtils.toString(checkbox));
 
         StringBuilder response = new StringBuilder();
-        response.append(text1+"/");
-        response.append(text2+"/");
+        response.append(text1 + "/");
+        response.append(text2 + "/");
         response.append(ArrayUtils.toString(checkbox));
 
         return response.toString();
@@ -208,9 +208,9 @@ public class IndexController {
     /**
      * 模版引擎数据传入，返回是模版文件名
      *
-     * @param model   这是个接口
-     * @param modelMap   这是个实现
-     * @param map   这是Java原生的 Map 类
+     * @param model    这是个接口
+     * @param modelMap 这是个实现
+     * @param map      这是Java原生的 Map 类
      * @return
      */
     @RequestMapping("/model")

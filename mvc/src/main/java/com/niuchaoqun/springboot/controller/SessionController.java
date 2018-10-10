@@ -33,8 +33,8 @@ public class SessionController {
             HttpSession httpSession,
             @SessionAttribute(value = "session1", required = false) String session1) {
         HttpSession session = request.getSession();
-        String session2 = (String)session.getAttribute("session2");
-        String http_session1 = (String)httpSession.getAttribute("session1");
+        String session2 = (String) session.getAttribute("session2");
+        String http_session1 = (String) httpSession.getAttribute("session1");
 
         logger.info(http_session1);
         logger.info(session1);
@@ -42,9 +42,9 @@ public class SessionController {
 
         HashMap<String, String> sessionMap = new HashMap<>();
         Enumeration<String> sessions = session.getAttributeNames();
-        while(sessions.hasMoreElements()) {
+        while (sessions.hasMoreElements()) {
             String key = sessions.nextElement();
-            sessionMap.put(key, (String)session.getAttribute(key));
+            sessionMap.put(key, (String) session.getAttribute(key));
         }
 
         return sessionMap.toString();

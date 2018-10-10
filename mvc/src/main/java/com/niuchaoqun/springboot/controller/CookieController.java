@@ -46,7 +46,7 @@ public class CookieController {
     @RequestMapping("/getcookie")
     @ResponseBody
     public String getCookie(HttpServletRequest request,
-            @CookieValue(value = "cookie1", required = false) String cookie1) {
+                            @CookieValue(value = "cookie1", required = false) String cookie1) {
 
         HashMap<String, String> map = new HashMap<>();
         Cookie[] cookies = request.getCookies();

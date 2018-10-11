@@ -1,5 +1,7 @@
 package com.niuchaoqun.springboot.rabbitmq;
 
+import com.niuchaoqun.springboot.rabbitmq.sender.DirectSender;
+import com.niuchaoqun.springboot.rabbitmq.sender.FanoutSender;
 import com.niuchaoqun.springboot.rabbitmq.sender.HelloSender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +16,24 @@ public class RabbitmqApplicationTests {
     @Autowired
     private HelloSender helloSender;
 
+    @Autowired
+    private FanoutSender fanoutSender;
+
+    @Autowired
+    private DirectSender directSender;
+
     @Test
     public void hello() {
         helloSender.send();
+    }
+
+    @Test
+    public void fanout() {
+        fanoutSender.send();
+    }
+
+    @Test
+    public void direct() {
+        directSender.send();
     }
 }

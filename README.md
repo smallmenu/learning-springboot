@@ -1,5 +1,7 @@
 # learning-springboot
 
+基于 spring boot 2.0.2 
+
 spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 springboot 学习项目：
 
 [springboot-learning-example](https://github.com/JeffLi1993/springboot-learning-example) (star 5191)

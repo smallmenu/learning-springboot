@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.rabbitmq.receiver;
+package com.niuchaoqun.springboot.receiver;
 
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;

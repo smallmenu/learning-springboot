@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.rabbitmq;
+package com.niuchaoqun.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

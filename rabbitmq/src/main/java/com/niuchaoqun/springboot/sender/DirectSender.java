@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.rabbitmq.sender;
+package com.niuchaoqun.springboot.sender;
 
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

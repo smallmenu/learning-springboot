@@ -1,8 +1,8 @@
 package com.niuchaoqun.springboot.rabbitmq;
 
-import com.niuchaoqun.springboot.rabbitmq.sender.DirectSender;
-import com.niuchaoqun.springboot.rabbitmq.sender.FanoutSender;
-import com.niuchaoqun.springboot.rabbitmq.sender.HelloSender;
+import com.niuchaoqun.springboot.sender.DirectSender;
+import com.niuchaoqun.springboot.sender.FanoutSender;
+import com.niuchaoqun.springboot.sender.HelloSender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

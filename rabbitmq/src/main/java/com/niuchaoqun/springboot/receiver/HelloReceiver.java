@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.rabbitmq.receiver;
+package com.niuchaoqun.springboot.receiver;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

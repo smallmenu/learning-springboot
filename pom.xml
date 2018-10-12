@@ -19,5 +19,8 @@
         <module>mybatis-common</module>
         <module>redis</module>
         <module>rabbitmq</module>
+        <module>quartz</module>
+        <module>admin</module>
+        <module>client</module>
     </modules>
 </project>

@@ -1,40 +1,35 @@
 package com.niuchaoqun.springboot.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
 
 @Configuration
 public class QuartzConfig {
-
     @Autowired
     private ScheduleJobFactory jobFactory;
 
+    /**
+     * To Configuration Quartz , not necessary, if not config this, will use default
+     *
+     * @param dataSource
+     * @return
+     */
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(@Qualifier("dataSource") DataSource dataSource) {
+    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-        // 调度启动延迟
-        schedulerFactoryBean.setStartupDelay(11);
-        // 覆盖已存在的任务
-        schedulerFactoryBean.setOverwriteExistingJobs(true);
-        // 调度器自动运行
-        schedulerFactoryBean.setAutoStartup(true);
-        // 数据源
-        schedulerFactoryBean.setDataSource(dataSource);
-        // 使用Spring管理
-        schedulerFactoryBean.setJobFactory(jobFactory);
-        // 调度器上下文
+        schedulerFactoryBean.setStartupDelay(3);
+        schedulerFactoryBean.setSchedulerName("QuartzMySQLScheduler");
         schedulerFactoryBean.setApplicationContextSchedulerContextKey("applicationContextKey");
-
-        schedulerFactoryBean.setSchedulerName("TASK_EXECUTOR");
+        schedulerFactoryBean.setOverwriteExistingJobs(true);
+        schedulerFactoryBean.setAutoStartup(true);
+        schedulerFactoryBean.setDataSource(dataSource);
+        schedulerFactoryBean.setJobFactory(jobFactory);
+        schedulerFactoryBean.setConfigLocation(new ClassPathResource("/quartz.properties"));
 
         return schedulerFactoryBean;
     }

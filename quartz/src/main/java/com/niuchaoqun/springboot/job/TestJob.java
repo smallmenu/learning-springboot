@@ -5,6 +5,10 @@ import org.quartz.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * DisallowConcurrentExecution 注解，禁止给定 Job 定义的多个实例并发执行
+ */
+@DisallowConcurrentExecution
 public class TestJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -13,10 +17,10 @@ public class TestJob implements Job {
         String name = jobDetail.getKey().toString();
         System.out.println(Thread.currentThread().getName() + " Start <"+ name +"> " + datetime);
 
-        try {
-            Thread.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 }

@@ -12,13 +12,6 @@ public class ScheduleJobFactory extends AdaptableJobFactory {
     @Autowired
     private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
-    /**
-     * For stop value is null in Job class
-     *
-     * @param bundle
-     * @return
-     * @throws Exception
-     */
     @Override
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
         Object jobInstance = super.createJobInstance(bundle);

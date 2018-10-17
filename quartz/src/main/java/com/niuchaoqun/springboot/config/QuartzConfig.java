@@ -22,13 +22,17 @@ public class QuartzConfig {
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-        schedulerFactoryBean.setStartupDelay(3);
-        schedulerFactoryBean.setSchedulerName("QuartzMySQLScheduler");
-        schedulerFactoryBean.setApplicationContextSchedulerContextKey("applicationContextKey");
-        schedulerFactoryBean.setOverwriteExistingJobs(true);
+        // 设置名称
+        //schedulerFactoryBean.setSchedulerName("QuartzMySQLScheduler");
+        // 是否初始化完成后自动调度
         schedulerFactoryBean.setAutoStartup(true);
+        // 初始化完成后调度延时
+        schedulerFactoryBean.setStartupDelay(3);
+        // 数据源
         schedulerFactoryBean.setDataSource(dataSource);
+        // 默认为AdaptableJobFactory
         schedulerFactoryBean.setJobFactory(jobFactory);
+        // 配置文件
         schedulerFactoryBean.setConfigLocation(new ClassPathResource("/quartz.properties"));
 
         return schedulerFactoryBean;

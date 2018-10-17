@@ -26,22 +26,22 @@ public class Bootstrap implements ApplicationRunner {
 
         Random random = new Random(System.currentTimeMillis());
 
-        for (int i = 10; i < 40; i++) {
+        int jobTotal = 2;
+
+        for (int i = 1; i <= jobTotal; i++) {
             JobDetail jobExist = scheduler.getJobDetail(JobKey.jobKey("job" + i, "group"));
 
             if (jobExist == null) {
-                JobDetail job = newJob(TestJob.class).withIdentity("job" + i, "group").build();
+                JobDetail job = newJob(TestJob.class).withIdentity("job" + i, "group").storeDurably().build();
 
                 SimpleTrigger trigger = newTrigger().withIdentity("trigger" + i, "group")
                         .startNow()
-                        .withSchedule(simpleSchedule().withIntervalInMilliseconds(300 + random.nextInt(200)).repeatForever())
+                        .withSchedule(simpleSchedule().withIntervalInSeconds(1).repeatForever())
                         .build();
 
                 scheduler.scheduleJob(job, trigger);
             }
         }
-
-        scheduler.start();
 
         System.out.println();
     }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 配置job交给spring管理
  */
 @Component
-public class ScheduleJobFactory extends AdaptableJobFactory {
+public class ScheduleJobFactoryConfig extends AdaptableJobFactory {
 
     @Autowired
     private AutowireCapableBeanFactory autowireCapableBeanFactory;

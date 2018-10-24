@@ -1,6 +1,5 @@
 package com.niuchaoqun.springboot.config;
 
-import org.quartz.spi.JobFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,7 @@ import javax.sql.DataSource;
 @Configuration
 public class QuartzConfig {
     @Autowired
-    private ScheduleJobFactory jobFactory;
+    private ScheduleJobFactoryConfig jobFactory;
 
     /**
      * To Configuration Quartz , not necessary, if not config this, will use default

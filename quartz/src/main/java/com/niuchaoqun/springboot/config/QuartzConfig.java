@@ -2,13 +2,11 @@ package com.niuchaoqun.springboot.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
 
-@Configuration
 public class QuartzConfig {
     @Autowired
     private ScheduleJobFactoryConfig jobFactory;
@@ -34,7 +32,7 @@ public class QuartzConfig {
         // 默认为 AdaptableJobFactory
         schedulerFactoryBean.setJobFactory(jobFactory);
         // 配置文件
-        schedulerFactoryBean.setConfigLocation(new ClassPathResource("/quartz.properties"));
+        schedulerFactoryBean.setConfigLocation(new ClassPathResource("quartz.properties"));
 
         return schedulerFactoryBean;
     }

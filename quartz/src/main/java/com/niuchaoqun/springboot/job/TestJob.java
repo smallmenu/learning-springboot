@@ -1,5 +1,6 @@
 package com.niuchaoqun.springboot.job;
 
+import com.niuchaoqun.springboot.State;
 import org.quartz.*;
 
 import java.time.LocalDateTime;
@@ -15,12 +16,15 @@ public class TestJob implements Job {
         String datetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         JobDetail jobDetail = jobExecutionContext.getJobDetail();
         String name = jobDetail.getKey().toString();
-        System.out.println(Thread.currentThread().getName() + " Start <"+ name +"> " + datetime);
 
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+
+        long l = State.counter.incrementAndGet();
+        System.out.println(l + Thread.currentThread().getName() + " Start <"+ name +"> " + datetime);
+
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -30,7 +30,7 @@ public class Bootstrap implements ApplicationRunner {
         Random random = new Random(System.currentTimeMillis());
 
         // 任务总数
-        int jobTotal = 10;
+        int jobTotal = 2;
         for (int i = 1; i <= jobTotal; i++) {
             String jobName = jobPrefix + i;
             String tiggerName = jobName + "Trigger" + i;
@@ -41,7 +41,12 @@ public class Bootstrap implements ApplicationRunner {
 
                 SimpleTrigger trigger = newTrigger().withIdentity(tiggerName, "group")
                         .startNow()
-                        .withSchedule(simpleSchedule().withIntervalInMilliseconds(100).repeatForever())
+                        .withSchedule(
+                                simpleSchedule()
+                                .withIntervalInMilliseconds(3000)
+                                .repeatForever()
+                                .withMisfireHandlingInstructionNextWithRemainingCount()
+                        )
                         .build();
 
                 scheduler.scheduleJob(job, trigger);

@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot;
 
 import com.niuchaoqun.springboot.config.AppProperties;
+import com.niuchaoqun.springboot.config.CustomProperties;
 import com.niuchaoqun.springboot.config.MysqlProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ public class HelloApplication implements CommandLineRunner {
     @Autowired
     private AppProperties appProperties;
 
+    @Autowired
+    private CustomProperties customProperties;
+
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(HelloApplication.class);
         application.setBannerMode(Banner.Mode.OFF);
@@ -31,8 +35,10 @@ public class HelloApplication implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         logger.debug(mysqlProperties.toString());
         logger.debug(appProperties.toString());
+        logger.debug(customProperties.toString());
 
         System.out.println(mysqlProperties.toString());
         System.out.println(appProperties.toString());
+        System.out.println(customProperties.toString());
     }
 }

@@ -66,6 +66,10 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 
 * RabbitMQ 集成示例
 
+### quartz
+
+* quartz 集成示例
+
 ## 文章目录
 
 [Spring Boot QuickStart (1) - 介绍](http://www.niuchaoqun.com/14963868024588.html)

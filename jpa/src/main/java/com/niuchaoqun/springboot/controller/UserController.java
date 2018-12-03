@@ -2,14 +2,17 @@ package com.niuchaoqun.springboot.controller;
 
 import com.niuchaoqun.springboot.core.BaseController;
 import com.niuchaoqun.springboot.core.Response;
+import com.niuchaoqun.springboot.core.RestResponse;
+import com.niuchaoqun.springboot.core.RestResult;
 import com.niuchaoqun.springboot.dto.form.UserAddForm;
 import com.niuchaoqun.springboot.dto.form.UserEditForm;
 import com.niuchaoqun.springboot.dto.form.UserSearchForm;
-import com.niuchaoqun.springboot.entity.Order;
 import com.niuchaoqun.springboot.entity.User;
 import com.niuchaoqun.springboot.repository.UserCustomRepository;
 import com.niuchaoqun.springboot.repository.UserRepository;
 import com.niuchaoqun.springboot.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +25,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Generated;
-import javax.validation.ReportAsSingleViolation;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -80,16 +80,18 @@ public class UserController extends BaseController {
         return Response.data(users);
     }
 
+    @ApiOperation(value = "根据用户ID返回数据")
+    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public Object get(@PathVariable Long userId) {
+    public RestResult<User> get(@PathVariable Long userId) {
         if (userId > 0) {
             Optional<User> user = userRepository.findById(userId);
 
             logger.info(user.get().toString());
-            return Response.data(user.orElse(null));
+            return RestResponse.data(user.orElse(null));
         }
 
-        return Response.error("参数错误");
+        return RestResponse.fail("参数错误");
     }
 
     @RequestMapping(value = "/username", method = RequestMethod.GET)

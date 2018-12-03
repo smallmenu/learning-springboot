@@ -1,6 +1,8 @@
 package com.niuchaoqun.springboot.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Generated;
@@ -35,10 +37,12 @@ import java.util.List;
 @DynamicUpdate
 public class User implements Serializable {
 
+    @ApiModelProperty("ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ApiModelProperty("姓名")
     @Column(nullable = false)
     private String name;
 

@@ -1,8 +1,6 @@
 package com.niuchaoqun.springboot.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.springframework.core.annotation.Order;
 
 /**
  * @author niuchaoqun

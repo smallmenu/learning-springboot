@@ -4,12 +4,14 @@ import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.scheduling.quartz.AdaptableJobFactory;
-import org.springframework.stereotype.Component;
 
 /**
- * 配置job交给spring管理
+ *
+ *
+ * 配置 job 交给spring管理，用于自定义 Quartz 配置，暂时没用
+ * @author ncq
  */
-@Component
+//@Component
 public class ScheduleJobFactoryConfig extends AdaptableJobFactory {
 
     @Autowired

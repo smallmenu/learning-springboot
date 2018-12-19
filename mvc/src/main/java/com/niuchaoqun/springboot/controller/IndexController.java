@@ -121,6 +121,8 @@ public class IndexController {
     @RequestMapping(value = "/getsimple", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String getSimple(String text1, String text2) {
+        logger.info(text1);
+        logger.info(text2);
         return text1 + "/" + text2;
     }
 
@@ -128,7 +130,7 @@ public class IndexController {
      * 通过注解获取 GET,POST 参数
      * <p>
      * 和普通方式区别的意义在于：可以进行映射、默认值、参数检查等操作
-     * RequestParam 注解默认required=true
+     * RequestParam 注解默认 required=true
      *
      * @param text1
      * @param text2
@@ -195,7 +197,9 @@ public class IndexController {
      */
     @RequestMapping("/getmodel")
     @ResponseBody
-    public User getModel(@Valid User user) {
+    public User getModel(@Valid User user, String address) {
+        logger.info(user.toString());
+        logger.info(address);
         return user;
     }
 

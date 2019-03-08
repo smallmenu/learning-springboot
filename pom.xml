@@ -21,6 +21,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-codec.version>1.11</commons-codec.version>
         <commons-pool2.version>2.5.0</commons-pool2.version>
+        <jjwt.version>0.9.0</jjwt.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger-fixbug.version>1.5.21</swagger-fixbug.version>
         <mybatis-starter.version>1.3.2</mybatis-starter.version>
@@ -42,6 +43,7 @@
         <module>quartz</module>
         <module>admin</module>
         <module>client</module>
+        <module>security</module>
     </modules>
 
     <dependencies>

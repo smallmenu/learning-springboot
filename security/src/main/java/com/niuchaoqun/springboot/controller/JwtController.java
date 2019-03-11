@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.controller;
 
 import com.niuchaoqun.springboot.jwt.JwtTokenProvider;
+import com.niuchaoqun.springboot.mapper.AdminMapper;
 import com.niuchaoqun.springboot.rest.RestResponse;
 import com.niuchaoqun.springboot.rest.RestResult;
 import org.slf4j.Logger;
@@ -29,15 +30,12 @@ public class JwtController {
     @PostMapping("/login")
     public RestResult<String> login(@RequestParam("username") String username, @RequestParam("password") String password) {
         Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        username, password
-                )
+                new UsernamePasswordAuthenticationToken(username, password)
         );
 
         SecurityContextHolder.getContext().setAuthentication(authenticate);
-        String token = jwtTokenProvider.getStringFromToken(authenticate);
+        String token = jwtTokenProvider.generateTokenByString(authenticate);
 
         return RestResponse.data(token);
     }
-
 }

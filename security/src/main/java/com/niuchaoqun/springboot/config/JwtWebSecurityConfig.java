@@ -1,11 +1,13 @@
 package com.niuchaoqun.springboot.config;
 
+import com.niuchaoqun.springboot.jwt.JwtAuthenticationEntryPoint;
 import com.niuchaoqun.springboot.jwt.JwtTokenAuthFilter;
 import com.niuchaoqun.springboot.property.JwtProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,10 +22,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtProperty jwtProperty;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -34,23 +39,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 // 禁用 CSRF
                 .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+
+                .and()
                 // 不存储Session，使用无状态回话
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.POST, jwtProperty.getLoginUrl()).permitAll()
-                .antMatchers(jwtProperty.getUrl()).authenticated()
-                .antMatchers("/basic").authenticated()
-                .and().httpBasic()
-                .and().headers().cacheControl();
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenAuthFilter(), UsernamePasswordAuthenticationFilter.class);
     }
@@ -63,5 +68,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

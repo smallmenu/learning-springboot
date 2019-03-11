@@ -31,10 +31,10 @@ pagehelper:
 
 
 jwt:
-  url: /api/**
-  login-url: /api/login
+  url: /jwt/**
+  login-url: /jwt/login
   secret: secret
-  expiration: 3600
+  expiration: 3600000
   header: Authorization
 
 

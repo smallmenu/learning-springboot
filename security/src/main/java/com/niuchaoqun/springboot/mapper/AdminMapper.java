@@ -6,7 +6,4 @@ import tk.mybatis.mapper.common.Mapper;
 
 @Repository
 public interface AdminMapper extends Mapper<Admin> {
-    Admin getRelationById(Long id);
-
-    Admin getRelationByUsername(String username);
 }

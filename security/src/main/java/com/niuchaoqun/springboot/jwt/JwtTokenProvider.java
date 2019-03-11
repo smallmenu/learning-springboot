@@ -24,7 +24,7 @@ public class JwtTokenProvider {
      * @param authentication
      * @return
      */
-    public String generateStringToken(Authentication authentication) {
+    public String generateTokenByString(Authentication authentication) {
         JwtUser jwtUser = (JwtUser) authentication.getPrincipal();
 
         return Jwts.builder()
@@ -41,7 +41,7 @@ public class JwtTokenProvider {
      * @param authentication
      * @return
      */
-    public String generateLongToken(Authentication authentication) {
+    public String generateTokenByLong(Authentication authentication) {
         JwtUser jwtUser = (JwtUser) authentication.getPrincipal();
 
         return Jwts.builder()

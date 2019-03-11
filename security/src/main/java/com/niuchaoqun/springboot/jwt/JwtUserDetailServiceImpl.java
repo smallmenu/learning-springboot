@@ -19,7 +19,8 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Admin admin = adminMapper.getRelationByUsername(username);
+        Admin adminQuery = Admin.builder().username(username).build();
+        Admin admin = adminMapper.selectOne(adminQuery);
 
         Optional.ofNullable(admin).orElseThrow(()->new UsernameNotFoundException("user not exist"));
 

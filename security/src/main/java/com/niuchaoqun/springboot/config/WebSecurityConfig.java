@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,24 +26,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtProperty jwtProperty;
 
     @Autowired
-    private JwtTokenAuthFilter jwtTokenAuthFilter;
-
-    @Autowired
     private UserDetailsService userDetailsService;
+
+    @Bean
+    public JwtTokenAuthFilter jwtTokenAuthFilter() {
+        return new JwtTokenAuthFilter();
+    }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            // 禁用 CSRF
-            .csrf().disable()
-            // 不存储Session，使用无状态回话
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-                //.addFilterAfter(jwtTokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            .authorizeRequests()
+                // 禁用 CSRF
+                .csrf().disable()
+                // 不存储Session，使用无状态回话
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, jwtProperty.getUri()).permitAll()
-                .anyRequest().permitAll();
+                .antMatchers(HttpMethod.POST, jwtProperty.getLoginUrl()).permitAll()
+                .antMatchers(jwtProperty.getUrl()).authenticated()
+                .antMatchers("/basic").authenticated()
+                .and().httpBasic()
+                .and().headers().cacheControl();
+
+        http.addFilterBefore(jwtTokenAuthFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

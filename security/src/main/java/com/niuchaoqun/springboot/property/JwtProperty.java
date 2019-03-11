@@ -12,7 +12,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "jwt")
 @Data
 public class JwtProperty {
-    private String uri;
+    private String url;
+
+    private String loginUrl;
 
     private String secret;
 

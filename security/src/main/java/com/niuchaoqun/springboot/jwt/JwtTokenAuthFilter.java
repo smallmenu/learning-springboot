@@ -2,7 +2,10 @@ package com.niuchaoqun.springboot.jwt;
 
 import com.niuchaoqun.springboot.property.JwtProperty;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,37 +22,39 @@ import java.io.IOException;
 
 @Component
 public class JwtTokenAuthFilter extends OncePerRequestFilter {
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenAuthFilter.class);
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private  JwtProperty jwtProperty;
+    private JwtProperty jwtProperty;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        String token = httpServletRequest.getHeader(jwtProperty.getHeader());
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        if (StringUtils.isNotBlank(token)) {
-            String username = jwtTokenUtil.getUsernameFromToken(token);
+        try {
+            String token = request.getHeader(jwtProperty.getHeader());
 
-            if (username != null) {
+            if (StringUtils.isNotBlank(token) && jwtTokenProvider.validateToken(token)) {
+                String username = jwtTokenProvider.getStringFromToken(token);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                if (jwtTokenUtil.validateToken(token, userDetails)) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
             }
+        } catch (Exception e) {
+            logger.error("set user authentication in security context", e);
         }
 
-
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        filterChain.doFilter(request, response);
     }
 }

@@ -31,8 +31,9 @@ pagehelper:
 
 
 jwt:
-  uri: /api/**
-  secret: 123123
+  url: /api/**
+  login-url: /api/login
+  secret: secret
   expiration: 3600
   header: Authorization
 

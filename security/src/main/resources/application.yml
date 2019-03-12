@@ -37,4 +37,9 @@ jwt:
   expiration: 3600000
   header: Authorization
 
+header:
+  url: /api/**
+  header-key: Api-Authorization
+  header-value: test
+
 

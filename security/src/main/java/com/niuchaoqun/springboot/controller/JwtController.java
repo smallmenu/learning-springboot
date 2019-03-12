@@ -1,7 +1,6 @@
 package com.niuchaoqun.springboot.controller;
 
 import com.niuchaoqun.springboot.jwt.JwtTokenProvider;
-import com.niuchaoqun.springboot.mapper.AdminMapper;
 import com.niuchaoqun.springboot.rest.RestResponse;
 import com.niuchaoqun.springboot.rest.RestResult;
 import org.slf4j.Logger;
@@ -11,10 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/jwt")
@@ -37,5 +33,17 @@ public class JwtController {
         String token = jwtTokenProvider.generateTokenByString(authenticate);
 
         return RestResponse.data(token);
+    }
+
+    @RequestMapping("test1")
+    @ResponseBody
+    public String test1() {
+        return "jwt test1";
+    }
+
+    @RequestMapping("test2")
+    @ResponseBody
+    public String test2() {
+        return "jwt test1";
     }
 }

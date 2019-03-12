@@ -37,8 +37,10 @@ public class JwtTokenAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         try {
+            // 获取 Jwt Header 信息
             String token = request.getHeader(jwtProperty.getHeader());
 
+            // 验证 Jwt Token
             if (StringUtils.isNotBlank(token) && jwtTokenProvider.validateToken(token)) {
                 String username = jwtTokenProvider.getStringFromToken(token);
 
@@ -49,12 +51,12 @@ public class JwtTokenAuthFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-
             }
         } catch (Exception e) {
             logger.error("set user authentication in security context", e);
         }
 
+        // 下一个 FilterChain
         filterChain.doFilter(request, response);
     }
 }

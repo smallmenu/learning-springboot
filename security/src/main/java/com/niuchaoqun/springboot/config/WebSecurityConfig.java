@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.config;
 
 import com.niuchaoqun.springboot.header.HeaderAuthFilter;
+import com.niuchaoqun.springboot.jwt.JwtAuthenticationEntryPoint;
 import com.niuchaoqun.springboot.jwt.JwtTokenAuthFilter;
 import com.niuchaoqun.springboot.property.HeaderProperty;
 import com.niuchaoqun.springboot.property.JwtProperty;
@@ -57,6 +58,9 @@ public class WebSecurityConfig {
         @Autowired
         private HeaderProperty headerProperty;
 
+        @Autowired
+        private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
         /**
          * 默认情况下 @Bean HeaderAuthFilter 会被 SpringBoot 自动探测到并且加入到 Security filter chain
          * <p>
@@ -78,9 +82,10 @@ public class WebSecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+
             http.antMatcher(headerProperty.getUrl())
                     .exceptionHandling()
-                    .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage()))
+                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
                     .and()
                     .addFilterAfter(headerAuthFilter(), BasicAuthenticationFilter.class)

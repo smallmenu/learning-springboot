@@ -40,18 +40,26 @@ public class JwtTokenAuthFilter extends OncePerRequestFilter {
             // 获取 Jwt Header 信息
             String token = request.getHeader(jwtProperty.getHeader());
 
-            // 验证 Jwt Token
-            if (StringUtils.isNotBlank(token) && jwtTokenProvider.validateToken(token)) {
-                String username = jwtTokenProvider.getStringFromToken(token);
+            if (token != null) {
+                // 验证 Jwt Token
+                if (StringUtils.isNotBlank(token) && jwtTokenProvider.validateToken(token)) {
+                    String username = jwtTokenProvider.getStringFromToken(token);
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                        logger.info("authorized user '{}', setting security context", username);
+
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+                }
             }
+
+
         } catch (Exception e) {
             logger.error("set user authentication in security context", e);
         }

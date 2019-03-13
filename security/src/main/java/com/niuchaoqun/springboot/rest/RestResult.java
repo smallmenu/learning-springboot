@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestResult<T> {
+    private Integer code;
+
     private Boolean state;
 
     private String message;
@@ -14,6 +16,15 @@ public class RestResult<T> {
     private String error;
 
     private T data;
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public RestResult<T> setCode(Integer code) {
+        this.code = code;
+        return this;
+    }
 
     public Boolean getState() {
         return state;

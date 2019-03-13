@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -58,13 +59,10 @@ public class WebSecurityConfig {
         @Autowired
         private HeaderProperty headerProperty;
 
-        @Autowired
-        private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
         /**
-         * 默认情况下 @Bean HeaderAuthFilter 会被 SpringBoot 自动探测到并且加入到 Security filter chain
+         * 默认情况下 @Bean 会被 SpringBoot 自动探测到并且加入到 Security filter chain
          * <p>
-         * 在这里手动禁止 Filter 自动注入，或者不使用 @Bean 而通过手动 new
+         * 在这里手动禁止 Filter 自动注入，另一种方法是不使用 @Bean 而通过手动 new
          *
          * @return
          */
@@ -85,7 +83,7 @@ public class WebSecurityConfig {
 
             http.antMatcher(headerProperty.getUrl())
                     .exceptionHandling()
-                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                    .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage()))
 
                     .and()
                     .addFilterAfter(headerAuthFilter(), BasicAuthenticationFilter.class)
@@ -108,6 +106,16 @@ public class WebSecurityConfig {
         @Autowired
         private UserDetailsService userDetailsService;
 
+        @Autowired
+        private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+        /**
+         * 默认情况下 @Bean 会被 SpringBoot 自动探测到并且加入到 Security filter chain
+         * <p>
+         * 在这里手动禁止 Filter 自动注入，另一种方法是不使用 @Bean 而通过手动 new
+         *
+         * @return
+         */
         @Bean
         public FilterRegistrationBean jwtTokenAuthFilterRegistration() {
             FilterRegistrationBean registration = new FilterRegistrationBean(jwtTokenAuthFilter());
@@ -129,10 +137,10 @@ public class WebSecurityConfig {
                     // 不存储Session，使用无状态回话
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                    // 处理未认证的异常
+                    // 处理认证的异常，自定义返回 REST JSON
                     .and()
                     .exceptionHandling()
-                    .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage()))
+                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
                     // 路由规则
                     .and()
@@ -142,7 +150,11 @@ public class WebSecurityConfig {
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .antMatchers(HttpMethod.POST, jwtProperty.getLoginUrl()).permitAll()
                     .antMatchers(jwtProperty.getUrl())
-                    .authenticated();
+                    .authenticated()
+                    .and()
+
+                    // 禁止页面缓存
+                    .headers().cacheControl();
         }
 
         @Override

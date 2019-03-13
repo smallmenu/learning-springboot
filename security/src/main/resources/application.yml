@@ -34,8 +34,8 @@ jwt:
   url: /jwt/**
   login-url: /jwt/login
   secret: secret
-  expiration: 3600000
-  header: Authorization
+  expiration: 3600
+  header: Jwt-Authorization
 
 header:
   url: /api/**

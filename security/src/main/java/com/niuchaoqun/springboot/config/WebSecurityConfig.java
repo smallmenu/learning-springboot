@@ -1,9 +1,7 @@
 package com.niuchaoqun.springboot.config;
 
-import com.niuchaoqun.springboot.header.HeaderAuthFilter;
 import com.niuchaoqun.springboot.jwt.JwtAuthenticationEntryPoint;
 import com.niuchaoqun.springboot.jwt.JwtTokenAuthFilter;
-import com.niuchaoqun.springboot.property.HeaderProperty;
 import com.niuchaoqun.springboot.property.JwtProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -20,9 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Multiple HttpSecurity 配置
@@ -43,52 +38,6 @@ public class WebSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http.antMatcher("/basic/**").authorizeRequests().anyRequest().authenticated().and().httpBasic();
 
-        }
-    }
-
-    /**
-     * http.antMatcher() 表示当前实例仅仅对这个路由进行配置
-     * <p>
-     * 这里是个 Header 头的认证
-     */
-    @Configuration
-    @Order(2)
-    public static class HeaderWebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-        @Autowired
-        private HeaderProperty headerProperty;
-
-        /**
-         * 默认情况下 @Bean 会被 SpringBoot 自动探测到并且加入到 Security filter chain
-         * <p>
-         * 在这里手动禁止 Filter 自动注入，另一种方法是不使用 @Bean 而通过手动 new
-         *
-         * @return
-         */
-        @Bean
-        public FilterRegistrationBean headerAuthFilterRegistration() {
-            FilterRegistrationBean registration = new FilterRegistrationBean(headerAuthFilter());
-            registration.setEnabled(false);
-            return registration;
-        }
-
-        @Bean
-        public HeaderAuthFilter headerAuthFilter() {
-            return new HeaderAuthFilter();
-        }
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-
-            http.antMatcher(headerProperty.getUrl())
-                    .exceptionHandling()
-                    .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage()))
-
-                    .and()
-                    .addFilterAfter(headerAuthFilter(), BasicAuthenticationFilter.class)
-                    .authorizeRequests()
-                    .anyRequest()
-                    .authenticated();
         }
     }
 

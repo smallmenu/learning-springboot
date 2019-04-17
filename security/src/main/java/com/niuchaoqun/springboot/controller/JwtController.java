@@ -38,6 +38,8 @@ public class JwtController {
     @RequestMapping("test1")
     @ResponseBody
     public String test1() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        authentication.getDetails();
         return "jwt test1";
     }
 

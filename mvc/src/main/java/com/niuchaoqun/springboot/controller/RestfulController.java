@@ -1,5 +1,7 @@
 package com.niuchaoqun.springboot.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.niuchaoqun.springboot.domain.Oversea;
 import com.niuchaoqun.springboot.domain.User;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -48,8 +50,8 @@ public class RestfulController {
         return user;
     }
 
-    @RequestMapping("/url")
-    public HashMap<String, String> index(@RequestParam(value = "base64_url") String base64Url, HttpServletResponse response) {
+    @RequestMapping("/oversea_url")
+    public HashMap<String, String> overseaUrl(@RequestParam(value = "base64_url") String base64Url, HttpServletResponse response) {
         OkHttpClient okhttpClient = new OkHttpClient().newBuilder().build();
 
         String url = base64Decode(base64Url);
@@ -65,7 +67,7 @@ public class RestfulController {
                 String code = String.valueOf(res.code());
 
                 result.put("code", code);
-                result.put("base64_html", base64SafeEncode(html));
+                result.put("base64Html", base64SafeEncode(html));
 
                 return result;
             }
@@ -74,6 +76,30 @@ public class RestfulController {
         }
 
         return result;
+    }
+
+    @RequestMapping("/url")
+    public Object url(@RequestParam(value = "url") String url, HttpServletResponse response) {
+        OkHttpClient okhttpClient = new OkHttpClient().newBuilder().build();
+        String overseaUrl = "http://35.234.52.90:9999/rest/oversea_url?base64_url=" + base64SafeEncode(url);
+
+        try (Response res = okhttpClient.newCall(new Request.Builder()
+                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36")
+                .url(overseaUrl).build()).execute()) {
+            if (res.isSuccessful() && res.body() != null) {
+                ResponseBody body = res.body();
+                String json = body.string();
+
+                ObjectMapper objectMapper = new ObjectMapper();
+                Oversea oversea = objectMapper.readValue(json, Oversea.class);
+
+                return oversea;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 

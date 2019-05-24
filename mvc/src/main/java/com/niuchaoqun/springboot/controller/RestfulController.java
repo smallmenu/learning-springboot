@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -46,23 +47,29 @@ public class RestfulController {
     }
 
     @RequestMapping("/url")
-    public String index(@RequestParam(value = "url") String url, HttpServletResponse response) {
+    public HashMap<String, String> index(@RequestParam(value = "url") String url, HttpServletResponse response) {
         OkHttpClient okhttpClient = new OkHttpClient().newBuilder().build();
+
+        HashMap<String, String> result = new HashMap<>();
 
         try (Response res = okhttpClient.newCall(new Request.Builder()
                 .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36")
                 .url(url).build()).execute()) {
             if (res.isSuccessful() && res.body() != null) {
                 ResponseBody body = res.body();
-                String string = body.string();
-                return string;
+                String html = body.string();
+                String code = String.valueOf(res.code());
+
+                result.put("code", code);
+                result.put("html", html);
+
+                return result;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
-
+        return result;
     }
 
 

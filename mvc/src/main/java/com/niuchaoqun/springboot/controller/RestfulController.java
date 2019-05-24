@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static com.github.suosi.commons.helper.Static.*;
+
 /**
  * 控制器 RequestMaping 注解URL前缀: /rest
  */
@@ -47,8 +49,10 @@ public class RestfulController {
     }
 
     @RequestMapping("/url")
-    public HashMap<String, String> index(@RequestParam(value = "url") String url, HttpServletResponse response) {
+    public HashMap<String, String> index(@RequestParam(value = "base64_url") String base64Url, HttpServletResponse response) {
         OkHttpClient okhttpClient = new OkHttpClient().newBuilder().build();
+
+        String url = base64Decode(base64Url);
 
         HashMap<String, String> result = new HashMap<>();
 

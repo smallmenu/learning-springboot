@@ -39,9 +39,9 @@
             <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>3.12.2</version>
+            <groupId>com.github.suosi-inc</groupId>
+            <artifactId>commons-spider</artifactId>
+            <version>0.18.0</version>
         </dependency>
     </dependencies>
 
@@ -53,4 +53,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 </project>

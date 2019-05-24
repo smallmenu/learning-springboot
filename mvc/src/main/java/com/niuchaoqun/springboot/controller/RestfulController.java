@@ -65,7 +65,7 @@ public class RestfulController {
                 String code = String.valueOf(res.code());
 
                 result.put("code", code);
-                result.put("html", html);
+                result.put("base64_html", base64SafeEncode(html));
 
                 return result;
             }

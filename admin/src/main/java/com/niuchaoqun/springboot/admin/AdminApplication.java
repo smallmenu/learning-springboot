@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot;
+package com.niuchaoqun.springboot.admin;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;

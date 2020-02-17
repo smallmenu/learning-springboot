@@ -1,21 +1,18 @@
 package com.niuchaoqun.springboot.service;
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.niuchaoqun.springboot.dto.form.UserAddForm;
+import com.niuchaoqun.springboot.dto.form.UserEditForm;
 import com.niuchaoqun.springboot.dto.form.UserSearchForm;
 import com.niuchaoqun.springboot.entity.Role;
 import com.niuchaoqun.springboot.entity.User;
 import com.niuchaoqun.springboot.entity.UserDetail;
 import com.niuchaoqun.springboot.entity.UserProfile;
-import com.niuchaoqun.springboot.dto.form.UserAddForm;
-import com.niuchaoqun.springboot.dto.form.UserEditForm;
 import com.niuchaoqun.springboot.mapper.RoleMapper;
 import com.niuchaoqun.springboot.mapper.UserDetailMapper;
 import com.niuchaoqun.springboot.mapper.UserMapper;
 import com.niuchaoqun.springboot.mapper.UserProfileMapper;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import tk.mybatis.mapper.entity.Condition;
-import tk.mybatis.mapper.entity.Example;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package com.niuchaoqun.springboot;
 
-import com.niuchaoqun.springboot.config.MysqlProperties;
+import com.niuchaoqun.springboot.hello.config.MysqlProperties;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

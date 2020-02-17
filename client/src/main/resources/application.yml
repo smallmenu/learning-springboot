@@ -1,0 +1,36 @@
+server:
+  port: 9999
+  undertow:
+    io-threads: 1
+    worker-threads: 8
+
+spring:
+  application:
+    name: CLIENT
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8000
+        instance:
+          prefer-ip: true
+        username: admin
+        password: springboot.admin
+
+logging.file: springboot-client.log
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.niuchaoqun.springboot.client: DEBUG
+  file:
+    max-size: 512MB
+    max-history: 3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

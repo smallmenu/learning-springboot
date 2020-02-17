@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.config;
+package com.niuchaoqun.springboot.hello.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,8 +1,8 @@
-package com.niuchaoqun.springboot;
+package com.niuchaoqun.springboot.hello;
 
-import com.niuchaoqun.springboot.config.AppProperties;
-import com.niuchaoqun.springboot.config.CustomProperties;
-import com.niuchaoqun.springboot.config.MysqlProperties;
+import com.niuchaoqun.springboot.hello.config.AppProperties;
+import com.niuchaoqun.springboot.hello.config.CustomProperties;
+import com.niuchaoqun.springboot.hello.config.MysqlProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

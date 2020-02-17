@@ -1,6 +1,6 @@
 # learning-springboot
 
-基于 spring boot 2.0.2 
+基于 spring boot 2.1.X （2.0.X 参考 2.0.X 分支）
 
 spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 springboot 学习项目：
 
@@ -16,10 +16,10 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 
 ### hello 
 
-* spring boot helloworld
-* 使用 spring boot 以及 maven、pom.xml
+* springboot helloworld
+* 使用 springboot 以及 maven、pom.xml
 * 命令行运行程序
-* application.properties 的常规配置、多配置文件的加载
+* application.properties 的常规配置、多配置文件的加载（spring.profiles.active 与 spring.profiles.include）
 * 配置日志
 * 通过 Java Properties 类读取自定义配置
 
@@ -73,6 +73,14 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 ### security
 
 * Security 集成示例
+
+### admin
+
+* springboot-admin 提供应用注册监控管理界面，含登陆页面
+
+### client
+
+* springboot-client 应用注册到admin，然后通过admin进行管理
 
 
 ## 文章目录

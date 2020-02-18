@@ -1,0 +1,44 @@
+server:
+  port: 9999
+  undertow:
+    io-threads: 2
+    worker-threads: 16
+  compression:
+    enabled: true
+  # 关闭默认的错误页面
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: mvc
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000
+        instance:
+          prefer-ip: true
+        username: admin
+        password: springboot.admin
+  thymeleaf:
+    cache: false
+
+logging.file: springboot-mvc.log
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.niuchaoqun.springboot.client: DEBUG
+  file:
+    max-size: 512MB
+    max-history: 3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

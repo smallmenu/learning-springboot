@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active:
+      - develop
+      - product
+    include:
+      - custom
+
+logging.file: springboot-hello.log
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.niuchaoqun.springboot.client: DEBUG
+  file:
+    max-size: 512MB
+    max-history: 3
+
+mysql:
+  host: default
+  user: default_user
+  mix: ${mysql.host}/${mysql.user}
+
+custom:
+  name: default
+  age: 11

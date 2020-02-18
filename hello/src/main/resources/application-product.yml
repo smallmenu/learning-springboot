@@ -1,0 +1,8 @@
+mysql:
+  host: product
+  user: product_user
+  mix: ${mysql.host}/${mysql.user}
+
+custom:
+  name: product
+  age: 12

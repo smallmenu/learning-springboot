@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.hello.config;
+package com.niuchaoqun.springboot.hello.property;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -6,10 +6,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:app.properties")
+@PropertySource("classpath:app.yml")
 @ConfigurationProperties(prefix = "app")
 @Data
-public class AppProperties {
+public class AppProperty {
     private String name;
     private String version;
 }

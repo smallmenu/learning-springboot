@@ -1,0 +1,8 @@
+mysql:
+  host: develop
+  user: develop_user
+  mix: ${mysql.host}/${mysql.user}
+
+custom:
+  name: develop
+  age: 10

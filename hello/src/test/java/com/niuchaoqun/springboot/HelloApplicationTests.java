@@ -1,6 +1,6 @@
 package com.niuchaoqun.springboot;
 
-import com.niuchaoqun.springboot.hello.config.MysqlProperties;
+import com.niuchaoqun.springboot.hello.property.MysqlProperty;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class HelloApplicationTests {
 
     @Autowired
-    private MysqlProperties mysqlProperties;
+    private MysqlProperty mysqlProperty;
 
     @Test
     public void contextLoads() {
@@ -21,9 +21,9 @@ public class HelloApplicationTests {
 
     @Test
     public void getMysql() {
-        Assert.assertEquals(mysqlProperties.getHost(), "dev");
-        Assert.assertEquals(mysqlProperties.getUser(), "dev_user");
-        Assert.assertEquals(mysqlProperties.getMix(), "dev/dev_user");
+        Assert.assertEquals(mysqlProperty.getHost(), "dev");
+        Assert.assertEquals(mysqlProperty.getUser(), "dev_user");
+        Assert.assertEquals(mysqlProperty.getMix(), "dev/dev_user");
     }
 
 }

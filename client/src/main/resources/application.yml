@@ -1,16 +1,16 @@
 server:
   port: 9999
   undertow:
-    io-threads: 1
-    worker-threads: 8
+    io-threads: 2
+    worker-threads: 16
 
 spring:
   application:
-    name: CLIENT
+    name: client
   boot:
     admin:
       client:
-        url: http://127.0.0.1:8000
+        url: http://localhost:8000
         instance:
           prefer-ip: true
         username: admin

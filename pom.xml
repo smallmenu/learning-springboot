@@ -32,6 +32,7 @@
     </properties>
 
     <modules>
+        <module>commons</module>
         <module>hello</module>
         <module>mvc</module>
         <module>jpa</module>
@@ -58,15 +59,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -84,15 +85,4 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-
-    <repository>
-        <id>aliyun</id>
-        <url>https://maven.aliyun.com/repository/public</url>
-        <releases>
-            <enabled>true</enabled>
-        </releases>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-    </repository>
 </project>

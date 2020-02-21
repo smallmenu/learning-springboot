@@ -29,7 +29,7 @@ logging:
   level:
     root: INFO
     org.springframework.web: ERROR
-    com.niuchaoqun.springboot.client: DEBUG
+    com.niuchaoqun.springboot.mvc: DEBUG
   file:
     max-size: 512MB
     max-history: 3

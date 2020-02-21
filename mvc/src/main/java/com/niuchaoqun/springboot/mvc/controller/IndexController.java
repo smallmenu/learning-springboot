@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.mvc.controller;
 
 import com.niuchaoqun.springboot.mvc.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class IndexController {
-
-    private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
-
     @RequestMapping("/")
     @ResponseBody
     public String index() {
@@ -85,8 +84,8 @@ public class IndexController {
             headers.put(headerName, value);
         }
 
-        logger.info(headers.toString());
-        logger.info(userAgent);
+        log.info(headers.toString());
+        log.info(userAgent);
         return headers;
     }
 
@@ -107,7 +106,7 @@ public class IndexController {
         requests.put("getRequestURL", request.getRequestURL().toString());
         requests.put("RemoteAddr", request.getRemoteAddr());
 
-        logger.info(requests.toString());
+        log.info(requests.toString());
         return requests;
     }
 
@@ -121,8 +120,8 @@ public class IndexController {
     @RequestMapping(value = "/getsimple", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String getSimple(String text1, String text2) {
-        logger.info(text1);
-        logger.info(text2);
+        log.info(text1);
+        log.info(text2);
         return text1 + "/" + text2;
     }
 
@@ -139,8 +138,8 @@ public class IndexController {
     @RequestMapping(value = "/get", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String get(@RequestParam("text1") String text1, @RequestParam(value = "text2") String text2) {
-        logger.info(text1);
-        logger.info(text2);
+        log.info(text1);
+        log.info(text2);
 
         return text1 + "/" + text2;
     }
@@ -162,9 +161,9 @@ public class IndexController {
     public String gets(String text1,
                        @RequestParam(value = "text2", defaultValue = "value2", required = true) String text2,
                        @RequestParam(value = "checkbox[]", required = false) ArrayList<String> checkbox) {
-        logger.info(text1);
-        logger.info(text2);
-        logger.info(ArrayUtils.toString(checkbox));
+        log.info(text1);
+        log.info(text2);
+        log.info(ArrayUtils.toString(checkbox));
 
         StringBuilder response = new StringBuilder();
         response.append(text1 + "/");
@@ -184,7 +183,7 @@ public class IndexController {
     @RequestMapping("/getmap")
     @ResponseBody
     public Map<String, Object> getMap(@RequestParam Map<String, Object> gets) {
-        logger.info(gets.toString());
+        log.info(gets.toString());
 
         return gets;
     }
@@ -198,8 +197,8 @@ public class IndexController {
     @RequestMapping("/getmodel")
     @ResponseBody
     public User getModel(@Valid User user, String address) {
-        logger.info(user.toString());
-        logger.info(address);
+        log.info(user.toString());
+        log.info(address);
         return user;
     }
 
@@ -256,13 +255,13 @@ public class IndexController {
      */
     @ModelAttribute(value = "model1")
     public String modelSet1() {
-        logger.info("ModelAttribute model1");
+        log.info("ModelAttribute model1");
         return "model1";
     }
 
     @ModelAttribute(value = "model2")
     public User modelSet2() {
-        logger.info("ModelAttribute model2");
+        log.info("ModelAttribute model2");
         User user = new User();
         user.setId(1L);
         user.setName("ModelAttribute User");

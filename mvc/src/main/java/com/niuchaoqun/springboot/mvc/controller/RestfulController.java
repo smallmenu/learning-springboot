@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.mvc.controller;
 
 import com.niuchaoqun.springboot.mvc.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +15,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @RestController
 @RequestMapping("/rest")
+@Slf4j
 public class RestfulController {
-
-    private final static Logger logger = LoggerFactory.getLogger(RestfulController.class);
-
     private final AtomicLong counter = new AtomicLong();
 
     /**

@@ -1,5 +1,6 @@
 package com.niuchaoqun.springboot.mvc.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 @Controller
+@Slf4j
 public class CookieController {
-    final private static Logger logger = LoggerFactory.getLogger(CookieController.class);
-
     /**
      * 通过HttpServletResponse设置cookie
      *
@@ -56,7 +56,7 @@ public class CookieController {
             }
         }
 
-        logger.info(cookie1);
+        log.info(cookie1);
 
         return map.toString();
     }

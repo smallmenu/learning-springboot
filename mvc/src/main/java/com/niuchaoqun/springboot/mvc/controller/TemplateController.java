@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.mvc.controller;
 
 import com.niuchaoqun.springboot.mvc.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/template")
+@Slf4j
 public class TemplateController {
 
     @RequestMapping("/setmodel")

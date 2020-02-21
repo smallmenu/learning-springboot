@@ -1,6 +1,6 @@
 # learning-springboot
 
-基于 spring boot 2.1.X （2.0.X 参考 2.0.X 分支）
+基于 spring boot 2.1.X （2.0.X 可参考 2.0.X 分支）
 
 spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 springboot 学习项目：
 
@@ -19,7 +19,7 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 * springboot helloworld
 * 使用 springboot 以及 maven、pom.xml
 * 命令行运行程序
-* application.properties 的常规配置、多配置文件的加载（spring.profiles.active 与 spring.profiles.include）
+* application.yml 的常规配置、多配置文件的加载（spring.profiles.active 与 spring.profiles.include）
 * 配置日志
 * 通过 Java Properties 类读取自定义配置
 
@@ -36,14 +36,12 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 
 ### jpa
 
-* 使用 Jetty 代替默认的 Tomcat
-* 集成 lombok
 * JPA 相关操作，定义实体，定义 Repository，CURD 以及分页操作示例
 * 模拟业务场景中的 Controller -> Service -> Repository -> Entity 操作流程
 * 通过定义 DTO 接受参数映射
 * JPA 一对一，一对多，多对多关联示例
 
-### mybatis
+### mybatis (原生太繁琐)
 
 * Mybatis 以及 Mybatis Generator 常规操作示例
 * Mapper 与 XML Mapper 操作示例
@@ -76,11 +74,11 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 
 ### admin
 
-* springboot-admin 提供应用注册监控管理界面，含登陆页面
+* springboot-admin 提供应用注册监控管理界面，含登陆认证
 
 ### client
 
-* springboot-client 应用注册到admin，然后通过admin进行管理
+* springboot-client 注册到admin，然后通过admin进行管理
 
 
 ## 文章目录

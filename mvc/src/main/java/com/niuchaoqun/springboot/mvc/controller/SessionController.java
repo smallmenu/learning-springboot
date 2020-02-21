@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.mvc.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 
 @Controller
+@Slf4j
 public class SessionController {
-
-    final private static Logger logger = LoggerFactory.getLogger(SessionController.class);
-
     @RequestMapping("/setsession")
     @ResponseBody
     public String setSession(HttpSession session) {
@@ -36,9 +35,9 @@ public class SessionController {
         String session2 = (String) session.getAttribute("session2");
         String http_session1 = (String) httpSession.getAttribute("session1");
 
-        logger.info(http_session1);
-        logger.info(session1);
-        logger.info(session2);
+        log.info(http_session1);
+        log.info(session1);
+        log.info(session2);
 
         HashMap<String, String> sessionMap = new HashMap<>();
         Enumeration<String> sessions = session.getAttributeNames();

@@ -12,6 +12,7 @@ import com.niuchaoqun.springboot.mybatis.common.mapper.RoleMapper;
 import com.niuchaoqun.springboot.mybatis.common.mapper.UserDetailMapper;
 import com.niuchaoqun.springboot.mybatis.common.mapper.UserMapper;
 import com.niuchaoqun.springboot.mybatis.common.mapper.UserProfileMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +31,8 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class UserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
     @Autowired
     UserMapper userMapper;
 

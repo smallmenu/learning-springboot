@@ -1,11 +1,13 @@
 package com.niuchaoqun.springboot.jpa.controller;
 
-import com.niuchaoqun.springboot.jpa.core.BaseController;
-import com.niuchaoqun.springboot.jpa.core.Response;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
+import com.niuchaoqun.springboot.commons.rest.RestResult;
 import com.niuchaoqun.springboot.jpa.entity.Order;
 import com.niuchaoqun.springboot.jpa.entity.Product;
 import com.niuchaoqun.springboot.jpa.entity.User;
 import com.niuchaoqun.springboot.jpa.repository.OrderRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,46 +21,45 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/order")
+@Slf4j
 public class OrderController extends BaseController {
-    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
-
     @Autowired
     private OrderRepository orderRepository;
 
     @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
-    public Object get(@PathVariable Long orderId) {
+    public RestResult get(@PathVariable Long orderId) {
         if (orderId > 0) {
             Optional<Order> order = orderRepository.findById(orderId);
-            return Response.data(order.orElse(null));
+            return RestResponse.data(order.orElse(null));
         }
 
-        return Response.error("参数错误");
+        return RestResponse.fail("参数错误");
     }
 
     @RequestMapping(value = "/product/{orderId}", method = RequestMethod.GET)
-    public Object product(@PathVariable Long orderId) {
+    public RestResult product(@PathVariable Long orderId) {
         if (orderId > 0) {
             Optional<Order> order = orderRepository.findById(orderId);
             if (order.isPresent()) {
                 List<Product> products = order.get().getProducts();
-                return Response.data(products);
+                return RestResponse.data(products);
             }
         }
 
-        return Response.error("参数错误");
+        return RestResponse.fail("参数错误");
     }
 
     @RequestMapping(value = "/user/{orderId}", method = RequestMethod.GET)
-    public Object user(@PathVariable Long orderId) {
+    public RestResult user(@PathVariable Long orderId) {
         if (orderId > 0) {
             Optional<Order> order = orderRepository.findById(orderId);
             if (order.isPresent()) {
                 User user = order.get().getUser();
-                return Response.data(user);
+                return RestResponse.data(user);
             }
         }
 
-        return Response.error("参数错误");
+        return RestResponse.fail("参数错误");
     }
 
 }

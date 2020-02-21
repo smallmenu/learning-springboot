@@ -1,7 +1,7 @@
 package com.niuchaoqun.springboot.jpa.controller;
 
-import com.niuchaoqun.springboot.jpa.core.RestResponse;
-import com.niuchaoqun.springboot.jpa.core.RestResult;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
+import com.niuchaoqun.springboot.commons.rest.RestResult;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

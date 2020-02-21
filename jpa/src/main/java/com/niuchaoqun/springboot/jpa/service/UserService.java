@@ -10,6 +10,7 @@ import com.niuchaoqun.springboot.jpa.repository.RoleRepository;
 import com.niuchaoqun.springboot.jpa.repository.UserDetailRepository;
 import com.niuchaoqun.springboot.jpa.repository.UserProfileRepository;
 import com.niuchaoqun.springboot.jpa.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
     @Autowired
     UserRepository userRepository;
 

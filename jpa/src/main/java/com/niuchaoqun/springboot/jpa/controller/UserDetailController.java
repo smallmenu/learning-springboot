@@ -1,9 +1,10 @@
 package com.niuchaoqun.springboot.jpa.controller;
 
-import com.niuchaoqun.springboot.jpa.core.BaseController;
-import com.niuchaoqun.springboot.jpa.core.Response;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
 import com.niuchaoqun.springboot.jpa.entity.UserDetail;
 import com.niuchaoqun.springboot.jpa.repository.UserDetailRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user_detail")
+@Slf4j
 public class UserDetailController extends BaseController {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserDetailController.class);
-
     @Autowired
     private UserDetailRepository userDetailRepository;
 
@@ -26,10 +25,10 @@ public class UserDetailController extends BaseController {
         if (userId > 0) {
             UserDetail userDetail = userDetailRepository.findByUserId(userId);
             if (userDetail != null) {
-                return Response.data(userDetail);
+                return RestResponse.data(userDetail);
             }
         }
 
-        return Response.error("参数错误");
+        return RestResponse.fail("参数错误");
     }
 }

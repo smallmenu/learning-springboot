@@ -1,9 +1,11 @@
 package com.niuchaoqun.springboot.mybatis.common.controller;
 
-import com.niuchaoqun.springboot.mybatis.common.core.BaseController;
-import com.niuchaoqun.springboot.mybatis.common.core.Response;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
+import com.niuchaoqun.springboot.commons.rest.RestResult;
 import com.niuchaoqun.springboot.mybatis.common.entity.UserDetail;
 import com.niuchaoqun.springboot.mybatis.common.mapper.UserDetailMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user_detail")
+@Slf4j
 public class UserDetailController extends BaseController {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserDetailController.class);
-
     @Autowired
     private UserDetailMapper userDetailMapper;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public Object get(@PathVariable Long userId) {
+    public RestResult get(@PathVariable Long userId) {
         if (userId > 0) {
             UserDetail select = new UserDetail();
             select.setUserId(userId);
             UserDetail userDetail = userDetailMapper.selectOne(select);
             if (userDetail != null) {
-                return Response.data(userDetail);
+                return RestResponse.data(userDetail);
             }
         }
 
-        return Response.error("参数错误");
+        return RestResponse.fail("参数错误");
     }
 }

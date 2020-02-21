@@ -1,0 +1,47 @@
+server:
+  port: 9999
+  undertow:
+    io-threads: 2
+    worker-threads: 16
+
+spring:
+  application:
+    name: mybatis-common
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000
+        instance:
+          prefer-ip: true
+        username: admin
+        password: springboot.admin
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123123
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      pool-name: MySQLHikari
+  jpa:
+    database: mysql
+    show-sql: true
+    generate-ddl: false
+
+logging.file: springboot-mybatis-common.log
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.niuchaoqun.springboot.mybatis.common: DEBUG
+  file:
+    max-size: 512MB
+    max-history: 3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

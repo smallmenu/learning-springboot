@@ -1,8 +1,9 @@
 package com.niuchaoqun.springboot.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.niuchaoqun.springboot.security.rest.RestResponse;
-import com.niuchaoqun.springboot.security.rest.RestResult;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
+import com.niuchaoqun.springboot.commons.rest.RestResult;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
 

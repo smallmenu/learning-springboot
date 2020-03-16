@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.admin.mvc.rabbitmq;
+package com.niuchaoqun.springboot.rabbitmq;
 
 import com.niuchaoqun.springboot.rabbitmq.sender.DirectSender;
 import com.niuchaoqun.springboot.rabbitmq.sender.FanoutSender;

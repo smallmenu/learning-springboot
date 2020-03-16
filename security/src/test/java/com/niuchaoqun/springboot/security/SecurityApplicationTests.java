@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.admin.mvc.client;
+package com.niuchaoqun.springboot.security;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ClientApplicationTests {
+public class SecurityApplicationTests {
 
     @Test
     public void contextLoads() {

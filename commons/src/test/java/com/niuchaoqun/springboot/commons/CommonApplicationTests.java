@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.admin.mvc.commons;
+package com.niuchaoqun.springboot.commons;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.admin.mvc.quartz;
+package com.niuchaoqun.springboot.mvc;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class QuartzApplicationTests {
+public class MvcApplicationTests {
 
     @Test
     public void contextLoads() {

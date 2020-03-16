@@ -1,0 +1,34 @@
+server:
+  port: 9999
+  undertow:
+    io-threads: 2
+    worker-threads: 16
+
+spring:
+  rabbitmq:
+    host: 192.168.101.170
+    port: 5672
+    username: admin
+    password: admin
+    listener:
+      simple.acknowledge-mode: manual
+
+logging.file: springboot-rabbitmq.log
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.niuchaoqun.springboot.rabbitmq: DEBUG
+  file:
+    max-size: 512MB
+    max-history: 3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+

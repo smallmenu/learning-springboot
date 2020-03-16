@@ -1,6 +1,5 @@
 package com.niuchaoqun.springboot.hello;
 
-import com.niuchaoqun.springboot.hello.property.AppProperty;
 import com.niuchaoqun.springboot.hello.property.CustomProperty;
 import com.niuchaoqun.springboot.hello.property.MysqlProperty;
 import lombok.extern.slf4j.Slf4j;
@@ -13,21 +12,15 @@ import org.springframework.stereotype.Component;
 public class Bootstrap implements CommandLineRunner {
     @Autowired
     private MysqlProperty mysqlProperty;
-
-    @Autowired
-    private AppProperty appProperty;
-
     @Autowired
     private CustomProperty customProperty;
 
     @Override
     public void run(String... args) throws Exception {
         log.debug(mysqlProperty.toString());
-        log.debug(appProperty.toString());
         log.debug(customProperty.toString());
 
         System.out.println(mysqlProperty.toString());
-        System.out.println(appProperty.toString());
         System.out.println(customProperty.toString());
     }
 }

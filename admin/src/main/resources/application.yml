@@ -19,6 +19,6 @@ logging:
     org.springframework.web: ERROR
     com.niuchaoqun.springboot.admin: DEBUG
   file:
-    max-size: 512MB
+    max-size: 256MB
     max-history: 3
 

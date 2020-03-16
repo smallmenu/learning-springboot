@@ -29,7 +29,7 @@ logging:
     org.springframework.web: ERROR
     com.niuchaoqun.springboot.mybatis: DEBUG
   file:
-    max-size: 512MB
+    max-size: 256MB
     max-history: 3
 
 management:

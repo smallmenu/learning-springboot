@@ -1,12 +1,9 @@
 server:
   port: 9999
-  undertow:
-    io-threads: 2
-    worker-threads: 16
 
 spring:
   application:
-    name: mybatis-common
+    name: jpa
   boot:
     admin:
       client:

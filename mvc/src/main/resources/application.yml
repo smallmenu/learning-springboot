@@ -1,8 +1,5 @@
 server:
   port: 9999
-  undertow:
-    io-threads: 2
-    worker-threads: 16
   compression:
     enabled: true
   # 关闭默认的错误页面

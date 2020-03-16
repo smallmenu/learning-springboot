@@ -1,10 +1,13 @@
 spring:
+  application:
+    name: hello
   profiles:
     active:
       - develop
       - product
     include:
       - custom
+
 
 logging.file: springboot-hello.log
 logging:

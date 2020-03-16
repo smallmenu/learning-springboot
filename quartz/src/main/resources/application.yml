@@ -1,8 +1,8 @@
 server:
   port: 9999
   undertow:
-    io-threads: 2
-    worker-threads: 16
+    io-threads: 1
+    worker-threads: 8
 
 spring:
   datasource:

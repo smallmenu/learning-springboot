@@ -3,17 +3,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.niuchaoqun.springboot</groupId>
     <artifactId>hello</artifactId>
-    <version>2.0</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>hello</name>
     <description>HelloWorld project for Spring Boot</description>
 
     <parent>
-        <groupId>com.niuchaoqun.springboot</groupId>
+        <groupId>com.niuchaoqun</groupId>
         <artifactId>springboot</artifactId>
-        <version>2.0</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -27,6 +28,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
@@ -37,6 +58,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

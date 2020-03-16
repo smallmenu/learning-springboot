@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>admin</artifactId>
-    <version>2.0</version>
+    <version>2.1</version>
     <packaging>jar</packaging>
 
     <name>admin</name>
@@ -13,7 +13,7 @@
     <parent>
         <groupId>com.niuchaoqun.springboot</groupId>
         <artifactId>springboot</artifactId>
-        <version>2.0</version>
+        <version>2.1</version>
     </parent>
 
     <dependencies>
@@ -50,7 +50,7 @@
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-dependencies</artifactId>
-                <version>2.0.6</version>
+                <version>${springboot-admin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

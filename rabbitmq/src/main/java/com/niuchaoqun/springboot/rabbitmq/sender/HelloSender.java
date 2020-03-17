@@ -4,8 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import static com.github.suosi.commons.helper.Static.date;
 
 @Component
 public class HelloSender {
@@ -14,8 +13,7 @@ public class HelloSender {
     private RabbitTemplate rabbitTemplate;
 
     public void send() {
-        String datetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
+        String datetime = date();
         String message = "Hello World! " + datetime;
 
         System.out.println("Send <" + message + ">");

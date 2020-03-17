@@ -1,14 +1,15 @@
 package com.niuchaoqun.springboot.redis.controller;
 
-
-import com.niuchaoqun.springboot.redis.core.BaseController;
-import com.niuchaoqun.springboot.redis.core.Response;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
+import com.niuchaoqun.springboot.commons.rest.RestResult;
 import com.niuchaoqun.springboot.redis.pojo.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,56 +17,56 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author niuchaoqun
+ */
 @RestController
 @RequestMapping("/string")
+@Slf4j
 public class StringController extends BaseController {
-    private static final Logger logger = LoggerFactory.getLogger(StringController.class);
-
-    @Autowired
-    private RedisTemplate<String, String> stringRedisTemplate;
-
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @RequestMapping("/set")
-    public Object set(@RequestParam(value = "stringKey", defaultValue = "string_key") String stringKey) {
-        ValueOperations operations = stringRedisTemplate.opsForValue();
+    @GetMapping("/set")
+    public RestResult set(@RequestParam(value = "stringKey", defaultValue = "string_key") String stringKey) {
+        ValueOperations operations = redisTemplate.opsForValue();
         operations.set(stringKey, "test_redis_value", 360, TimeUnit.SECONDS);
 
-        return Response.success();
+        return RestResponse.success();
     }
 
-    @RequestMapping("/get")
-    public Object get(@RequestParam(value = "stringKey", defaultValue = "string_key") String stringKey) {
-        ValueOperations operations = stringRedisTemplate.opsForValue();
-        if (stringRedisTemplate.hasKey(stringKey)) {
+    @GetMapping("/get")
+    public RestResult get(@RequestParam(value = "stringKey", defaultValue = "string_key") String stringKey) {
+        ValueOperations operations = redisTemplate.opsForValue();
+        if (BooleanUtils.isTrue(redisTemplate.hasKey(stringKey))) {
+            // 没有指定泛型，获取时则需要进行类型转换
             String result = (String) operations.get(stringKey);
-            return Response.success(result);
+            return RestResponse.success(result);
         } else {
-            return Response.error("not exist");
+            return RestResponse.fail("not exist");
         }
     }
 
-    @RequestMapping("/seti")
-    public Object seti(@RequestParam(value = "integerKey", defaultValue = "integer_key") String integerKey) {
+    @GetMapping("/seti")
+    public RestResult seti(@RequestParam(value = "integerKey", defaultValue = "integer_key") String integerKey) {
         ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
         operations.set(integerKey, 200, 360, TimeUnit.SECONDS);
 
-        return Response.success();
+        return RestResponse.success();
     }
 
-    @RequestMapping("/geti")
-    public Object geti(@RequestParam(value = "integerKey", defaultValue = "integer_key") String integerKey) {
+    @GetMapping("/geti")
+    public RestResult geti(@RequestParam(value = "integerKey", defaultValue = "integer_key") String integerKey) {
         ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
-        if (redisTemplate.hasKey(integerKey)) {
+        if (BooleanUtils.isTrue(redisTemplate.hasKey(integerKey))) {
             Integer integer = operations.get(integerKey);
-            return Response.success(String.valueOf(integer));
+            return RestResponse.data(integer);
         } else {
-            return Response.error("not exist");
+            return RestResponse.fail("not exist");
         }
     }
 
-    @RequestMapping("/seta")
+    @GetMapping("/seta")
     public Object seta(@RequestParam(value = "arrayKey", defaultValue = "array_key") String arrayKey) {
         ArrayList<String> arrays = new ArrayList<>();
         arrays.add("AA");
@@ -75,21 +76,21 @@ public class StringController extends BaseController {
         ValueOperations<String, ArrayList<String>> operations = redisTemplate.opsForValue();
         operations.set(arrayKey, arrays, 360, TimeUnit.SECONDS);
 
-        return Response.success();
+        return RestResponse.success();
     }
 
-    @RequestMapping("/geta")
+    @GetMapping("/geta")
     public Object geta(@RequestParam(value = "arrayKey", defaultValue = "array_key") String arrayKey) {
         ValueOperations<String, ArrayList<String>> operations = redisTemplate.opsForValue();
-        if (redisTemplate.hasKey(arrayKey)) {
+        if (BooleanUtils.isTrue(redisTemplate.hasKey(arrayKey))) {
             ArrayList<String> arrays = operations.get(arrayKey);
-            return Response.data(arrays);
+            return RestResponse.data(arrays);
         } else {
-            return Response.error("not exist");
+            return RestResponse.fail("not exist");
         }
     }
 
-    @RequestMapping("/setobject")
+    @GetMapping("/setobject")
     public Object setObject(@RequestParam(value = "objectKey", defaultValue = "object_key") String objectKey) {
         User user = new User();
         user.setId(1);
@@ -98,17 +99,17 @@ public class StringController extends BaseController {
 
         ValueOperations<String, User> operations = redisTemplate.opsForValue();
         operations.set(objectKey, user);
-        return Response.success();
+        return RestResponse.success();
     }
 
-    @RequestMapping("/getobject")
+    @GetMapping("/getobject")
     public Object getObject(@RequestParam(value = "objectKey", defaultValue = "object_key") String objectKey) {
         ValueOperations<String, User> operations = redisTemplate.opsForValue();
-        if (redisTemplate.hasKey(objectKey)) {
+        if (BooleanUtils.isTrue(redisTemplate.hasKey(objectKey))) {
             User user = operations.get(objectKey);
-            return Response.data(user);
+            return RestResponse.data(user);
         } else {
-            return Response.error("not exist");
+            return RestResponse.fail("not exist");
         }
     }
 }

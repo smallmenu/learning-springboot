@@ -1,9 +1,8 @@
 package com.niuchaoqun.springboot.redis.controller;
 
-import com.niuchaoqun.springboot.redis.core.BaseController;
-import com.niuchaoqun.springboot.redis.core.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author niuchaoqun
+ */
 @RequestMapping("/hash")
 @RestController
+@Slf4j
 public class HashController extends BaseController {
-    private static final Logger logger = LoggerFactory.getLogger(HashController.class);
-
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -29,6 +30,6 @@ public class HashController extends BaseController {
 
         String value = operations.get(hashKey, "key2");
 
-        return Response.success(value);
+        return RestResponse.success(value);
     }
 }

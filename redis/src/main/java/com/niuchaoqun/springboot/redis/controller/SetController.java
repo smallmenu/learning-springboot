@@ -1,9 +1,8 @@
 package com.niuchaoqun.springboot.redis.controller;
 
-import com.niuchaoqun.springboot.redis.core.BaseController;
-import com.niuchaoqun.springboot.redis.core.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
@@ -13,9 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/set")
 @RestController
+@Slf4j
 public class SetController extends BaseController {
-    private static final Logger logger = LoggerFactory.getLogger(SetController.class);
-
     @Autowired
     private RedisTemplate<String, String> stringRedisTemplate;
 
@@ -29,6 +27,6 @@ public class SetController extends BaseController {
 
         String random = operations.randomMember(setKey);
 
-        return Response.success(random);
+        return RestResponse.success(random);
     }
 }

@@ -1,34 +1,33 @@
 package com.niuchaoqun.springboot.redis.controller;
 
-import com.niuchaoqun.springboot.redis.core.BaseController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import static com.github.suosi.commons.helper.Static.date;
 
+/**
+ * @author niuchaoqun
+ */
 @RestController
+@Slf4j
 public class IndexController extends BaseController {
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
-
     @Autowired
     StringRedisTemplate template;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "hello, redis";
     }
 
-    @RequestMapping("/message")
+    @GetMapping("/message")
     public void message() {
-
-        String message = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String message = date();
         for (int i = 0; i < 5; i++) {
-            template.convertAndSend("chat", message+ " " + i);
+            template.convertAndSend("redis message ", message + " " + i);
         }
     }
 }

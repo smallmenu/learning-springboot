@@ -7,7 +7,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @EnableCaching
-@MapperScan(basePackages = "com.niuchaoqun.springboot.mapper")
+@MapperScan(basePackages = "com.niuchaoqun.springboot.redis.mapper")
 public class RedisApplication {
 
     public static void main(String[] args) {

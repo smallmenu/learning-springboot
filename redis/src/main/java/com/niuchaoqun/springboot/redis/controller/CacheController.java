@@ -1,12 +1,11 @@
 package com.niuchaoqun.springboot.redis.controller;
 
-import com.niuchaoqun.springboot.redis.core.BaseController;
-import com.niuchaoqun.springboot.redis.core.Response;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
 import com.niuchaoqun.springboot.redis.entity.Product;
 import com.niuchaoqun.springboot.redis.mapper.ProductMapper;
 import com.niuchaoqun.springboot.redis.service.ProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cache")
+@Slf4j
 public class CacheController extends BaseController {
-    public static final Logger logger = LoggerFactory.getLogger(CacheController.class);
-
     @Autowired
     private ProductService productService;
 
@@ -27,10 +25,10 @@ public class CacheController extends BaseController {
     public Object products(@RequestParam(value = "id", required = false) Integer id) {
         if (id != null && id > 0) {
             List<Product> productWhere = productService.getProductWhere(id);
-            return Response.data(productWhere);
+            return RestResponse.data(productWhere);
         } else {
             List<Product> allProduct = productService.getAllProduct();
-            return Response.data(allProduct);
+            return RestResponse.data(allProduct);
         }
     }
 
@@ -39,10 +37,10 @@ public class CacheController extends BaseController {
         if (productId > 0) {
             Product product = productService.getProductById(productId);
             if (product != null) {
-                return Response.data(product);
+                return RestResponse.data(product);
             }
         }
-        return Response.error();
+        return RestResponse.error();
     }
 
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.PUT)
@@ -51,8 +49,8 @@ public class CacheController extends BaseController {
             Product product = productMapper.selectByPrimaryKey(productId);
             product.setPrice(0.00);
             Product save = productService.save(product);
-            return Response.data(save);
+            return RestResponse.data(save);
         }
-        return Response.error();
+        return RestResponse.error();
     }
 }

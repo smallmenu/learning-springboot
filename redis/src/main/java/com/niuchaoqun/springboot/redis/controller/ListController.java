@@ -1,10 +1,9 @@
 package com.niuchaoqun.springboot.redis.controller;
 
-import com.niuchaoqun.springboot.redis.core.BaseController;
-import com.niuchaoqun.springboot.redis.core.Response;
+import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.commons.rest.RestResponse;
 import com.niuchaoqun.springboot.redis.pojo.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/list")
+@Slf4j
 public class ListController extends BaseController {
-    private static final Logger logger = LoggerFactory.getLogger(ListController.class);
 
     @Autowired
     private RedisTemplate<String, String> stringRedisTemplate;
@@ -39,7 +38,7 @@ public class ListController extends BaseController {
 
         String pop = operations.leftPop(listKey);
 
-        return Response.success(pop);
+        return RestResponse.success(pop);
     }
 
     @RequestMapping("/object")
@@ -61,6 +60,6 @@ public class ListController extends BaseController {
 
         User user = operations.leftPop(objectKey);
 
-        return Response.data(user);
+        return RestResponse.data(user);
     }
 }

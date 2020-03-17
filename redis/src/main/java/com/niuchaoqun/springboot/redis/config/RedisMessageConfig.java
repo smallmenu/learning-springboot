@@ -9,7 +9,10 @@ import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
-@Configuration
+/**
+ * @author niuchaoqun
+ */
+//@Configuration
 public class RedisMessageConfig {
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {

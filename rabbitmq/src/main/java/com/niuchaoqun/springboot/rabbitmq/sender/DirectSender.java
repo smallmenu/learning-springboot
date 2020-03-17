@@ -5,8 +5,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import static com.github.suosi.commons.helper.Static.date;
 
 @Component
 public class DirectSender {
@@ -17,9 +16,9 @@ public class DirectSender {
     private DirectExchange directExchange;
 
     public void send() {
-        String datetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String datetime = date();
 
-        String message = "Hello World! ";
+        String message = "Direct Hello World! ";
 
         System.out.println("Direct Send <" + message + datetime +  ">");
 
@@ -31,7 +30,7 @@ public class DirectSender {
             e.printStackTrace();
         }
 
-        datetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        datetime = date();
 
         rabbitTemplate.convertAndSend(directExchange.getName(), "error", message + datetime);
 

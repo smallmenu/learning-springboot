@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Configuration;
  * @author niuchaoqun
  */
 @Configuration
-@ConfigurationProperties(prefix = "redis-manual")
+@ConfigurationProperties(prefix = "redis-other")
 @Data
-public class RedisManualProperty {
+public class RedisOtherProperty {
     private String host;
     private Integer port;
     private Integer database;

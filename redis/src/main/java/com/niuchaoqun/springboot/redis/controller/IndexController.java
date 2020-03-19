@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.redis.controller;
 
 import com.niuchaoqun.springboot.commons.base.BaseController;
+import com.niuchaoqun.springboot.redis.property.RedisManualProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,7 +17,10 @@ import static com.github.suosi.commons.helper.Static.date;
 @Slf4j
 public class IndexController extends BaseController {
     @Autowired
-    StringRedisTemplate template;
+    private StringRedisTemplate template;
+
+    @Autowired
+    private RedisManualProperty redisManualProperty;
 
     @GetMapping("/")
     public String index() {

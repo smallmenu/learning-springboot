@@ -20,17 +20,20 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author niuchaoqun
  */
-@RequestMapping("/manual")
+@RequestMapping("/multiple")
 @RestController
 @Slf4j
-public class ManualController {
-
+public class MultipleController {
     @Autowired
     private RedisTemplate redisTemplate;
 
     @Autowired
     @Qualifier("manualRedisTemplate")
     private RedisTemplate manualRedisTemplate;
+
+    @Autowired
+    @Qualifier("otherRedisTemplate")
+    private RedisTemplate otherRedisTemplate;
 
     @GetMapping("/set")
     public RestResult set(@RequestParam(value = "stringKey", defaultValue = "manual_string_key") String stringKey) {
@@ -40,6 +43,9 @@ public class ManualController {
         ValueOperations<String, String> operations2 = manualRedisTemplate.opsForValue();
         operations2.set(stringKey, "manual_test_redis_value2", 360, TimeUnit.SECONDS);
 
+        ValueOperations<String, String> operations3 = otherRedisTemplate.opsForValue();
+        operations3.set(stringKey, "manual_test_redis_value3", 360, TimeUnit.SECONDS);
+
         return RestResponse.success();
     }
 
@@ -48,6 +54,7 @@ public class ManualController {
         ValueOperations<String, String> operations1 = redisTemplate.opsForValue();
         String string1 = null;
         String string2 = null;
+        String string3 = null;
         if (BooleanUtils.isTrue(redisTemplate.hasKey(stringKey))) {
             string1 = operations1.get(stringKey);
         }
@@ -57,9 +64,15 @@ public class ManualController {
             string2 = operations2.get(stringKey);
         }
 
+        ValueOperations<String, String> operations3 = otherRedisTemplate.opsForValue();
+        if (BooleanUtils.isTrue(otherRedisTemplate.hasKey(stringKey))) {
+            string3 = operations3.get(stringKey);
+        }
+
         List<String> strings = new ArrayList<>();
         strings.add(string1);
         strings.add(string2);
+        strings.add(string3);
 
         return RestResponse.data(strings);
     }

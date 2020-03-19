@@ -11,11 +11,11 @@ spring:
     port: 6379
     database: 0
     password: Redis123.com
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 0
+  #    lettuce:
+  #      pool:
+  #        max-active: 8
+  #        max-idle: 8
+  #        min-idle: 0
   cache:
     type: redis
     redis:
@@ -24,6 +24,7 @@ spring:
     store-type: redis
     timeout: 3600
 
+# 手动配置 Redis 实例
 redis-manual:
   host: localhost
   port: 6379
@@ -31,7 +32,20 @@ redis-manual:
   password: Redis123.com
   lettuce:
     pool:
-      test: 2
+      max-active: 10
+      max-idle: 10
+      min-idle: 0
+
+redis-other:
+  host: localhost
+  port: 6379
+  database: 2
+  password: Redis123.com
+  lettuce:
+    pool:
+      max-active: 11
+      max-idle: 11
+      min-idle: 0
 
 mybatis:
   type-aliases-package: com.niuchaoqun.springboot.redis.entity

@@ -9,13 +9,15 @@ import org.springframework.context.annotation.Configuration;
  * @author niuchaoqun
  */
 @Configuration
-@ConfigurationProperties(prefix = "redis-manual")
+@ConfigurationProperties(prefix = "spring.redis")
 @Data
-public class RedisManualProperty {
+public class RedisDefaultProperty {
     private String host;
     private Integer port;
     private Integer database;
     private String password;
+
+    private RedisProperties.Cluster cluster;
 
     private RedisProperties.Lettuce lettuce;
 }

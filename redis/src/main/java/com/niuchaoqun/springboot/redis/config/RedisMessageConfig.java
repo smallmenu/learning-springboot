@@ -1,6 +1,6 @@
 package com.niuchaoqun.springboot.redis.config;
 
-import com.niuchaoqun.springboot.redis.pojo.Receiver;
+import com.niuchaoqun.springboot.redis.Receiver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

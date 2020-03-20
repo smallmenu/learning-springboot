@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ public class SetController extends BaseController {
     @Autowired
     private RedisTemplate<String, String> stringRedisTemplate;
 
-    @RequestMapping("/string")
+    @GetMapping("/string")
     public Object string(@RequestParam(value = "setKey", defaultValue = "set_key_string") String setKey) {
         SetOperations<String, String> operations = stringRedisTemplate.opsForSet();
         operations.add(setKey, "AA");

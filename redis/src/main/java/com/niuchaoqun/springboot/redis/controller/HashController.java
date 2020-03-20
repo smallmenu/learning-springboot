@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class HashController extends BaseController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @RequestMapping("/string")
+    @GetMapping("/string")
     public Object string(@RequestParam(value = "hashKey", defaultValue = "hash_key_string") String hashKey) {
         HashOperations<String, String, String> operations = redisTemplate.opsForHash();
 

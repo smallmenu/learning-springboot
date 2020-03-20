@@ -21,7 +21,7 @@ public class CacheController extends BaseController {
     @Autowired
     private ProductMapper productMapper;
 
-    @RequestMapping("/product")
+    @GetMapping("/product")
     public Object products(@RequestParam(value = "id", required = false) Integer id) {
         if (id != null && id > 0) {
             List<Product> productWhere = productService.getProductWhere(id);
@@ -32,7 +32,7 @@ public class CacheController extends BaseController {
         }
     }
 
-    @RequestMapping("/product/{productId}")
+    @GetMapping("/product/{productId}")
     public Object get(@PathVariable Long productId) {
         if (productId > 0) {
             Product product = productService.getProductById(productId);
@@ -43,7 +43,7 @@ public class CacheController extends BaseController {
         return RestResponse.error();
     }
 
-    @RequestMapping(value = "/product/{productId}", method = RequestMethod.PUT)
+    @PutMapping("/product/{productId}")
     public Object save(@PathVariable Long productId) {
         if (productId > 0) {
             Product product = productMapper.selectByPrimaryKey(productId);

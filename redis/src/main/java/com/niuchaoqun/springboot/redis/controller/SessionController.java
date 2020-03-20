@@ -2,6 +2,7 @@ package com.niuchaoqun.springboot.redis.controller;
 
 import com.niuchaoqun.springboot.commons.rest.RestResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -13,14 +14,14 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/session")
 @Slf4j
 public class SessionController {
-    @RequestMapping("/set")
+    @GetMapping("/set")
     public Object set(HttpSession session) {
         session.setAttribute("session1", "value1");
         session.setAttribute("session2", "value2");
         return RestResponse.success();
     }
 
-    @RequestMapping("/get")
+    @GetMapping("/get")
     public Object get(
             HttpServletRequest request,
             HttpSession httpSession,

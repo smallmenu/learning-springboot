@@ -30,8 +30,8 @@ public class IndexController extends BaseController {
     @GetMapping("/message")
     public void message() {
         String message = date();
-        for (int i = 0; i < 5; i++) {
-            template.convertAndSend("redis message ", message + " " + i);
+        for (int i = 0; i < 1000000; i++) {
+            template.convertAndSend("chat", message + " " + i);
         }
     }
 }

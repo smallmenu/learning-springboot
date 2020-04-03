@@ -1,6 +1,7 @@
 package com.niuchaoqun.springboot.security.jwt;
 
 import com.niuchaoqun.springboot.security.property.JwtProperty;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author niuchaoqun
+ */
 @Component
+@Slf4j
 public class JwtTokenAuthFilter extends OncePerRequestFilter {
-    private static final Logger logger = LoggerFactory.getLogger(JwtTokenAuthFilter.class);
-
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
@@ -51,7 +54,7 @@ public class JwtTokenAuthFilter extends OncePerRequestFilter {
 
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                        logger.info("authorized user '{}', setting security context", username);
+                        log.info("authorized user '{}', setting security context", username);
 
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
@@ -60,7 +63,7 @@ public class JwtTokenAuthFilter extends OncePerRequestFilter {
 
 
         } catch (Exception e) {
-            logger.error("set user authentication in security context", e);
+            log.error("set user authentication in security context", e);
         }
 
         // 下一个 FilterChain

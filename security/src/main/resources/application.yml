@@ -13,23 +13,34 @@ spring:
         username: admin
         password: springboot.admin
   datasource:
-    url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/springboot_security?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 123123
-    driver-class-name: com.mysql.jdbc.Driver
     hikari:
       pool-name: MySQLHikari
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password: Redis123.com
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 1
+        max-idle: 8
   security:
     user:
       name: admin
       password: admin
 
+  main:
+    allow-bean-definition-overriding: true
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.niuchaoqun.springboot.security.entity
+  type-aliases-package: com.niuchaoqun.springboot.security.entity,com.niuchaoqun.springboot.security.dto.form
 mapper:
   identity: mysql
   not-empty: false
@@ -38,13 +49,6 @@ pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
-
-jwt:
-  url: /jwt/**
-  login-url: /jwt/login
-  secret: secret
-  expiration: 3600000
-  header: Jwt-Authorization
 
 logging.file: springboot-security.log
 logging:
@@ -64,5 +68,16 @@ management:
   endpoint:
     health:
       show-details: always
+web:
+  jwt:
+    url: /api/**
+    login-url: /api/login
+    secret: secret
+    expiration: 3600000
+    header: Jwt-Authorization
+  config:
+    table-cache:
+      - role
+      - setting
 
 

@@ -37,7 +37,6 @@ public class WebSecurityConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.antMatcher("/basic/**").authorizeRequests().anyRequest().authenticated().and().httpBasic();
-
         }
     }
 

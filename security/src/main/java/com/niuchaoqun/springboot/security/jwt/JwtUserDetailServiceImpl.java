@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Optional;
 
+/**
+ * @author niuchaoqun
+ */
 @Service
 public class JwtUserDetailServiceImpl implements UserDetailsService {
 

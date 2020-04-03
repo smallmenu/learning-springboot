@@ -16,14 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author niuchaoqun
+ */
 @Component
 @Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
-
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        logger.error("jwt authorized error: {}", e.getMessage());
+        log.error("jwt authorized error: {}", e.getMessage());
 
         ServletOutputStream os = response.getOutputStream();
 

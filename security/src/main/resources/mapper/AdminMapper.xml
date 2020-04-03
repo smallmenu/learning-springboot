@@ -1,4 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.niuchaoqun.springboot.security.mapper.AdminMapper">
+    <resultMap id="AdminRelationResultMap" type="Admin">
+        <id property="id" column="id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="email" column="email"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+        <result property="createdby" column="createdby"/>
+        <result property="updatedby" column="updatedby"/>
+        <result property="state" column="state"/>
+        <result property="lastLoginIp" column="last_login_ip"/>
+        <result property="lastLogined" column="last_logined"/>
+        <association property="role" javaType="Role">
+            <id property="id" column="r_id"/>
+            <result property="name" column="r_name"/>
+            <result property="count" column="r_count"/>
+        </association>
+    </resultMap>
+
+    <select id="getRelationById" parameterType="long" resultMap="AdminRelationResultMap">
+        SELECT a.*, r.id as r_id, r.name as r_name, r.count as r_count
+        FROM admin a, role r
+        WHERE a.id = #{id} AND a.role_id = r.id
+    </select>
+
+
+    <select id="search" parameterType="AdminSearchForm" resultMap="AdminRelationResultMap">
+        SELECT a.*, r.id as r_id, r.name as r_name, r.count as r_count
+        FROM admin a, role r
+        WHERE a.role_id = r.id
+        <if test="state != null">
+            AND state = #{state}
+        </if>
+        <if test="roleId != null">
+            AND role_id = #{roleId}
+        </if>
+        <if test="username != null">
+            AND username LIKE #{username}"%"
+        </if>
+        <choose>
+            <when test="orderby != null">
+                ORDER BY ${orderby}
+            </when>
+            <otherwise>
+                ORDER BY id
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="order != null">
+                ${order}
+            </when>
+            <otherwise>
+                DESC
+            </otherwise>
+        </choose>
+    </select>
 </mapper>

@@ -1,8 +1,6 @@
 package com.niuchaoqun.springboot.commons.rest;
 
-/**
- * @author niuchaoqun
- */
+
 public final class RestResponse {
     public static <T> RestResult<T> error() {
         return new RestResult<T>().setCode(-1);

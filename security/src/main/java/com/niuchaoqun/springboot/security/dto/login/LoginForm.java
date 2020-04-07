@@ -5,9 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-/**
- * @author niuchaoqun
- */
+
 @Data
 public class LoginForm {
     @ApiModelProperty(value = "用户名", required = true, dataType = "String")

@@ -4,9 +4,7 @@ import com.niuchaoqun.springboot.security.entity.Role;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
-/**
- * @author niuchaoqun
- */
+
 @Repository
 public interface RoleMapper extends Mapper<Role> {
 }

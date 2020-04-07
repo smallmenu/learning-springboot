@@ -10,9 +10,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-/**
- * @author niuchaoqun
- */
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -23,6 +21,28 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.niuchaoqun.springboot.security.controller.api"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
+    public Docket createOpenapiDoc() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("openapi")
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.niuchaoqun.springboot.security.controller.openapi"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
+    public Docket createBasicDoc() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("basic")
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.niuchaoqun.springboot.security.controller.basic"))
                 .paths(PathSelectors.any())
                 .build();
     }

@@ -12,9 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author niuchaoqun
- */
+
 @Service
 @Slf4j
 public class RoleServiceImpl implements RoleService {

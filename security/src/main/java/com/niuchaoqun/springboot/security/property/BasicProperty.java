@@ -4,12 +4,14 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Set;
-
 
 @Configuration
-@ConfigurationProperties(prefix = "web.config")
+@ConfigurationProperties(prefix = "web.basic")
 @Data
-public class ConfigProperty {
-    private Set<String> tableCache;
+public class BasicProperty {
+    private String url;
+
+    private String user;
+
+    private String password;
 }

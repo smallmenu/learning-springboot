@@ -6,9 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 
-/**
- * @author niuchaoqun
- */
+
 @Data
 public class AdminLoginLogSearchForm {
 

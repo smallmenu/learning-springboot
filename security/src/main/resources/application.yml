@@ -32,7 +32,6 @@ spring:
     user:
       name: admin
       password: admin
-
   main:
     allow-bean-definition-overriding: true
 
@@ -74,7 +73,16 @@ web:
     login-url: /api/login
     secret: secret
     expiration: 3600000
-    header: Jwt-Authorization
+    header: Jwt-Auth
+  basic:
+    url: /basic/**
+    user: admin
+    password: password
+  openapi:
+    url: /openapi/**
+    header-key: Openapi-Auth
+    header-value: access
+    error: Openapi auth error
   config:
     table-cache:
       - role

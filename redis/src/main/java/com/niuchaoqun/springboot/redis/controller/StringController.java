@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author niuchaoqun
- */
+
 @RestController
 @RequestMapping("/string")
 @Slf4j

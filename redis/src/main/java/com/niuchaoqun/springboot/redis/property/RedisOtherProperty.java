@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author niuchaoqun
- */
+
 @Configuration
 @ConfigurationProperties(prefix = "redis-other")
 @Data

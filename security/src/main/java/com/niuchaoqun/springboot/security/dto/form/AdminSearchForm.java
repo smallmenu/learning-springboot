@@ -8,9 +8,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
-/**
- * @author niuchaoqun
- */
+
 @Data
 public class AdminSearchForm {
     @ApiModelProperty(value = "状态", required = false, dataType = "Integer")

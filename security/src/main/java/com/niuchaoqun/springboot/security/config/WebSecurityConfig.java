@@ -2,7 +2,9 @@ package com.niuchaoqun.springboot.security.config;
 
 import com.niuchaoqun.springboot.security.jwt.JwtAuthenticationEntryPoint;
 import com.niuchaoqun.springboot.security.jwt.JwtTokenAuthFilter;
+import com.niuchaoqun.springboot.security.property.BasicProperty;
 import com.niuchaoqun.springboot.security.property.JwtProperty;
+import com.niuchaoqun.springboot.security.property.OpenapiProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +32,34 @@ public class WebSecurityConfig {
      * http.antMatcher() 表示当前实例仅仅对这个路由进行配置
      * <p>
      * 这里是个 Http Basic Auth 认证
+     * <p>
+     * 因为抛弃了自动化配置，所以 spring.security.user 配置无效，需要手动指定用户名密码
      */
     @Configuration
     @Order(1)
     public static class BasicWebSecurityConfig extends WebSecurityConfigurerAdapter {
+        @Autowired
+        private BasicProperty basicProperty;
+
+        @Autowired
+        private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.inMemoryAuthentication()
+                    .withUser(basicProperty.getUser())
+                    .password(bCryptPasswordEncoder.encode(basicProperty.getPassword()))
+                    .roles("ADMIN");
+        }
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/basic/**").authorizeRequests().anyRequest().authenticated().and().httpBasic();
+            http.antMatcher(basicProperty.getUrl())
+                    .authorizeRequests()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .httpBasic();
         }
     }
 
@@ -49,6 +72,12 @@ public class WebSecurityConfig {
     public static class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Autowired
         private JwtProperty jwtProperty;
+
+        @Autowired
+        private OpenapiProperty openapiProperty;
+
+        @Autowired
+        private BasicProperty basicProperty;
 
         @Autowired
         private UserDetailsService userDetailsService;
@@ -95,6 +124,8 @@ public class WebSecurityConfig {
                     .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    //.antMatchers(basicProperty.getUrl()).permitAll()
+                    .antMatchers(openapiProperty.getUrl()).permitAll()
                     .antMatchers(HttpMethod.POST, jwtProperty.getLoginUrl()).permitAll()
                     .antMatchers(jwtProperty.getUrl())
                     .authenticated()

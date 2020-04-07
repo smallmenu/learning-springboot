@@ -5,9 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.*;
 
-/**
- * @author niuchaoqun
- */
+
 @Data
 public class AdminEditForm {
     @ApiModelProperty(value = "角色ID", required = false, dataType = "Long")

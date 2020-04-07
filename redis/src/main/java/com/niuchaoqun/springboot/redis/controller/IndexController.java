@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.github.suosi.commons.helper.Static.date;
 
-/**
- * @author niuchaoqun
- */
+
 @RestController
 @Slf4j
 public class IndexController extends BaseController {

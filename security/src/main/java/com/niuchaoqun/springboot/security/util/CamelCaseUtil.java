@@ -4,9 +4,7 @@ package com.niuchaoqun.springboot.security.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author niuchaoqun
- */
+
 public class CamelCaseUtil {
     private static final char SEPARATOR = '_';
 

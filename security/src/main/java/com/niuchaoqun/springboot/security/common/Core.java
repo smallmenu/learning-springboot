@@ -19,9 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author niuchaoqun
- */
+
 @Component
 @Slf4j
 public class Core {

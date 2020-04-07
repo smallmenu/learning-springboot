@@ -19,18 +19,16 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author niuchaoqun
- */
-@Api(tags = "1-登录")
+
+@Api(tags = "登录")
 @RestController
-@RequestMapping("/api/login")
-public class LoginController extends BaseController {
+@RequestMapping("/api")
+public class ApiController extends BaseController {
     @Autowired
     private LoginService loginService;
 
     @ApiOperation("登录接口")
-    @PostMapping("")
+    @PostMapping("/login")
     public RestResult<Map> login(@Valid LoginForm loginForm, BindingResult result) {
         if (result.hasErrors()) {
             return RestResponse.fail(this.resultErrors(result));
@@ -48,8 +46,8 @@ public class LoginController extends BaseController {
     }
 
     @ApiOperation("测试")
-    @PostMapping("/test")
-    public RestResult test(ModelMap modelMap) {
+    @PostMapping("/ping")
+    public RestResult ping(ModelMap modelMap) {
         Logined logined = (Logined) modelMap.get("logined");
 
         return RestResponse.data(logined);

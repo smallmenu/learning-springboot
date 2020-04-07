@@ -12,9 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-/**
- * @author niuchaoqun
- */
+
 @Data
 @Builder
 @NoArgsConstructor

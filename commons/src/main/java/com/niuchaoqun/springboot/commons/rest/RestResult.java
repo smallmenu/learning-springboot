@@ -2,9 +2,7 @@ package com.niuchaoqun.springboot.commons.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-/**
- * @author niuchaoqun
- */
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestResult<T> {
     private Integer code;

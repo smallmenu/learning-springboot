@@ -22,14 +22,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-/**
- * @author niuchaoqun
- */
-@Api(tags = "3-管理员")
+@Api(tags = "管理员")
 @RequestMapping("/api/admin")
 @RestController
 @Slf4j
-public class AdminController extends BaseController {
+public class ApiAdminController extends BaseController {
     @Autowired
     private AdminService adminService;
 

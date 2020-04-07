@@ -10,9 +10,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.io.Serializable;
 
-/**
- * @author niuchaoqun
- */
+
 @Configuration
 public class RedisConfig {
     @Bean

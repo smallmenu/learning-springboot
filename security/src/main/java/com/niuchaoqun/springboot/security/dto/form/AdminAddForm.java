@@ -5,9 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.*;
 
-/**
- * @author niuchaoqun
- */
+
 @Data
 public class AdminAddForm {
     @ApiModelProperty(value = "用户名，字母开头，字母数字下划线组合，4-32长度", required = true, dataType = "String")

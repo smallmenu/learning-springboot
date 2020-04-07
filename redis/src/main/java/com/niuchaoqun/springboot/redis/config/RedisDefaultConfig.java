@@ -22,9 +22,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.io.Serializable;
 import java.util.Optional;
 
-/**
- * @author niuchaoqun
- */
+
 @Configuration
 public class RedisDefaultConfig {
     @Autowired

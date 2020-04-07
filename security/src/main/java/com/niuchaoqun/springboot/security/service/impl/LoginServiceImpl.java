@@ -21,9 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
-/**
- * @author niuchaoqun
- */
+
 @Service
 @Slf4j
 public class LoginServiceImpl implements LoginService {

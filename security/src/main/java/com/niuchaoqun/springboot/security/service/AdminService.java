@@ -7,9 +7,7 @@ import com.niuchaoqun.springboot.security.entity.Admin;
 
 import java.util.List;
 
-/**
- * @author niuchaoqun
- */
+
 public interface AdminService {
 
     Admin get(Long id);

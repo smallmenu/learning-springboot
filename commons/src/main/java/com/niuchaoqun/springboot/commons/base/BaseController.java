@@ -6,9 +6,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-/**
- * @author niuchaoqun
- */
+
 public class BaseController {
 
     protected Integer pageSize = 15;

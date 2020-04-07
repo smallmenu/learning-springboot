@@ -1,28 +1,29 @@
-package com.niuchaoqun.springboot.security.controller;
+package com.niuchaoqun.springboot.security.controller.openapi;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = "Basic")
+@Api(tags = "Openapi")
 @RestController
-@RequestMapping("/basic")
+@RequestMapping("/openapi")
 @Slf4j
-public class BasicController {
+public class OpenapiController {
     @ApiOperation("test1")
-    @RequestMapping("test1")
+    @GetMapping("test1")
     @ResponseBody
     public String test1() {
-        return "http basic test1";
+        return "openapi test1";
     }
 
     @ApiOperation("test2")
-    @RequestMapping("test2")
+    @GetMapping("test2")
     @ResponseBody
     public String test2() {
-        return "http basic test2";
+        return "openapi test2";
     }
 }

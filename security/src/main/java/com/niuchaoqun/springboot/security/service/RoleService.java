@@ -10,6 +10,4 @@ public interface RoleService {
     Role get(Long id);
 
     Role exist(Long id);
-
-    List<Role> allByCache();
 }

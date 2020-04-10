@@ -28,12 +28,14 @@ spring:
         max-active: 8
         min-idle: 1
         max-idle: 8
-  security:
-    user:
-      name: admin
-      password: admin
   main:
     allow-bean-definition-overriding: true
+
+#swagger:
+#  basic:
+#    enable: true
+#    username: admin
+#    password: swagger
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

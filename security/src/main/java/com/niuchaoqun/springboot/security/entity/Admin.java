@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -23,8 +25,6 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "JDBC")
     private Long id;
 
-    private Long roleId;
-
     private String username;
 
     private String name;
@@ -33,6 +33,9 @@ public class Admin {
     private String password;
 
     private String email;
+
+    @Column(insertable = false)
+    private Integer locked;
 
     @Column(insertable = false)
     private Integer state;
@@ -68,5 +71,5 @@ public class Admin {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime updated;
 
-    private Role role;
+    private List<Role> roles;
 }

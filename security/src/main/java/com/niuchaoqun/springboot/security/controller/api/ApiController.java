@@ -34,15 +34,19 @@ public class ApiController extends BaseController {
             return RestResponse.fail(this.resultErrors(result));
         }
 
-        String token = loginService.login(loginForm);
+        try {
+            String token = loginService.login(loginForm);
 
-        if (token != null) {
-            HashMap<String, String> data = new HashMap<>();
-            data.put("token", token);
-            return RestResponse.data(data);
+            if (token != null) {
+                HashMap<String, String> data = new HashMap<>();
+                data.put("token", token);
+                return RestResponse.data(data);
+            } else {
+                return RestResponse.fail("登录失败");
+            }
+        } catch (Exception e) {
+            return RestResponse.fail(e.getLocalizedMessage());
         }
-
-        return RestResponse.fail("用户名或密码错误");
     }
 
     @ApiOperation("测试")

@@ -17,6 +17,10 @@ public class JwtUser implements UserDetails {
 
     private String password;
 
+    private Integer locked;
+
+    private Integer state;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     @Override
@@ -26,7 +30,11 @@ public class JwtUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        if (locked == 1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
@@ -36,6 +44,10 @@ public class JwtUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        if (state == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

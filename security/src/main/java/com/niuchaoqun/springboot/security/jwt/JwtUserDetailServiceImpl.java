@@ -29,6 +29,8 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
                 .id(admin.getId())
                 .username(admin.getUsername())
                 .password(admin.getPassword())
+                .state(admin.getState())
+                .locked(admin.getLocked())
                 .authorities(Collections.emptyList())
                 .build();
     }

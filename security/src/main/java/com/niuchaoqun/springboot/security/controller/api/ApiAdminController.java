@@ -62,6 +62,22 @@ public class ApiAdminController extends BaseController {
         return RestResponse.fail(RestError.PARAM_ERROR);
     }
 
+    @ApiOperation("管理员详情含关联数据，ID查找")
+    @GetMapping("/relation/{id}")
+    public RestResult<Admin> getRelation(@PathVariable Long id) {
+        if (id > 0) {
+            try {
+                Admin data = adminService.getRelationById(id);
+
+                return RestResponse.data(data);
+            } catch (Exception e) {
+                return RestResponse.fail(e.getLocalizedMessage());
+            }
+        }
+
+        return RestResponse.fail(RestError.PARAM_ERROR);
+    }
+
     @ApiOperation("管理员修改")
     @PostMapping("/{id}")
     public RestResult<Admin> edit(@PathVariable Long id, @Valid AdminEditForm editForm, BindingResult result) {

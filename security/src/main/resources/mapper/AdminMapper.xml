@@ -3,7 +3,6 @@
 <mapper namespace="com.niuchaoqun.springboot.security.mapper.AdminMapper">
     <resultMap id="AdminRelationResultMap" type="Admin">
         <id property="id" column="id"/>
-        <result property="roleId" column="role_id"/>
         <result property="username" column="username"/>
         <result property="name" column="name"/>
         <result property="password" column="password"/>
@@ -16,22 +15,24 @@
         <result property="state" column="state"/>
         <result property="lastLoginIp" column="last_login_ip"/>
         <result property="lastLogined" column="last_logined"/>
-        <association property="role" javaType="Role">
-            <id property="id" column="r_id"/>
-            <result property="name" column="r_name"/>
-            <result property="count" column="r_count"/>
-        </association>
+        <collection property="roles" javaType="Role">
+            <id property="id" column="role_id"/>
+            <result property="name" column="role_name"/>
+            <result property="count" column="role_count"/>
+        </collection>
     </resultMap>
 
     <select id="getRelationById" parameterType="long" resultMap="AdminRelationResultMap">
-        SELECT a.*, r.id as r_id, r.name as r_name, r.count as r_count
-        FROM admin a, role r
-        WHERE a.id = #{id} AND a.role_id = r.id
+        SELECT a.*, r.id as role_id, r.name as role_name, r.count as role_count
+        FROM admin a
+        LEFT JOIN admin_role ar ON a.id = ar.adminid
+        LEFT JOIN role r ON ar.roleid = r.id
+        WHERE a.id = #{id}
     </select>
 
 
     <select id="search" parameterType="AdminSearchForm" resultMap="AdminRelationResultMap">
-        SELECT a.*, r.id as r_id, r.name as r_name, r.count as r_count
+        SELECT a.*, r.id as r_id, r.name as role_name, r.count as role_count
         FROM admin a, role r
         WHERE a.role_id = r.id
         <if test="state != null">

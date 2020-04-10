@@ -9,11 +9,8 @@ import com.niuchaoqun.springboot.security.mapper.AdminLoginLogMapper;
 import com.niuchaoqun.springboot.security.mapper.AdminMapper;
 import com.niuchaoqun.springboot.security.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,12 +18,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
-
 @Service
 @Slf4j
 public class LoginServiceImpl implements LoginService {
-    private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -53,9 +47,11 @@ public class LoginServiceImpl implements LoginService {
 
         Authentication authenticate;
         try {
+            // 验证登录
             authenticate = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword())
             );
+            // 写入上下文
             JwtUser jwtUser = (JwtUser) authenticate.getPrincipal();
             SecurityContextHolder.getContext().setAuthentication(authenticate);
             String token = jwtTokenProvider.generateTokenByString(authenticate);
@@ -73,7 +69,11 @@ public class LoginServiceImpl implements LoginService {
             adminLoginLogMapper.insertSelective(adminLoginLog);
 
             return token;
-        } catch (Exception e) {
+        } catch (LockedException e) {
+            throw new LockedException("账号已锁定");
+        } catch (DisabledException e) {
+            throw new DisabledException("账号已被禁用");
+        } catch (BadCredentialsException e) {
             // 登录失败日志
             Admin admin = adminMapper.selectOne(Admin.builder().username(loginForm.getUsername()).build());
             if (admin != null) {
@@ -82,7 +82,9 @@ public class LoginServiceImpl implements LoginService {
                 adminLoginLogMapper.insertSelective(adminLoginLog);
             }
 
-            logger.info(e.getLocalizedMessage());
+            log.info(e.getLocalizedMessage());
+            throw new BadCredentialsException("账号密码错误");
+        } catch (Exception e) {
             return null;
         }
     }

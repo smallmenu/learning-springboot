@@ -24,7 +24,11 @@ public class AdminEditForm {
     @Email
     private String email;
 
-    @ApiModelProperty(value = "状态", required = false, dataType = "Integer")
+    @ApiModelProperty(value = "锁定状态", required = false, dataType = "Integer")
+    @PositiveOrZero
+    private Integer locked;
+
+    @ApiModelProperty(value = "启用状态", required = false, dataType = "Integer")
     @PositiveOrZero
     private Integer state;
 

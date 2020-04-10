@@ -28,7 +28,7 @@ public class AdminAddForm {
     @Email(message = "Email不合法")
     private String email;
 
-    @ApiModelProperty(value = "角色ID", required = true, dataType = "Long")
-    @Positive
-    private Long roleId;
+    @ApiModelProperty(value = "角色ID，英文逗号分隔", required = true, dataType = "String")
+    @NotBlank
+    private String roleId;
 }

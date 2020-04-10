@@ -1,18 +1,21 @@
 package com.niuchaoqun.springboot.security.service.impl;
 
-import com.niuchaoqun.springboot.security.common.Core;
 import com.niuchaoqun.springboot.security.dto.form.AdminAddForm;
 import com.niuchaoqun.springboot.security.dto.form.AdminEditForm;
 import com.niuchaoqun.springboot.security.dto.form.AdminSearchForm;
 import com.niuchaoqun.springboot.security.entity.Admin;
+import com.niuchaoqun.springboot.security.entity.AdminRole;
 import com.niuchaoqun.springboot.security.entity.Role;
 import com.niuchaoqun.springboot.security.jwt.JwtUser;
 import com.niuchaoqun.springboot.security.mapper.AdminMapper;
+import com.niuchaoqun.springboot.security.mapper.AdminRoleMapper;
 import com.niuchaoqun.springboot.security.mapper.RoleMapper;
 import com.niuchaoqun.springboot.security.service.AdminService;
 import com.niuchaoqun.springboot.security.service.LoginService;
 import com.niuchaoqun.springboot.security.service.RoleService;
+import com.niuchaoqun.springboot.security.util.DbUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +35,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private AdminRoleMapper adminRoleMapper;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -66,14 +73,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin getRelationByUsername(String username) {
-        Admin admin = checkExistAdminUsername(username);
+        Admin admin = existAdminUsername(username);
 
         return adminMapper.getRelationById(admin.getId());
     }
 
     @Override
     public Admin getByUsername(String username) {
-        return checkExistAdminUsername(username);
+        return existAdminUsername(username);
     }
 
     @Override
@@ -119,6 +126,7 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean remove(Long id) {
@@ -127,14 +135,14 @@ public class AdminServiceImpl implements AdminService {
 //        int rows = adminMapper.deleteByPrimaryKey(id);
 //
 //        if (rows > 0) {
-//            Long roleId = admin.getRoleId();
 //            Role role = roleService.exist(admin.getRoleId());
 //            role.setCount(role.getCount() - 1);
 //
 //            boolean result = roleMapper.updateByPrimaryKeySelective(role) > 0;
 //            return result;
 //        }
-
+//
+//        return false;
         return false;
     }
 
@@ -149,30 +157,57 @@ public class AdminServiceImpl implements AdminService {
                 });
 
         JwtUser jwtUser = loginService.loginUser();
-        Role existRole = roleService.exist(addForm.getRoleId());
 
         Admin admin = Admin.builder()
                 .username(addForm.getUsername())
                 .name(addForm.getName())
                 .email(addForm.getEmail())
-                //.roleId(addForm.getRoleId())
                 .createdby(jwtUser.getId())
                 .build();
 
         // 生成密码
         admin.setPassword(bCryptPasswordEncoder.encode(addForm.getPassword()));
 
-        // 插入
+        // 插入管理员
         adminMapper.insertSelective(admin);
 
-        // 更新 Role
-        existRole.setCount(existRole.getCount() + 1);
-        roleMapper.updateByPrimaryKeySelective(existRole);
+        // 更新角色
+        addRoles(admin.getId(), addForm.getRoleId());
 
         return adminMapper.getRelationById(admin.getId());
     }
 
-    private Admin checkExistAdminUsername(String username) {
+    private void addRoles(Long adminid, String roleidString) {
+        List<AdminRole> adminRoles = new ArrayList<>();
+        List<String> roleidStrings = DbUtil.stringToList(roleidString);
+        if (!roleidStrings.isEmpty()) {
+            for (String roleidStr : roleidStrings) {
+                long roleid = NumberUtils.toLong(roleidStr);
+
+                try {
+                    Role existRole = roleService.exist(roleid);
+
+                    // 更新角色统计
+                    existRole.setCount(existRole.getCount() + 1);
+                    roleMapper.updateByPrimaryKeySelective(existRole);
+
+                    AdminRole adminRole = AdminRole.builder().adminid(adminid).roleid(roleid).build();
+                    adminRoles.add(adminRole);
+                } catch (Exception e) {
+                    log.warn("角色ID：{} 不存在", roleid);
+                }
+            }
+        }
+
+        // 插入关联表
+        if (!adminRoles.isEmpty()) {
+            adminRoleMapper.insertList(adminRoles);
+        } else {
+            throw new EntityNotFoundException("角色不存在");
+        }
+    }
+
+    private Admin existAdminUsername(String username) {
         Admin adminQuery = Admin.builder().username(username).build();
 
         return Optional.ofNullable(adminMapper.selectOne(adminQuery))

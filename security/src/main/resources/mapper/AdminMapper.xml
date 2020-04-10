@@ -15,7 +15,7 @@
         <result property="state" column="state"/>
         <result property="lastLoginIp" column="last_login_ip"/>
         <result property="lastLogined" column="last_logined"/>
-        <collection property="roles" javaType="Role">
+        <collection property="roles" ofType="Role">
             <id property="id" column="role_id"/>
             <result property="name" column="role_name"/>
             <result property="count" column="role_count"/>
@@ -32,24 +32,27 @@
 
 
     <select id="search" parameterType="AdminSearchForm" resultMap="AdminRelationResultMap">
-        SELECT a.*, r.id as r_id, r.name as role_name, r.count as role_count
-        FROM admin a, role r
-        WHERE a.role_id = r.id
-        <if test="state != null">
-            AND state = #{state}
-        </if>
-        <if test="roleId != null">
-            AND role_id = #{roleId}
-        </if>
-        <if test="username != null">
-            AND username LIKE #{username}"%"
-        </if>
+        SELECT a.*, r.id as role_id, r.name as role_name, r.count as role_count
+        FROM admin a
+        LEFT JOIN admin_role ar ON a.id = ar.adminid
+        LEFT JOIN role r ON ar.roleid = r.id
+        <where>
+            <if test="state != null">
+                AND a.state = #{state}
+            </if>
+            <if test="roleId != null">
+                AND ar.role_id = #{roleId}
+            </if>
+            <if test="username != null">
+                AND a.username LIKE #{username}"%"
+            </if>
+        </where>
         <choose>
             <when test="orderby != null">
                 ORDER BY ${orderby}
             </when>
             <otherwise>
-                ORDER BY id
+                ORDER BY a.id
             </otherwise>
         </choose>
         <choose>

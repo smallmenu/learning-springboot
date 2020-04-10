@@ -74,7 +74,7 @@ web:
     url: /api/**
     login-url: /api/login
     secret: secret
-    expiration: 3600000
+    expiration: 86400000
     header: Jwt-Auth
   basic:
     url: /basic/**

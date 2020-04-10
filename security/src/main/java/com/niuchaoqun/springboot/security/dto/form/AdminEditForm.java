@@ -8,8 +8,7 @@ import javax.validation.constraints.*;
 
 @Data
 public class AdminEditForm {
-    @ApiModelProperty(value = "角色ID", required = false, dataType = "Long")
-    @Positive
+    @ApiModelProperty(value = "角色ID", required = false, dataType = "String")
     private Long roleId;
 
     @ApiModelProperty(value = "姓名", required = false, dataType = "String")

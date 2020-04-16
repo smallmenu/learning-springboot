@@ -62,7 +62,7 @@ public class ApiAdminController extends BaseController {
         return RestResponse.fail(RestError.PARAM_ERROR);
     }
 
-    @ApiOperation("管理员详情关联数据，ID查找")
+    @ApiOperation("管理员关联详情，ID查找")
     @GetMapping("/relation/{id}")
     public RestResult<Admin> getRelation(@PathVariable Long id) {
         if (id > 0) {

@@ -7,7 +7,7 @@ import com.niuchaoqun.springboot.security.jwt.JwtTokenProvider;
 import com.niuchaoqun.springboot.security.jwt.JwtUser;
 import com.niuchaoqun.springboot.security.mapper.AdminLoginLogMapper;
 import com.niuchaoqun.springboot.security.mapper.AdminMapper;
-import com.niuchaoqun.springboot.security.service.LoginService;
+import com.niuchaoqun.springboot.security.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 
 @Service
 @Slf4j
-public class LoginServiceImpl implements LoginService {
+public class AuthServiceImpl implements AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -83,17 +83,17 @@ public class LoginServiceImpl implements LoginService {
             }
 
             log.info(e.getLocalizedMessage());
-            throw new BadCredentialsException("账号密码错误");
+            throw new BadCredentialsException("账号或密码错误");
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public JwtUser loginUser() {
+    public JwtUser logined() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // 未登录状态下返回Null
+        // 未登录状态下返回 Null
         if (authentication != null && authentication.getPrincipal().getClass().equals(JwtUser.class)) {
             return (JwtUser) authentication.getPrincipal();
         }

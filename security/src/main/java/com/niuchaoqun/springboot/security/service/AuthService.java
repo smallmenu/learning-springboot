@@ -4,8 +4,19 @@ import com.niuchaoqun.springboot.security.dto.login.LoginForm;
 import com.niuchaoqun.springboot.security.jwt.JwtUser;
 
 
-public interface LoginService {
+public interface AuthService {
+    /**
+     * 登录接口
+     *
+     * @param loginForm
+     * @return
+     */
     String login(LoginForm loginForm);
 
-    JwtUser loginUser();
+    /**
+     * 获取当前已登录用户
+     *
+     * @return
+     */
+    JwtUser logined();
 }

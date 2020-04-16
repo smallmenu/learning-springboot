@@ -21,7 +21,4 @@ public class Role {
     private Long id;
 
     private String name;
-
-    @Column(insertable = false)
-    private Long count;
 }

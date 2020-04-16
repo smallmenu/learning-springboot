@@ -11,7 +11,7 @@ import com.niuchaoqun.springboot.security.mapper.AdminMapper;
 import com.niuchaoqun.springboot.security.mapper.AdminRoleMapper;
 import com.niuchaoqun.springboot.security.mapper.RoleMapper;
 import com.niuchaoqun.springboot.security.service.AdminService;
-import com.niuchaoqun.springboot.security.service.LoginService;
+import com.niuchaoqun.springboot.security.service.AuthService;
 import com.niuchaoqun.springboot.security.service.RoleService;
 import com.niuchaoqun.springboot.security.util.DbUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
     private RoleService roleService;
 
     @Autowired
-    private LoginService loginService;
+    private AuthService authService;
 
     @Override
     public Admin get(Long id) {
@@ -86,63 +86,51 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Admin edit(Long id, AdminEditForm editForm) {
-//        Admin admin = exist(id);
-//
-//        Admin editAdmin = Admin.builder().id(id).build();
-//
-//        // 更新角色
-//        if (editForm.getRoleId() != null && admin.getRoleId().longValue() != editForm.getRoleId().longValue()) {
-//            Role oldRole = roleService.exist(admin.getRoleId());
-//            Role newRole = roleService.exist(editForm.getRoleId());
-//
-//            // 原角色
-//            oldRole.setCount(oldRole.getCount() - 1);
-//            roleMapper.updateByPrimaryKeySelective(oldRole);
-//
-//            // 新角色
-//            newRole.setCount(newRole.getCount() + 1);
-//            roleMapper.updateByPrimaryKeySelective(newRole);
-//
-//            editAdmin.setRoleId(editForm.getRoleId());
-//        }
-//
-//        // 更新密码
-//        if (editForm.getPassword() != null) {
-//            editAdmin.setPassword(bCryptPasswordEncoder.encode(editForm.getPassword()));
-//        }
-//
-//        // 其他字段更新
-//        Optional.ofNullable(editForm.getName()).ifPresent(editAdmin::setName);
-//        Optional.ofNullable(editForm.getEmail()).ifPresent(editAdmin::setEmail);
-//        Optional.ofNullable(editForm.getState()).ifPresent(editAdmin::setState);
-//
-//        // 获取当前用户
-//        JwtUser jwtUser = loginService.loginUser();
-//        editAdmin.setUpdatedby(jwtUser.getId());
-//
-//        adminMapper.updateByPrimaryKeySelective(editAdmin);
-//
-//        return adminMapper.getRelationById(editAdmin.getId());
-        return null;
+        exist(id);
+
+        Admin editAdmin = Admin.builder().id(id).build();
+
+        // 更新密码
+        if (editForm.getPassword() != null) {
+            editAdmin.setPassword(bCryptPasswordEncoder.encode(editForm.getPassword()));
+        }
+
+        // 其他字段更新
+        Optional.ofNullable(editForm.getName()).ifPresent(editAdmin::setName);
+        Optional.ofNullable(editForm.getEmail()).ifPresent(editAdmin::setEmail);
+        Optional.ofNullable(editForm.getState()).ifPresent(editAdmin::setState);
+
+        // 获取当前用户
+        JwtUser jwtUser = authService.logined();
+        editAdmin.setUpdatedby(jwtUser.getId());
+
+        adminMapper.updateByPrimaryKeySelective(editAdmin);
+
+        // 更新角色
+        if (editForm.getRoleId() != null) {
+            // 清空角色关联信息
+            adminRoleMapper.delete(AdminRole.builder().adminid(id).build());
+
+            // 更新角色
+            updateRoles(id, editForm.getRoleId());
+        }
+
+        return adminMapper.getRelationById(editAdmin.getId());
     }
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean remove(Long id) {
-//        Admin admin = exist(id);
-//
-//        int rows = adminMapper.deleteByPrimaryKey(id);
-//
-//        if (rows > 0) {
-//            Role role = roleService.exist(admin.getRoleId());
-//            role.setCount(role.getCount() - 1);
-//
-//            boolean result = roleMapper.updateByPrimaryKeySelective(role) > 0;
-//            return result;
-//        }
-//
-//        return false;
+        exist(id);
+
+        int rows = adminMapper.deleteByPrimaryKey(id);
+
+        if (rows > 0) {
+            adminRoleMapper.delete(AdminRole.builder().adminid(id).build());
+            return true;
+        }
+
         return false;
     }
 
@@ -156,7 +144,7 @@ public class AdminServiceImpl implements AdminService {
                     throw new EntityExistsException("用户名已存在");
                 });
 
-        JwtUser jwtUser = loginService.loginUser();
+        JwtUser jwtUser = authService.logined();
 
         Admin admin = Admin.builder()
                 .username(addForm.getUsername())
@@ -172,14 +160,14 @@ public class AdminServiceImpl implements AdminService {
         adminMapper.insertSelective(admin);
 
         // 更新角色
-        addRoles(admin.getId(), addForm.getRoleId());
+        updateRoles(admin.getId(), addForm.getRoleId());
 
         return adminMapper.getRelationById(admin.getId());
     }
 
-    private void addRoles(Long adminid, String roleidString) {
+    private void updateRoles(Long adminid, String roleidString) {
         List<AdminRole> adminRoles = new ArrayList<>();
-        List<String> roleidStrings = DbUtil.stringToList(roleidString);
+        List<String> roleidStrings = DbUtil.idStringToList(roleidString);
         if (!roleidStrings.isEmpty()) {
             for (String roleidStr : roleidStrings) {
                 long roleid = NumberUtils.toLong(roleidStr);
@@ -187,14 +175,10 @@ public class AdminServiceImpl implements AdminService {
                 try {
                     Role existRole = roleService.exist(roleid);
 
-                    // 更新角色统计
-                    existRole.setCount(existRole.getCount() + 1);
-                    roleMapper.updateByPrimaryKeySelective(existRole);
-
-                    AdminRole adminRole = AdminRole.builder().adminid(adminid).roleid(roleid).build();
+                    AdminRole adminRole = AdminRole.builder().adminid(adminid).roleid(existRole.getId()).build();
                     adminRoles.add(adminRole);
-                } catch (Exception e) {
-                    log.warn("角色ID：{} 不存在", roleid);
+                } catch (EntityNotFoundException e) {
+                    log.warn("非法角色 {roleid}", roleid);
                 }
             }
         }

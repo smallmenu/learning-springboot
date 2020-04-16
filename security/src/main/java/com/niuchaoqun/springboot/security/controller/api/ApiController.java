@@ -5,7 +5,7 @@ import com.niuchaoqun.springboot.commons.rest.RestResponse;
 import com.niuchaoqun.springboot.commons.rest.RestResult;
 import com.niuchaoqun.springboot.security.dto.data.Logined;
 import com.niuchaoqun.springboot.security.dto.login.LoginForm;
-import com.niuchaoqun.springboot.security.service.LoginService;
+import com.niuchaoqun.springboot.security.service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class ApiController extends BaseController {
     @Autowired
-    private LoginService loginService;
+    private AuthService authService;
 
     @ApiOperation("登录接口")
     @PostMapping("/login")
@@ -35,7 +35,7 @@ public class ApiController extends BaseController {
         }
 
         try {
-            String token = loginService.login(loginForm);
+            String token = authService.login(loginForm);
 
             if (token != null) {
                 HashMap<String, String> data = new HashMap<>();

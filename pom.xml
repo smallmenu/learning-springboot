@@ -28,7 +28,7 @@
         <swagger-bootstrap-ui>1.9.6</swagger-bootstrap-ui>
         <mybatis-starter.version>2.1.2</mybatis-starter.version>
         <mapper-starter.version>2.1.5</mapper-starter.version>
-        <pagehelper-start.version>1.2.10</pagehelper-start.version>
+        <pagehelper-start.version>1.2.13</pagehelper-start.version>
         <guava.version>20.0</guava.version>
         <okhttp.version>3.12.2</okhttp.version>
     </properties>

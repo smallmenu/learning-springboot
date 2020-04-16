@@ -18,21 +18,19 @@
         <collection property="roles" ofType="Role">
             <id property="id" column="role_id"/>
             <result property="name" column="role_name"/>
-            <result property="count" column="role_count"/>
         </collection>
     </resultMap>
 
     <select id="getRelationById" parameterType="long" resultMap="AdminRelationResultMap">
-        SELECT a.*, r.id as role_id, r.name as role_name, r.count as role_count
+        SELECT a.*, r.id as role_id, r.name as role_name
         FROM admin a
         LEFT JOIN admin_role ar ON a.id = ar.adminid
         LEFT JOIN role r ON ar.roleid = r.id
         WHERE a.id = #{id}
     </select>
 
-
     <select id="search" parameterType="AdminSearchForm" resultMap="AdminRelationResultMap">
-        SELECT a.*, r.id as role_id, r.name as role_name, r.count as role_count
+        SELECT a.*, r.id as role_id, r.name as role_name
         FROM admin a
         LEFT JOIN admin_role ar ON a.id = ar.adminid
         LEFT JOIN role r ON ar.roleid = r.id

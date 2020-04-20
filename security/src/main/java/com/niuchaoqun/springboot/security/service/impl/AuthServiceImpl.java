@@ -57,21 +57,21 @@ public class AuthServiceImpl implements AuthService {
             String token = jwtTokenProvider.generateTokenByString(authenticate);
 
             // 最近登录
-            Admin admin = adminMapper.selectByPrimaryKey(jwtUser.getId());
-            admin.setLastLogined(now);
-            admin.setLastLoginIp(clientIp);
+            Admin admin = Admin.builder().id(jwtUser.getId()).lastLogined(now).lastLoginIp(clientIp).build();
             adminMapper.updateByPrimaryKeySelective(admin);
 
             // 登录成功日志
-            adminLoginLog.setAdminId(admin.getId());
-            adminLoginLog.setUsername(admin.getUsername());
+            adminLoginLog.setAdminId(jwtUser.getId());
+            adminLoginLog.setUsername(jwtUser.getUsername());
             adminLoginLog.setState(1);
             adminLoginLogMapper.insertSelective(adminLoginLog);
 
             return token;
         } catch (LockedException e) {
+            log.info(e.getLocalizedMessage());
             throw new LockedException("账号已锁定");
         } catch (DisabledException e) {
+            log.info(e.getLocalizedMessage());
             throw new DisabledException("账号已被禁用");
         } catch (BadCredentialsException e) {
             // 登录失败日志
@@ -85,6 +85,7 @@ public class AuthServiceImpl implements AuthService {
             log.info(e.getLocalizedMessage());
             throw new BadCredentialsException("账号或密码错误");
         } catch (Exception e) {
+            log.info(e.getLocalizedMessage());
             return null;
         }
     }

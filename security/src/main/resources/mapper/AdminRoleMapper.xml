@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.niuchaoqun.springboot.security.mapper.AdminRoleMapper">
+    <select id="selectRolesByAdminId" resultType="Role">
+        SELECT r.*
+        FROM admin_role ar
+        LEFT JOIN role r ON ar.roleid = r.id
+        WHERE
+	    ar.adminid = #{adminId}
+    </select>
+
+    <select id="selectAdminsByRoleId" resultType="Admin">
+        SELECT a.*
+        FROM admin_role ar
+        LEFT JOIN admin a ON ar.adminid = a.id
+        WHERE
+	    ar.roleid = #{roleId}
+    </select>
 </mapper>

@@ -13,16 +13,18 @@
         <result property="createdby" column="createdby"/>
         <result property="updatedby" column="updatedby"/>
         <result property="state" column="state"/>
+        <result property="locked" column="locked"/>
         <result property="lastLoginIp" column="last_login_ip"/>
         <result property="lastLogined" column="last_logined"/>
         <collection property="roles" ofType="Role">
             <id property="id" column="role_id"/>
             <result property="name" column="role_name"/>
+            <result property="role" column="role_role"/>
         </collection>
     </resultMap>
 
     <select id="getRelationById" parameterType="long" resultMap="AdminRelationResultMap">
-        SELECT a.*, r.id as role_id, r.name as role_name
+        SELECT a.*, r.id as role_id, r.name as role_name, r.role as role_role
         FROM admin a
         LEFT JOIN admin_role ar ON a.id = ar.adminid
         LEFT JOIN role r ON ar.roleid = r.id
@@ -30,7 +32,7 @@
     </select>
 
     <select id="search" parameterType="AdminSearchForm" resultMap="AdminRelationResultMap">
-        SELECT a.*, r.id as role_id, r.name as role_name
+        SELECT a.*, r.id as role_id, r.name as role_name, r.role as role_role
         FROM admin a
         LEFT JOIN admin_role ar ON a.id = ar.adminid
         LEFT JOIN role r ON ar.roleid = r.id
@@ -62,4 +64,5 @@
             </otherwise>
         </choose>
     </select>
+
 </mapper>

@@ -193,8 +193,9 @@ public class AdminServiceImpl implements AdminService {
 
     private Admin existAdminUsername(String username) {
         Admin adminQuery = Admin.builder().username(username).build();
+        Admin admin = adminMapper.selectOne(adminQuery);
 
-        return Optional.ofNullable(adminMapper.selectOne(adminQuery))
+        return Optional.ofNullable(admin)
                 .orElseThrow(() -> new EntityNotFoundException("用户名不存在"));
     }
 }

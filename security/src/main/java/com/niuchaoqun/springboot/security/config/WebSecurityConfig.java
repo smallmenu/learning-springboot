@@ -77,9 +77,6 @@ public class WebSecurityConfig {
         private OpenapiProperty openapiProperty;
 
         @Autowired
-        private BasicProperty basicProperty;
-
-        @Autowired
         private UserDetailsService userDetailsService;
 
         @Autowired

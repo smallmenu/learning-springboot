@@ -35,7 +35,7 @@
 
     <modules>
         <module>commons</module>
-        <module>hello</module>
+        <module>helloworld</module>
         <module>mvc</module>
         <module>jpa</module>
         <module>mybatis</module>

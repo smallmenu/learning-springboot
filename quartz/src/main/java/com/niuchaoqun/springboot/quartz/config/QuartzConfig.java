@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 /**
  * 用于自定义 Quartz 配置，暂时没用
  *
- * @author niuchaoqun
+
  */
 //@Component
 public class QuartzConfig {

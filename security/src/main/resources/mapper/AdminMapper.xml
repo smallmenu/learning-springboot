@@ -26,16 +26,24 @@
     <select id="getRelationById" parameterType="long" resultMap="AdminRelationResultMap">
         SELECT a.*, r.id as role_id, r.name as role_name, r.role as role_role
         FROM admin a
-        LEFT JOIN admin_role ar ON a.id = ar.adminid
-        LEFT JOIN role r ON ar.roleid = r.id
+        LEFT JOIN admin_role ar ON a.id = ar.admin_id
+        LEFT JOIN role r ON ar.role_id = r.id
         WHERE a.id = #{id}
+    </select>
+
+    <select id="selectByRoleId" resultType="Admin">
+        SELECT a.*
+        FROM admin_role ar
+        LEFT JOIN admin a ON ar.admin_id = a.id
+        WHERE
+	    ar.role_id = #{roleId}
     </select>
 
     <select id="search" parameterType="AdminSearchForm" resultMap="AdminRelationResultMap">
         SELECT a.*, r.id as role_id, r.name as role_name, r.role as role_role
         FROM admin a
-        LEFT JOIN admin_role ar ON a.id = ar.adminid
-        LEFT JOIN role r ON ar.roleid = r.id
+        LEFT JOIN admin_role ar ON a.id = ar.admin_id
+        LEFT JOIN role r ON ar.role_id = r.id
         <where>
             <if test="state != null">
                 AND a.state = #{state}

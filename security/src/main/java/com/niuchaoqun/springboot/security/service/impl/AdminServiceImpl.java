@@ -109,7 +109,7 @@ public class AdminServiceImpl implements AdminService {
         // 更新角色
         if (editForm.getRoleId() != null) {
             // 清空角色关联信息
-            adminRoleMapper.delete(AdminRole.builder().adminid(id).build());
+            adminRoleMapper.delete(AdminRole.builder().adminId(id).build());
 
             // 更新角色
             updateRoles(id, editForm.getRoleId());
@@ -127,7 +127,7 @@ public class AdminServiceImpl implements AdminService {
         int rows = adminMapper.deleteByPrimaryKey(id);
 
         if (rows > 0) {
-            adminRoleMapper.delete(AdminRole.builder().adminid(id).build());
+            adminRoleMapper.delete(AdminRole.builder().adminId(id).build());
             return true;
         }
 
@@ -165,7 +165,7 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.getRelationById(admin.getId());
     }
 
-    private void updateRoles(Long adminid, String roleidString) {
+    private void updateRoles(Long adminId, String roleidString) {
         List<AdminRole> adminRoles = new ArrayList<>();
         List<String> roleidStrings = DbUtil.idStringToList(roleidString);
         if (!roleidStrings.isEmpty()) {
@@ -175,7 +175,7 @@ public class AdminServiceImpl implements AdminService {
                 try {
                     Role existRole = roleService.exist(roleid);
 
-                    AdminRole adminRole = AdminRole.builder().adminid(adminid).roleid(existRole.getId()).build();
+                    AdminRole adminRole = AdminRole.builder().adminId(adminId).roleId(existRole.getId()).build();
                     adminRoles.add(adminRole);
                 } catch (EntityNotFoundException e) {
                     log.warn("非法角色 {roleid}", roleid);

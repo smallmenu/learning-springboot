@@ -37,7 +37,6 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
                 .state(admin.getState())
                 .locked(admin.getLocked())
                 .authorities(AuthorityUtils.createAuthorityList(authorities))
-                .authorities(Collections.emptyList())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.niuchaoqun.springboot.security.config;
 
+import com.niuchaoqun.springboot.security.jwt.JwtAccessDeniedHander;
 import com.niuchaoqun.springboot.security.jwt.JwtAuthenticationEntryPoint;
 import com.niuchaoqun.springboot.security.jwt.JwtTokenAuthFilter;
 import com.niuchaoqun.springboot.security.property.BasicProperty;
@@ -24,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * Multiple HttpSecurity 配置
  *
- * @author niuchaoqun
+
  */
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -82,6 +83,9 @@ public class WebSecurityConfig {
         @Autowired
         private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+        @Autowired
+        private JwtAccessDeniedHander jwtAccessDeniedHander;
+
         /**
          * 默认情况下 @Bean 会被 SpringBoot 自动探测到并且加入到 Security filter chain
          * <p>
@@ -106,27 +110,36 @@ public class WebSecurityConfig {
             http
                     // 禁用 CSRF
                     .csrf().disable()
+                    .formLogin().disable()
+                    .httpBasic().disable()
 
                     // 不存储Session，使用无状态回话
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                    // 处理认证的异常，自定义返回 REST JSON
+                    // 处理异常，自定义返回 REST JSON
                     .and()
                     .exceptionHandling()
+                    // 认证授权
+                    .accessDeniedHandler(jwtAccessDeniedHander)
+                    // 无认证
                     .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
-                    // 路由规则
+                    // 自定义 Jwt 拦截器
                     .and()
                     .addFilterBefore(jwtTokenAuthFilter(), UsernamePasswordAuthenticationFilter.class)
+
+                    // 路由配置
                     .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    //.antMatchers(basicProperty.getUrl()).permitAll()
                     .antMatchers(openapiProperty.getUrl()).permitAll()
                     .antMatchers(HttpMethod.POST, jwtProperty.getLoginUrl()).permitAll()
-                    .antMatchers(jwtProperty.getUrl())
-                    .authenticated()
+                    .antMatchers(jwtProperty.getUrl()).access("@jwtRbacPermission.hasPermission(request, authentication)")
+                    // 认证其他请求
+                    // .anyRequest()
+                    // .authenticated()
                     .and()
+                    .logout().disable()
 
                     // 禁止页面缓存
                     .headers().cacheControl();

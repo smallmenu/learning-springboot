@@ -13,12 +13,10 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminRole {
+public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "JDBC")
     private Long id;
 
-    private Long adminId;
 
-    private Long roleId;
 }

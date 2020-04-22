@@ -22,8 +22,8 @@ import java.util.Map;
 
 @Api(tags = "登录")
 @RestController
-@RequestMapping("/api")
-public class ApiController extends BaseController {
+@RequestMapping("/api/auth")
+public class ApiAuthController extends BaseController {
     @Autowired
     private AuthService authService;
 

@@ -72,7 +72,7 @@ management:
 web:
   jwt:
     url: /api/**
-    login-url: /api/login
+    login-url: /api/auth/login
     secret: secret
     expiration: 86400000
     header: Jwt-Auth

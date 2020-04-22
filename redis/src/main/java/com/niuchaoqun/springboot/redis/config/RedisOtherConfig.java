@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * 自定义 Redis 实例配置
  *
- * @author niuchaoqun
+ *
  */
 @Configuration
 public class RedisOtherConfig {

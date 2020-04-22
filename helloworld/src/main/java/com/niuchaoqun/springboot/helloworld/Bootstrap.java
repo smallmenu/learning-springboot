@@ -1,7 +1,7 @@
-package com.niuchaoqun.springboot.hello;
+package com.niuchaoqun.springboot.helloworld;
 
-import com.niuchaoqun.springboot.hello.property.CustomProperty;
-import com.niuchaoqun.springboot.hello.property.MysqlProperty;
+import com.niuchaoqun.springboot.helloworld.property.CustomProperty;
+import com.niuchaoqun.springboot.helloworld.property.MysqlProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

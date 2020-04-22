@@ -13,12 +13,14 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminRole {
+public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "JDBC")
     private Long id;
 
-    private Long adminId;
+    private String name;
 
-    private Long roleId;
+    private String method;
+
+    private String url;
 }

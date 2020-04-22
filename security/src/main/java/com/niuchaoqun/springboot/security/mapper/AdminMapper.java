@@ -11,5 +11,7 @@ import java.util.List;
 public interface AdminMapper extends Mapper<Admin> {
     Admin getRelationById(Long id);
 
+    List<Admin> selectByRoleId(Long roleId);
+
     List<Admin> search(AdminSearchForm searchForm);
 }

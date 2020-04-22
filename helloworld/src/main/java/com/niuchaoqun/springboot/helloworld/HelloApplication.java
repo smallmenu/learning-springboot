@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.hello;
+package com.niuchaoqun.springboot.helloworld;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;

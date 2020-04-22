@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.hello.property;
+package com.niuchaoqun.springboot.helloworld.property;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

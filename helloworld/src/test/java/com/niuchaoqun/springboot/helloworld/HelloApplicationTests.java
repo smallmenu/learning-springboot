@@ -1,4 +1,4 @@
-package com.niuchaoqun.springboot.hello;
+package com.niuchaoqun.springboot.helloworld;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(tags = "管理员")
+@Api(tags = "管理员管理")
 @RequestMapping("/api/admin")
 @RestController
 @Slf4j

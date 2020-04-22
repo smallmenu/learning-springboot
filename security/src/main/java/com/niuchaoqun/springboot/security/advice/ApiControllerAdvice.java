@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 全局异常捕获
- *
- * @author niuchaoqun
  */
 @ControllerAdvice("com.niuchaoqun.springboot.security.controller.api")
 @Slf4j

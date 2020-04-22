@@ -3,8 +3,6 @@ package com.niuchaoqun.springboot.mvc.controller;
 import com.niuchaoqun.springboot.mvc.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

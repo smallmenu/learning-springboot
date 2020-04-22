@@ -1,6 +1,6 @@
 spring:
   application:
-    name: hello
+    name: helloworld
   profiles:
     active:
       - develop
@@ -9,12 +9,12 @@ spring:
       - custom
 
 
-logging.file: springboot-hello.log
+logging.file: springboot-helloworld.log
 logging:
   level:
     root: INFO
     org.springframework.web: ERROR
-    com.niuchaoqun.springboot.hello: DEBUG
+    com.niuchaoqun.springboot.helloworld: DEBUG
   file:
     max-size: 256MB
     max-history: 3

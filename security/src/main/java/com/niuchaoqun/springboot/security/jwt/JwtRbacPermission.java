@@ -32,16 +32,9 @@ public class JwtRbacPermission {
         boolean hasPermission = false;
 
         if (jwtUser instanceof UserDetails) {
-            Collection<? extends GrantedAuthority> authorities = jwtUser.getAuthorities();
-            for (GrantedAuthority authority : authorities) {
-                String authority1 = authority.getAuthority();
 
-            }
 
         }
-
-        Long adminId = jwtUser.getId();
-
 
         return hasPermission;
     }

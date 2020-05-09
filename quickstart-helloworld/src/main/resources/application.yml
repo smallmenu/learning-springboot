@@ -9,7 +9,7 @@ spring:
       - custom
 
 
-logging.file: springboot-helloworld.log
+logging.file: helloworld.log
 logging:
   level:
     root: INFO

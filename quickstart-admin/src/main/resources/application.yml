@@ -1,0 +1,24 @@
+server:
+  port: 8000
+  undertow:
+    io-threads: 2
+    worker-threads: 8
+
+spring:
+  application:
+    name: admin
+  security:
+    user:
+      name: admin
+      password: springboot.admin
+
+logging.file: admin.log
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.niuchaoqun.springboot.admin: DEBUG
+  file:
+    max-size: 256MB
+    max-history: 3
+

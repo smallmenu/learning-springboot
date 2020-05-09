@@ -35,26 +35,26 @@
 
     <modules>
         <module>commons</module>
-        <module>helloworld</module>
-        <module>mvc</module>
-        <module>jpa</module>
-        <module>mybatis</module>
-        <module>mybatis-common</module>
-        <module>redis</module>
-        <module>rabbitmq</module>
-        <module>quartz</module>
-        <module>admin</module>
-        <module>client</module>
-        <module>security</module>
+        <module>quickstart-helloworld</module>
+        <module>quickstart-admin</module>
+        <module>quickstart-mvc</module>
+        <module>quickstart-jpa</module>
+        <module>quickstart-mybatis</module>
+        <module>quickstart-mybatis-common</module>
+        <module>quickstart-redis</module>
+        <module>quickstart-rabbitmq</module>
+        <module>quickstart-quartz</module>
+        <module>quickstart-client</module>
+        <module>quickstart-security</module>
     </modules>
 
     <dependencies>
 
-    <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
-    </dependency>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

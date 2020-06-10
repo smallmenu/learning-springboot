@@ -1,11 +1,7 @@
 package com.niuchaoqun.springboot.redis.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,39 +31,39 @@ import java.io.Serializable;
  * @ConditionalOnMissingBean(name = "redisTemplate")
  * <p>
  * 解决方案：
- * 一旦你要操作多个实例，那么你应该对每个实例都进行手动配置，同时还有给其中注解上：  @Primary
+ * 一旦你要操作多个实例，那么你应该对每个实例都进行手动配置，同时还有给其中一个注解上：  @Primary
  * 因为一些配套的组件比如使用 Redis Session 会使用默认的 RedisConnectionFactory 进行装配
  */
-//@Configuration
-//public class RedisConfig {
-//    @Bean
-//    public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-//        RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
-//
-//        redisTemplate.setConnectionFactory(redisConnectionFactory);
-//        redisTemplate.setKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-//        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-//
-//        redisTemplate.afterPropertiesSet();
-//
-//        return redisTemplate;
-//    }
-//
-//    /**
-//     * StringRedisTemplate 继承自 RedisTemplate<String, String>
-//     * 有专门的序列化机制，使用的是 StringRedisSerializer
-//     * <p>
-//     * 注意：在本配置中，它和 RedisTemplate 不互通，因为配置了 RedisTemplate 使用 Jackson 来对 Value 进行序列化，获取 StringRedisTemplate 设置的值，获取会报错。
-//     *
-//     * @param redisConnectionFactory
-//     * @return
-//     */
-//    @Bean
-//    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
-//        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
-//        stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
-//        return stringRedisTemplate;
-//    }
-//}
+@Configuration
+public class RedisConfig {
+    @Bean
+    public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
+
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+
+        redisTemplate.afterPropertiesSet();
+
+        return redisTemplate;
+    }
+
+    /**
+     * StringRedisTemplate 继承自 RedisTemplate<String, String>
+     * 有专门的序列化机制，使用的是 StringRedisSerializer
+     * <p>
+     * 注意：在本配置中，它和 RedisTemplate 不互通，因为配置了 RedisTemplate 使用 Jackson 来对 Value 进行序列化，获取 StringRedisTemplate 设置的值，获取会报错。
+     *
+     * @param redisConnectionFactory
+     * @return
+     */
+    @Bean
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+        stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
+        return stringRedisTemplate;
+    }
+}

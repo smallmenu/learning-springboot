@@ -24,64 +24,62 @@ import java.util.Optional;
 
 /**
  * 自定义 Redis 实例配置
- *
- *
  */
-@Configuration
-public class RedisManualConfig {
-    @Autowired
-    private RedisManualProperty redisManualProperty;
-
-    @Bean(name = "manualRedisConnectionFactory")
-    public RedisConnectionFactory manualRedisConnectionFactory() {
-        // Lettuce 连接池参数
-        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
-        poolConfig.setMaxTotal(Optional.ofNullable(redisManualProperty.getLettuce())
-                .map(RedisProperties.Lettuce::getPool)
-                .map(RedisProperties.Pool::getMaxActive)
-                .orElse(GenericObjectPoolConfig.DEFAULT_MAX_TOTAL));
-        poolConfig.setMaxIdle(Optional.ofNullable(redisManualProperty.getLettuce())
-                .map(RedisProperties.Lettuce::getPool)
-                .map(RedisProperties.Pool::getMaxIdle).orElse(GenericObjectPoolConfig.DEFAULT_MAX_IDLE));
-        poolConfig.setMinIdle(Optional.ofNullable(redisManualProperty.getLettuce())
-                .map(RedisProperties.Lettuce::getPool)
-                .map(RedisProperties.Pool::getMinIdle).orElse(GenericObjectPoolConfig.DEFAULT_MIN_IDLE));
-        LettuceClientConfiguration clientConfig = LettucePoolingClientConfiguration.builder()
-                .poolConfig(poolConfig)
-                .build();
-
-        // Redis 配置
-        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName(redisManualProperty.getHost());
-        config.setPort(redisManualProperty.getPort());
-        config.setDatabase(redisManualProperty.getDatabase());
-        config.setPassword(RedisPassword.of(redisManualProperty.getPassword()));
-
-        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(config, clientConfig);
-
-        return lettuceConnectionFactory;
-    }
-
-    @Bean(name = "manualRedisTemplate")
-    public RedisTemplate manualRedisTemplate(@Qualifier("manualRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
-
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-
-        redisTemplate.afterPropertiesSet();
-
-        return redisTemplate;
-    }
-
-    @Bean(name = "manualStringRedisTemplate")
-    public StringRedisTemplate manualStringRedisTemplate(@Qualifier("manualRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
-        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
-        stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
-
-        return stringRedisTemplate;
-    }
-}
+//@Configuration
+//public class RedisManualConfig {
+//    @Autowired
+//    private RedisManualProperty redisManualProperty;
+//
+//    @Bean(name = "manualRedisConnectionFactory")
+//    public RedisConnectionFactory manualRedisConnectionFactory() {
+//        // Lettuce 连接池参数
+//        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+//        poolConfig.setMaxTotal(Optional.ofNullable(redisManualProperty.getLettuce())
+//                .map(RedisProperties.Lettuce::getPool)
+//                .map(RedisProperties.Pool::getMaxActive)
+//                .orElse(GenericObjectPoolConfig.DEFAULT_MAX_TOTAL));
+//        poolConfig.setMaxIdle(Optional.ofNullable(redisManualProperty.getLettuce())
+//                .map(RedisProperties.Lettuce::getPool)
+//                .map(RedisProperties.Pool::getMaxIdle).orElse(GenericObjectPoolConfig.DEFAULT_MAX_IDLE));
+//        poolConfig.setMinIdle(Optional.ofNullable(redisManualProperty.getLettuce())
+//                .map(RedisProperties.Lettuce::getPool)
+//                .map(RedisProperties.Pool::getMinIdle).orElse(GenericObjectPoolConfig.DEFAULT_MIN_IDLE));
+//        LettuceClientConfiguration clientConfig = LettucePoolingClientConfiguration.builder()
+//                .poolConfig(poolConfig)
+//                .build();
+//
+//        // Redis 配置
+//        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+//        config.setHostName(redisManualProperty.getHost());
+//        config.setPort(redisManualProperty.getPort());
+//        config.setDatabase(redisManualProperty.getDatabase());
+//        config.setPassword(RedisPassword.of(redisManualProperty.getPassword()));
+//
+//        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(config, clientConfig);
+//
+//        return lettuceConnectionFactory;
+//    }
+//
+//    @Bean(name = "manualRedisTemplate")
+//    public RedisTemplate manualRedisTemplate(@Qualifier("manualRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
+//        RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
+//
+//        redisTemplate.setConnectionFactory(redisConnectionFactory);
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+//        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+//
+//        redisTemplate.afterPropertiesSet();
+//
+//        return redisTemplate;
+//    }
+//
+//    @Bean(name = "manualStringRedisTemplate")
+//    public StringRedisTemplate manualStringRedisTemplate(@Qualifier("manualRedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
+//        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+//        stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
+//
+//        return stringRedisTemplate;
+//    }
+//}

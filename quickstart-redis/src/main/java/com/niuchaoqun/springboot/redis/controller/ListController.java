@@ -32,7 +32,7 @@ public class ListController extends BaseController {
     @GetMapping("/set_string")
     public Object setStringList(@RequestParam(value = "listKey", defaultValue = "list_key_string") String listKey) {
         String value = "list_value";
-        ListOperations<String, String> operations = stringRedisTemplate.opsForList();
+        ListOperations<String, String> operations = redisTemplate.opsForList();
 
         operations.rightPush(listKey, value);
         operations.rightPush(listKey, value);

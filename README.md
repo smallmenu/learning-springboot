@@ -10,7 +10,7 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 
 [SpringBoot-Learning](https://github.com/dyc87112/SpringBoot-Learning) (star 3524)
 
-在实践过程中，增加了不少自己对业务场景的思考与幻想。（2018-06-14更新）
+增加了不少自己对业务场景的思考与幻想。（2019-06-14更新）
 
 ## 项目目录
 
@@ -41,7 +41,7 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 * 通过定义 DTO 接受参数映射
 * JPA 一对一，一对多，多对多关联示例
 
-### mybatis (原生太繁琐)
+### mybatis (原生)
 
 * Mybatis 以及 Mybatis Generator 常规操作示例
 * Mapper 与 XML Mapper 操作示例

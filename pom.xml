@@ -43,6 +43,7 @@
         <module>quickstart-mybatis-common</module>
         <module>quickstart-redis</module>
         <module>quickstart-rabbitmq</module>
+        <module>quickstart-kafka</module>
         <module>quickstart-quartz</module>
         <module>quickstart-client</module>
         <module>quickstart-security</module>

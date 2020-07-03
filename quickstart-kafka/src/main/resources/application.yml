@@ -1,0 +1,41 @@
+server:
+  port: 9999
+  undertow:
+    io-threads: 1
+    worker-threads: 4
+
+spring:
+  kafka:
+    bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+    listener:
+      concurrency: 8
+      ack-mode: manual
+    consumer:
+      bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+      group-id: console
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+    producer:
+#      compression-type: lz4
+      bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+      retries: 3
+      acks: all
+
+logging.file: springboot-kafka.log
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.niuchaoqun.springboot.kafka: INFO
+  file:
+    max-size: 256MB
+    max-history: 3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

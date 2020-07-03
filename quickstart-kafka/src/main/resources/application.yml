@@ -6,18 +6,24 @@ server:
 
 spring:
   kafka:
-    bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+    bootstrap-servers: kafka-test:9092
     listener:
       concurrency: 3
       ack-mode: manual
     consumer:
       group-id: console
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       enable-auto-commit: false
     producer:
       compression-type: lz4
       retries: 3
       acks: all
+
+kafka:
+  producer:
+    concurrency: 3
+  listener:
+    auto-startup: true
 
 logging.file: springboot-kafka.log
 logging:

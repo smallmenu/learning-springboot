@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Consumer {
     private static final AtomicLong count = new AtomicLong();
 
-    @KafkaListener(topics = "html_source_message")
+    @KafkaListener(topics = "test")
     public void consume(String message, Acknowledgment ack) {
         long current = count.getAndIncrement();
         log.info("Consumed message -> {}", current);

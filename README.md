@@ -14,7 +14,7 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 
 ## 项目目录
 
-### hello 
+### quickstart-hello 
 
 * springboot helloworld
 * 使用 springboot 以及 maven、pom.xml
@@ -23,7 +23,7 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 * 配置日志
 * 通过 Java Properties 类读取自定义配置
 
-### mvc
+### quickstart-mvc
 
 * Spring MVC 与 Restful 示例
 * 定义路由，定义 HTTP 方法
@@ -34,25 +34,25 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 * 使用 spring-boot-devtools 热更新（代码更新后修改自动编译）
 * 404，500 页面自定义
 
-### jpa
+### quickstart-jpa
 
 * JPA 相关操作，定义实体，定义 Repository，CURD 以及分页操作示例
 * 模拟业务场景中的 Controller -> Service -> Repository -> Entity 操作流程
 * 通过定义 DTO 接受参数映射
 * JPA 一对一，一对多，多对多关联示例
 
-### mybatis (原生)
+### quickstart-mybatis (原生)
 
 * Mybatis 以及 Mybatis Generator 常规操作示例
 * Mapper 与 XML Mapper 操作示例
 
-### mybatis-common
+### quickstart-mybatis-common
 
 * Mybatis 集成通用 Mapper 与分页插件 pagehelper
 * 使用 Mybatis 方式实现上面 JPA 同样的示例
 * 如何实现使用多条件查询与关联查询
 
-### redis
+### quickstart-redis
 
 * Redis 集成示例，Redis JavaConfig 配置key与value
 * stringRedisTemplate 与 RedisTemplate
@@ -60,23 +60,23 @@ spring boot 自学笔记及实践，充分参考学习了 GitHub 上现存 sprin
 * Cache 与 Redis 的集成，Cache注解
 * 使用 Redis 托管 Session
 
-### rabbitmq
+### quickstart-rabbitmq
 
 * RabbitMQ 集成示例
 
-### quartz
+### quickstart-quartz
 
 * quartz 集成示例
 
-### security
+### quickstart-security
 
 * Security 集成示例
 
-### admin
+### quickstart-admin
 
 * springboot-admin 提供应用注册监控管理界面，含登陆认证
 
-### client
+### quickstart-client
 
 * springboot-client 注册到admin，然后通过admin进行管理
 

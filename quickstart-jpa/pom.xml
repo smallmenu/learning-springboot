@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jpa</artifactId>
+    <artifactId>quickstart-jpa</artifactId>
     <version>2.1</version>
     <packaging>jar</packaging>
 
-    <name>jpa</name>
-    <description>Springboot JPA</description>
+    <name>quickstart-jpa</name>
+    <description>Spring Boot JPA</description>
 
     <parent>
         <groupId>com.niuchaoqun.springboot</groupId>

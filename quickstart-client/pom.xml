@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>client</artifactId>
+    <artifactId>quickstart-client</artifactId>
     <version>2.1</version>
     <packaging>jar</packaging>
 
-    <name>client</name>
-    <description>Springboot Admin Client</description>
+    <name>quickstart-client</name>
+    <description>Spring Boot Admin Client</description>
 
     <parent>
         <groupId>com.niuchaoqun.springboot</groupId>

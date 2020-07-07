@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>security</artifactId>
+    <artifactId>quickstart-security</artifactId>
     <version>2.1</version>
 
-    <name>security</name>
-    <description>Springboot Security</description>
+    <name>quickstart-security</name>
+    <description>Spring Boot Security</description>
 
     <parent>
         <groupId>com.niuchaoqun.springboot</groupId>

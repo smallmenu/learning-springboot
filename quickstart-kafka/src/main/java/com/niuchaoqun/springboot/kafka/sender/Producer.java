@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -25,16 +23,10 @@ public class Producer {
 
     public void send() {
         if (concurrency > 0) {
-            ExecutorService executors = Executors.newFixedThreadPool(concurrency);
-
-            try {
-                while (true) {
-                    ProducerJob producerJob = new ProducerJob(kafkaTemplate, TOPIC);
-                    executors.execute(producerJob);
-                }
-
-            } finally {
-                executors.shutdown();
+            for (int i = 0; i < concurrency; i++) {
+                ProducerJob producerJob = new ProducerJob(kafkaTemplate, TOPIC);
+                Thread thread = new Thread(producerJob, "r" + i);
+                thread.start();
             }
         }
     }

@@ -16,11 +16,13 @@ public class ProducerJob implements Runnable {
 
     @Override
     public void run() {
-        String message = ProducerMessage.log();
-        if (message != null) {
-            kafkaTemplate.send(topic, message);
-            long count = Producer.count.getAndIncrement();
-            log.info("Send Message {}, {}", count, message.length());
+        while (true) {
+            String message = ProducerMessage.log();
+            if (message != null) {
+                kafkaTemplate.send(topic, message);
+                long count = Producer.count.getAndIncrement();
+                log.info("Send Message {}, {}", count, message.length());
+            }
         }
     }
 }

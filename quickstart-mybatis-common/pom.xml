@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mybatis-common</artifactId>
+    <artifactId>quickstart-mybatis-common</artifactId>
     <version>2.1</version>
     <packaging>jar</packaging>
 
-    <name>mybatis-common</name>
-    <description>Springboot Mybatis Common Mapper</description>
+    <name>quickstart-mybatis-common</name>
+    <description>Spring Boot Mybatis Common Mapper</description>
 
     <parent>
         <groupId>com.niuchaoqun.springboot</groupId>

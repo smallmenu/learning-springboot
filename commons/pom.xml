@@ -6,7 +6,7 @@
     <artifactId>commons</artifactId>
     <version>2.1</version>
     <name>commons</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Spring Boot Commons</description>
 
     <parent>
         <groupId>com.niuchaoqun.springboot</groupId>

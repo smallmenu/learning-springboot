@@ -1,12 +1,12 @@
 package com.niuchaoqun.springboot.kafka.dto;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NginxLog {
     private String time_local;
 
@@ -26,7 +26,7 @@ public class NginxLog {
 
     private String cache_status;
 
-    private String request_time;
+    private Double request_time;
 
     private Long request_length;
 

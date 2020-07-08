@@ -21,7 +21,9 @@ public class ProducerJob implements Runnable {
             if (message != null) {
                 kafkaTemplate.send(topic, message);
                 long count = Producer.count.getAndIncrement();
-                log.info("Send Message {}, {}", count, message.length());
+                if (count % 10000 == 0) {
+                    log.info("Send Message {}, {}", count, message.length());
+                }
             }
         }
     }

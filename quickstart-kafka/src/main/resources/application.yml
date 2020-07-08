@@ -8,7 +8,7 @@ spring:
   kafka:
     bootstrap-servers: kafka-test:9092
     listener:
-      concurrency: 3
+      concurrency: 1
       ack-mode: manual
     consumer:
       group-id: console

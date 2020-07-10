@@ -1,11 +1,15 @@
 package com.niuchaoqun.springboot.kafka.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NginxLog {
     private String time_local;
@@ -54,6 +58,9 @@ public class NginxLog {
 
     @Data
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class GeoipBean {
 
         private String country;
@@ -68,6 +75,9 @@ public class NginxLog {
 
     @Data
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class UserAgentBean {
 
         private String device_type;

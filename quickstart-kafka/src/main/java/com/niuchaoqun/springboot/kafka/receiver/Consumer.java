@@ -16,7 +16,7 @@ public class Consumer {
     private static final AtomicLong count = new AtomicLong();
 
     @KafkaListener(topics = "test", autoStartup = "${kafka.listener.auto-startup:false}")
-    public void consume(String message, Acknowledgment ack) {
+    public void execute(String message, Acknowledgment ack) {
         long current = count.getAndIncrement();
         log.info("Consumed message -> {}", current);
 

@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class CustomProperty {
     private String name;
+
     private Integer age;
+
     private String other;
 }

@@ -13,8 +13,8 @@ logging.file: helloworld.log
 logging:
   level:
     root: INFO
-    org.springframework.web: ERROR
-    com.niuchaoqun.springboot.helloworld: DEBUG
+    org.springframework.web: INFO
+    com.niuchaoqun.springboot.helloworld: INFO
   file:
     max-size: 256MB
     max-history: 3

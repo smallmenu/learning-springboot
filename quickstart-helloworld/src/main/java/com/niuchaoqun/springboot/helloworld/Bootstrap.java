@@ -12,13 +12,14 @@ import org.springframework.stereotype.Component;
 public class Bootstrap implements CommandLineRunner {
     @Autowired
     private MysqlProperty mysqlProperty;
+
     @Autowired
     private CustomProperty customProperty;
 
     @Override
     public void run(String... args) throws Exception {
-        log.debug(mysqlProperty.toString());
-        log.debug(customProperty.toString());
+        log.info(mysqlProperty.toString());
+        log.info(customProperty.toString());
 
         System.out.println(mysqlProperty.toString());
         System.out.println(customProperty.toString());

@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.13.RELEASE</version>
+        <version>2.1.17.RELEASE</version>
     </parent>
 
     <properties>
@@ -31,6 +31,9 @@
         <pagehelper-start.version>1.2.13</pagehelper-start.version>
         <guava.version>20.0</guava.version>
         <okhttp.version>3.12.2</okhttp.version>
+        <freemarker.version>2.3.30</freemarker.version>
+        <elasticsearch.version>6.4.3</elasticsearch.version>
+        <httpclient.version>4.5.13</httpclient.version>
     </properties>
 
     <modules>
@@ -50,7 +53,6 @@
     </modules>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -65,36 +67,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-annotations</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-fixbug.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>${swagger-fixbug.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -24,4 +24,9 @@
 /nbdist/
 /.nb-gradle/
 
-springboot-*.log*
+
+.vscode
+
+*.log*
+
+
